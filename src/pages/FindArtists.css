@@ -1,0 +1,233 @@
+/* Find Artists Page */
+.find-artists-page {
+    padding: 6rem 0 4rem;
+    min-height: 100vh;
+}
+
+.search-header {
+    text-align: center;
+    margin-bottom: 4rem;
+}
+
+.search-header h2 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.search-header p {
+    font-family: var(--font-mono);
+    color: var(--text-muted);
+    font-size: 1.1rem;
+}
+
+.search-controls {
+    max-width: 800px;
+    margin: 3rem auto 0;
+}
+
+.search-bar {
+    position: relative;
+    margin-bottom: 2rem;
+}
+
+.search-icon {
+    position: absolute;
+    left: 1.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-muted);
+}
+
+.search-bar input {
+    width: 100%;
+    padding: 1.2rem 1.5rem 1.2rem 4rem;
+    border: 2px solid var(--border-strong);
+    background: var(--bg-panel);
+    font-size: 1rem;
+    font-family: var(--font-mono);
+    transition: all 0.2s;
+}
+
+.search-bar input:focus {
+    outline: none;
+    border-color: var(--color-accent);
+    box-shadow: 0 4px 0 var(--color-accent);
+    transform: translateY(-2px);
+}
+
+.genre-filters {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.filter-chip {
+    padding: 0.6rem 1.2rem;
+    border: 1px solid var(--border-strong);
+    background: var(--bg-panel);
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.15s;
+    text-transform: uppercase;
+}
+
+.filter-chip:hover {
+    background: var(--color-primary);
+    color: var(--text-inverse);
+    transform: translateY(-2px);
+    box-shadow: 0 3px 0 var(--color-accent);
+}
+
+.filter-chip.active {
+    background: var(--color-accent);
+    border-color: var(--color-accent);
+    color: var(--text-inverse);
+    box-shadow: 0 3px 0 var(--color-primary);
+    transform: translateY(-2px);
+}
+
+/* Artists Grid */
+.artists-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 2rem;
+}
+
+.artist-card {
+    background: var(--bg-panel);
+    border: 2px solid var(--border-strong);
+    overflow: hidden;
+    transition: all 0.2s;
+    cursor: pointer;
+}
+
+.artist-card:hover {
+    transform: translate(-4px, -4px);
+    box-shadow: 8px 8px 0 var(--color-accent);
+}
+
+.artist-image {
+    height: 240px;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    filter: grayscale(20%);
+    transition: filter 0.3s;
+}
+
+.artist-card:hover .artist-image {
+    filter: grayscale(0%);
+}
+
+.artist-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.7));
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-end;
+    padding: 1rem;
+}
+
+.genre-badge {
+    background: var(--color-accent);
+    color: var(--text-inverse);
+    padding: 0.4rem 0.8rem;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.artist-info {
+    padding: 1.5rem;
+}
+
+.artist-info h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    line-height: 1.2;
+}
+
+.artist-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border-subtle);
+}
+
+.meta-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+.meta-item svg {
+    flex-shrink: 0;
+}
+
+.meta-item.last-venue {
+    align-items: flex-start;
+}
+
+.venue-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+}
+
+.venue-name {
+    font-weight: 700;
+    color: var(--text-main);
+}
+
+.venue-location {
+    font-size: 0.75rem;
+}
+
+.artist-tags {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.tag {
+    padding: 0.3rem 0.6rem;
+    background: var(--bg-app);
+    border: 1px solid var(--border-subtle);
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .find-artists-page {
+        padding: 5rem 0 3rem;
+    }
+
+    .search-header h2 {
+        font-size: 2rem;
+    }
+
+    .artists-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .artist-card:hover {
+        transform: none;
+        box-shadow: none;
+    }
+}

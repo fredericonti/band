@@ -1,0 +1,247 @@
+.find-bands-page {
+    padding-top: 40px;
+    padding-bottom: 80px;
+    background: var(--bg-app);
+}
+
+.search-header {
+    text-align: center;
+    margin-bottom: 80px;
+}
+
+.search-header h2 {
+    font-size: 5rem;
+    margin-bottom: 16px;
+    line-height: 0.9;
+}
+
+.search-header p {
+    color: var(--text-muted);
+    margin-bottom: 40px;
+    font-size: 1.2rem;
+    font-family: var(--font-mono);
+}
+
+.search-controls {
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.search-bar {
+    position: relative;
+    margin-bottom: 32px;
+}
+
+.search-icon {
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-muted);
+}
+
+.search-bar input {
+    width: 100%;
+    padding: 20px 20px 20px 56px;
+    background: var(--bg-panel);
+    border: 1px solid var(--border-strong);
+    border-radius: 0;
+    color: var(--text-main);
+    font-size: 1.2rem;
+    font-weight: 700;
+    font-family: var(--font-mono);
+    transition: all 0.2s;
+}
+
+.search-bar input:focus {
+    border-color: var(--color-accent);
+    box-shadow: 8px 8px 0 var(--border-strong);
+    transform: translate(-4px, -4px);
+    outline: none;
+}
+
+.genre-filters {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.filter-chip {
+    background: transparent;
+    border: 1px solid var(--border-strong);
+    color: var(--text-muted);
+    padding: 10px 24px;
+    border-radius: 0;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    transition: all 0.1s;
+    font-family: var(--font-mono);
+}
+
+.filter-chip:hover {
+    border-color: var(--text-main);
+    color: var(--text-main);
+    background: var(--bg-panel);
+    transform: translateY(-2px);
+    box-shadow: 4px 4px 0 var(--color-accent);
+}
+
+.filter-chip.active {
+    background: var(--color-primary);
+    border-color: var(--color-primary);
+    color: var(--text-inverse);
+    box-shadow: 4px 4px 0 var(--color-accent);
+    transform: translateY(-2px);
+}
+
+.bands-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 40px;
+}
+
+.band-card {
+    background: var(--bg-panel);
+    border-radius: 0;
+    overflow: hidden;
+    border: 1px solid var(--border-strong);
+    transition: all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.band-card:hover {
+    transform: translate(-8px, -8px);
+    box-shadow: 12px 12px 0 var(--color-primary);
+    border-color: var(--color-primary);
+}
+
+.band-image {
+    height: 240px;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    border-bottom: 1px solid var(--border-strong);
+    filter: grayscale(100%);
+    transition: filter 0.2s;
+}
+
+.band-card:hover .band-image {
+    filter: grayscale(0%);
+}
+
+.band-overlay {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+}
+
+.genre-badge {
+    background: var(--color-accent);
+    color: var(--text-inverse);
+    padding: 6px 12px;
+    border-radius: 0;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    border: 1px solid var(--border-strong);
+    font-family: var(--font-mono);
+}
+
+.band-info {
+    padding: 24px;
+}
+
+.band-info h3 {
+    font-size: 1.8rem;
+    margin-bottom: 16px;
+    text-transform: uppercase;
+    line-height: 1;
+}
+
+.band-meta {
+    display: flex;
+    justify-content: space-between;
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin-bottom: 20px;
+    font-family: var(--font-mono);
+}
+
+.meta-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.band-tags {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 24px;
+}
+
+.tag {
+    background: transparent;
+    padding: 6px 12px;
+    border-radius: 0;
+    font-size: 0.7rem;
+    color: var(--text-main);
+    border: 1px solid var(--border-subtle);
+    font-weight: 600;
+    text-transform: uppercase;
+    font-family: var(--font-mono);
+}
+
+.btn-block {
+    width: 100%;
+    border-width: 1px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .find-bands-page {
+        padding-top: 20px;
+        padding-bottom: 40px;
+    }
+
+    .search-header {
+        margin-bottom: 40px;
+    }
+
+    .search-header h2 {
+        font-size: 2.5rem;
+    }
+
+    .search-header p {
+        font-size: 1rem;
+    }
+
+    .search-bar input {
+        font-size: 1rem;
+        padding: 15px 15px 15px 45px;
+    }
+
+    .search-icon {
+        left: 15px;
+    }
+
+    .bands-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .band-card:hover {
+        transform: none;
+        box-shadow: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .search-header h2 {
+        font-size: 2rem;
+    }
+}

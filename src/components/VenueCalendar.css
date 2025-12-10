@@ -1,0 +1,334 @@
+/* Venue Calendar - The Grid */
+.venue-calendar-container {
+    padding: 2rem 0;
+}
+
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 3px solid var(--border-strong);
+}
+
+.calendar-header h2 {
+    font-size: 2rem;
+    letter-spacing: 0.05em;
+}
+
+.month-navigation {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 1.1rem;
+}
+
+.month-navigation button {
+    background: var(--bg-panel);
+    border: 2px solid var(--border-strong);
+    width: 40px;
+    height: 40px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all 0.15s;
+}
+
+.month-navigation button:hover {
+    background: var(--color-primary);
+    color: var(--text-inverse);
+    transform: translate(-2px, -2px);
+    box-shadow: 3px 3px 0 var(--color-accent);
+}
+
+/* Calendar Grid */
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 0;
+    border: 1px solid var(--border-strong);
+}
+
+.calendar-header-cell {
+    background: var(--bg-panel);
+    border: 1px solid var(--border-strong);
+    padding: 1rem;
+    text-align: center;
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 0.85rem;
+}
+
+.calendar-day {
+    min-height: 120px;
+    border: 1px solid var(--border-strong);
+    padding: 0.75rem;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.15s;
+    display: flex;
+    flex-direction: column;
+}
+
+.calendar-day.empty {
+    background: white;
+}
+
+.calendar-day.empty:hover {
+    background: var(--bg-panel);
+}
+
+.calendar-day.empty:hover .add-slot {
+    opacity: 1;
+}
+
+.calendar-day.booked {
+    background: var(--color-primary);
+    color: var(--text-inverse);
+}
+
+.calendar-day.booked:hover {
+    background: var(--color-accent);
+}
+
+.calendar-day.open-slot {
+    background: var(--bg-panel);
+    border: 2px solid var(--color-accent);
+}
+
+.calendar-day.open-slot:hover {
+    background: var(--color-accent);
+    color: var(--text-inverse);
+}
+
+.day-number {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.gig-info {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: auto;
+}
+
+.artist-name {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    font-weight: 700;
+}
+
+.slot-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    margin-top: auto;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+}
+
+.slot-genre {
+    font-weight: 700;
+}
+
+.applicants-badge {
+    background: var(--color-accent);
+    color: var(--text-inverse);
+    padding: 0.2rem 0.5rem;
+    font-size: 0.7rem;
+    font-weight: 700;
+    width: fit-content;
+}
+
+.add-slot {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    transition: opacity 0.2s;
+    color: var(--text-muted);
+}
+
+/* Create Slot Modal */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.create-slot-modal {
+    background: var(--bg-app);
+    width: 500px;
+    height: 100vh;
+    overflow-y: auto;
+    border-left: 3px solid var(--border-strong);
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-header {
+    padding: 2rem;
+    border-bottom: 2px solid var(--border-strong);
+    background: var(--bg-panel);
+}
+
+.modal-header h3 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.selected-date {
+    font-family: var(--font-mono);
+    color: var(--text-muted);
+    text-transform: capitalize;
+}
+
+.slot-form {
+    padding: 2rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group {
+    margin-bottom: 2rem;
+}
+
+.form-group label {
+    display: block;
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 0.85rem;
+    margin-bottom: 0.75rem;
+    color: var(--text-muted);
+}
+
+.genre-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.genre-chips .chip {
+    padding: 0.6rem 1rem;
+    background: var(--bg-panel);
+    border: 2px solid var(--border-strong);
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.15s;
+}
+
+.genre-chips .chip:hover {
+    background: var(--color-primary);
+    color: var(--text-inverse);
+}
+
+.genre-chips .chip.selected {
+    background: var(--color-accent);
+    border-color: var(--color-accent);
+    color: var(--text-inverse);
+    transform: translate(-2px, -2px);
+    box-shadow: 3px 3px 0 var(--color-primary);
+}
+
+.budget-input,
+.time-input {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    border: 2px solid var(--border-strong);
+    padding: 1rem;
+    background: var(--bg-panel);
+}
+
+.budget-input input,
+.time-input input {
+    flex: 1;
+    border: none;
+    background: transparent;
+    font-size: 1.5rem;
+    font-weight: 700;
+    font-family: var(--font-display);
+}
+
+.time-input input {
+    font-size: 1.2rem;
+}
+
+.budget-input input:focus,
+.time-input input:focus {
+    outline: none;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+textarea {
+    width: 100%;
+    border: 2px solid var(--border-strong);
+    background: var(--bg-panel);
+    padding: 1rem;
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+    resize: vertical;
+}
+
+textarea:focus {
+    outline: none;
+    border-color: var(--color-accent);
+}
+
+.modal-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: auto;
+    padding-top: 2rem;
+    border-top: 2px solid var(--border-strong);
+}
+
+.modal-actions .btn {
+    flex: 1;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .calendar-header {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: flex-start;
+    }
+
+    .calendar-grid {
+        font-size: 0.85rem;
+    }
+
+    .calendar-day {
+        min-height: 80px;
+        padding: 0.5rem;
+    }
+
+    .create-slot-modal {
+        width: 100%;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+}
