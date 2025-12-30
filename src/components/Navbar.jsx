@@ -30,7 +30,7 @@ const Navbar = () => {
         <nav className="navbar">
             <div className="container navbar-container">
                 <Link to="/" className="navbar-logo" onClick={closeMenu}>
-                    CODA <span className="logo-version">v1.0</span>
+                    CODA
                 </Link>
 
                 <button
