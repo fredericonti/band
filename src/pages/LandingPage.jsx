@@ -1,15 +1,15 @@
-
-import React, { useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, ArrowUpRight, Globe, Shield, Zap } from 'lucide-react';
-import { motion, useScroll, useTransform, useMotionValue, useMotionTemplate } from 'framer-motion';
+import { ArrowRight, ArrowUpRight } from 'lucide-react';
+import { motion, useScroll, useTransform, useSpring, useMotionValue, useMotionTemplate } from 'framer-motion';
 import './LandingPage.css';
 
 const LandingPage = () => {
+    // Scroll Progress for Parallax
     const { scrollYProgress } = useScroll();
-    const x = useTransform(scrollYProgress, [0, 1], [0, -100]);
+    const heroY = useTransform(scrollYProgress, [0, 1], [0, 200]);
 
-    // Mouse tracking for Hero Spotlight
+    // Mouse Spotlight
     const mouseX = useMotionValue(0);
     const mouseY = useMotionValue(0);
 
@@ -19,232 +19,215 @@ const LandingPage = () => {
         mouseY.set(clientY - top);
     };
 
+    // Stagger Variants
+    const staggerContainer = {
+        hidden: { opacity: 0 },
+        show: {
+            opacity: 1,
+            transition: {
+                staggerChildren: 0.1,
+                delayChildren: 0.2
+            }
+        }
+    };
+
+    const fadeInUp = {
+        hidden: { opacity: 0, y: 30 },
+        show: {
+            opacity: 1,
+            y: 0,
+            transition: { type: "spring", stiffness: 50, damping: 20 }
+        }
+    };
+
     return (
         <div className="landing-page">
-            {/* 1. HERO: Immersive Infrastructure */}
+            {/* 1. HERO SECTION */}
             <section className="hero-section-new" onMouseMove={handleMouseMove}>
-                {/* Background Image */}
                 <div className="hero-bg">
-                    <img
-                        src="https://images.unsplash.com/photo-1625447956229-40bad977175c?q=80&w=1080&auto=format&fit=crop"
+                    <motion.img
+                        style={{ y: heroY }}
+                        src="https://images.unsplash.com/photo-1493225255756-d9584f8606e9?q=80&w=2000&auto=format&fit=crop"
                         alt="Infrastructure"
                         className="bg-image"
                     />
                     <div className="bg-overlay"></div>
                 </div>
 
-                {/* Mouse Spotlight Effect on Background */}
                 <motion.div
                     className="hero-spotlight"
                     style={{
-                        background: useMotionTemplate`radial-gradient(600px circle at ${mouseX}px ${mouseY}px, rgba(255, 79, 0, 0.15), transparent 80%)`
+                        background: useMotionTemplate`radial-gradient(800px circle at ${mouseX}px ${mouseY}px, rgba(59, 130, 246, 0.15), transparent 80%)`
                     }}
                 />
 
-                {/* Animated Particles */}
-                <div className="hero-particles">
-                    {[...Array(20)].map((_, i) => (
-                        <motion.div
-                            key={i}
-                            className="particle"
-                            initial={{
-                                x: Math.random() * (window.innerWidth || 1000),
-                                y: Math.random() * (window.innerHeight || 800),
-                                opacity: 0.2
-                            }}
-                            animate={{
-                                x: Math.random() * (window.innerWidth || 1000),
-                                y: Math.random() * (window.innerHeight || 800),
-                            }}
-                            transition={{
-                                duration: Math.random() * 10 + 20,
-                                repeat: Infinity,
-                                repeatType: "reverse",
-                                ease: "linear"
-                            }}
-                        />
-                    ))}
-                </div>
-
-                {/* Content */}
-                <div className="hero-content-new">
-                    <motion.div
-                        initial={{ opacity: 0, y: 30 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.8 }}
-                    >
-                        <motion.span
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            transition={{ delay: 0.3 }}
-                            className="hero-badge"
-                        >
-                            CODA OS v1.0
-                        </motion.span>
-
-                        <motion.h1
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.5 }}
-                            className="hero-title-new"
-                        >
-                            A INFRAESTRUTURA
-                            <br />
-                            <span className="text-gradient">INVISÍVEL</span>
-                        </motion.h1>
-
-                        <motion.p
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.7 }}
-                            className="hero-description"
-                        >
-                            A nova era da música ao vivo. Conexão direta, sem burocracia e com gestão financeira automatizada.
-                        </motion.p>
+                <motion.div
+                    className="hero-content-new"
+                    variants={staggerContainer}
+                    initial="hidden"
+                    animate="show"
+                >
+                    <motion.div variants={fadeInUp} className="hero-badge">
+                        PLATAFORMA BETA v1.0
                     </motion.div>
 
-                    {/* Scroll Indicator */}
+                    <motion.h1 variants={fadeInUp} className="hero-title-new">
+                        A NOVA ERA DA<br />
+                        MÚSICA AO VIVO
+                    </motion.h1>
+
+                    <motion.p variants={fadeInUp} className="hero-description">
+                        Conectando artistas e estabelecimentos de forma inteligente.
+                        Sem intermediários, sem burocracia, apenas música e negócios.
+                    </motion.p>
+                </motion.div>
+
+                {/* Scroll Indicator */}
+                <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 1.5, duration: 1 }}
+                    className="scroll-indicator"
+                >
                     <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ delay: 1.2 }}
-                        className="scroll-indicator"
+                        animate={{ y: [0, 8, 0] }}
+                        transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                        className="scroll-pill"
                     >
-                        <motion.div
-                            animate={{ y: [0, 10, 0] }}
-                            transition={{ duration: 2, repeat: Infinity }}
-                            className="scroll-pill"
-                        >
-                            <div className="scroll-dot" />
+                        <div className="scroll-dot" />
+                    </motion.div>
+                </motion.div>
+            </section>
+
+            {/* 2. NAVIGATION SPLIT */}
+            <motion.section
+                className="split-nav-section"
+                initial="hidden"
+                whileInView="show"
+                viewport={{ once: true, margin: "-10%" }}
+                variants={staggerContainer}
+            >
+                <Link to="/find-bands" className="split-pane pane-left">
+                    <motion.div variants={fadeInUp} className="pane-content">
+                        <h2 className="pane-title">PARA BARES</h2>
+                        <ul className="tech-list">
+                            <li>Encontre a banda perfeita</li>
+                            <li>Pagamento automatizado</li>
+                            <li>Avaliações reais</li>
+                        </ul>
+                        <span className="pane-cta">Começar Agora <ArrowUpRight size={20} /></span>
+                    </motion.div>
+                </Link>
+                <Link to="/register" className="split-pane pane-right">
+                    <motion.div variants={fadeInUp} className="pane-content">
+                        <h2 className="pane-title">PARA ARTISTAS</h2>
+                        <ul className="tech-list">
+                            <li>Agenda cheia</li>
+                            <li>Cachê garantido</li>
+                            <li>Perfil profissional</li>
+                        </ul>
+                        <span className="pane-cta">Criar Perfil <ArrowUpRight size={20} /></span>
+                    </motion.div>
+                </Link>
+            </motion.section>
+
+            {/* 3. BENTO GRID */}
+            <section className="bento-grid-section">
+                <div className="container">
+                    <motion.div
+                        className="bento-grid"
+                        initial="hidden"
+                        whileInView="show"
+                        viewport={{ once: true, margin: "-10%" }}
+                        variants={staggerContainer}
+                    >
+                        <motion.div variants={fadeInUp} className="bento-item text-item">
+                            <div>
+                                <h3>Gestão Completa</h3>
+                                <p>Tudo o que você precisa em um só lugar. Do contrato ao pagamento, nossa infraestrutura cuida de tudo.</p>
+                            </div>
+                        </motion.div>
+                        <motion.div variants={fadeInUp} className="bento-item image-item">
+                            <img src="https://images.unsplash.com/photo-1514525253440-b393452e2625?q=80&w=800&auto=format&fit=crop" alt="Music" className="card-image" />
+                            <div className="img-overlay">LIVE</div>
+                        </motion.div>
+                        <motion.div variants={fadeInUp} className="bento-item image-item">
+                            <img src="https://images.unsplash.com/photo-1501612780327-45045538702b?q=80&w=800&auto=format&fit=crop" alt="Stage" className="card-image" />
+                            <div className="img-overlay">STAGE</div>
+                        </motion.div>
+                        <motion.div variants={fadeInUp} className="bento-item text-item">
+                            <div>
+                                <h3>Contratos Digitais</h3>
+                                <p>Segurança jurídica automática para cada show. Assinatura digital integrada e proteção para ambos os lados.</p>
+                            </div>
                         </motion.div>
                     </motion.div>
                 </div>
             </section>
 
-            {/* 2. NAVIGATION: Split Screen */}
-            <section className="split-nav-section">
-                <Link to="/find-bands" className="split-pane pane-left">
-                    <div className="pane-content">
-                        <h2 className="pane-title">ESTABELECIMENTOS</h2>
-                        <ul className="tech-list">
-                            <li>CURADORIA AUTOMATIZADA</li>
-                            <li>PAGAMENTO CENTRALIZADO</li>
-                            <li>NOTA FISCAL DIGITAL</li>
-                        </ul>
-                        <span className="pane-cta">CONTRATE ARTISTAS <ArrowUpRight /></span>
-                    </div>
-                    <div className="pane-overlay"></div>
-                </Link>
-                <Link to="/register" className="split-pane pane-right">
-                    <div className="pane-content">
-                        <h2 className="pane-title">ARTISTAS</h2>
-                        <ul className="tech-list">
-                            <li>AGENDA INTELIGENTE</li>
-                            <li>CONTRATO PADRONIZADO</li>
-                            <li>RECEBIMENTO GARANTIDO</li>
-                        </ul>
-                        <span className="pane-cta">ACHE LOCAIS PARA TOCAR <ArrowUpRight /></span>
-                    </div>
-                    <div className="pane-overlay"></div>
-                </Link>
-            </section>
-
-            {/* 3. GRID: Bento Box with Visual Placeholders */}
-            <section className="bento-grid-section">
-                <div className="bento-grid">
-                    <div className="bento-item text-item">
-                        <h3>GESTÃO FINANCEIRA SIMPLIFICADA</h3>
-                        <p>Centralize pagamentos e recebimentos em uma única plataforma. Transparência total para quem contrata e para quem toca.</p>
-                        <div className="mono-tag">REF: FINANCE_001</div>
-                    </div>
-                    <div className="bento-item image-item img-1">
-                        <div className="img-overlay">TRANSACTIONS</div>
-                    </div>
-                    <div className="bento-item image-item img-2">
-                        <div className="img-overlay">PERFORMANCE</div>
-                    </div>
-                    <div className="bento-item text-item dark">
-                        <h3>COMPLIANCE AUTOMÁTICO</h3>
-                        <p>Segurança jurídica e fiscal em cada show. Contratos gerados automaticamente e recolhimento de impostos simplificado.</p>
-                        <div className="mono-tag">STATUS: VERIFIED</div>
-                    </div>
-                </div>
-            </section>
-
-            {/* 4. PRODUCT: Horizontal Scroll with Visual Placeholders */}
+            {/* 4. PRODUCT SHOWCASE */}
             <section className="product-showcase">
+                <div className="container" style={{ marginBottom: '2rem' }}>
+                    <motion.h2
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        style={{ fontSize: '2.5rem', fontWeight: '700' }}
+                    >
+                        COMO FUNCIONA
+                    </motion.h2>
+                </div>
+
                 <div className="showcase-track">
-                    <div className="showcase-card">
-                        <div className="card-header">
-                            <span className="step-number">01</span>
-                            <h4>CONEXÃO</h4>
-                        </div>
-                        <div className="card-visual" data-step="01">
-                            <img
-                                src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=800&auto=format&fit=crop"
-                                alt="Conexão"
-                                className="card-image"
-                            />
-                        </div>
-                        <p className="card-desc">Encontre o match perfeito entre som e ambiente.</p>
-                    </div>
-                    <div className="showcase-card">
-                        <div className="card-header">
-                            <span className="step-number">02</span>
-                            <h4>NEGOCIAÇÃO</h4>
-                        </div>
-                        <div className="card-visual" data-step="02">
-                            <img
-                                src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=800&auto=format&fit=crop"
-                                alt="Negociação"
-                                className="card-image"
-                            />
-                        </div>
-                        <p className="card-desc">Propostas claras, datas definidas e valores justos.</p>
-                    </div>
-                    <div className="showcase-card">
-                        <div className="card-header">
-                            <span className="step-number">03</span>
-                            <h4>SHOWTIME</h4>
-                        </div>
-                        <div className="card-visual" data-step="03">
-                            <img
-                                src="https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?q=80&w=800&auto=format&fit=crop"
-                                alt="Showtime"
-                                className="card-image"
-                            />
-                        </div>
-                        <p className="card-desc">Foco total na experiência. O resto a gente cuida.</p>
-                    </div>
+                    {[
+                        { title: "Connect", desc: "Busque por gênero, localização e orçamento.", img: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=800" },
+                        { title: "Negotiate", desc: "Envie propostas e feche o contrato na hora.", img: "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?q=80&w=800" },
+                        { title: "Perform", desc: "Foque no show. O pagamento é liberado automaticamente.", img: "https://images.unsplash.com/photo-1459749411177-287ceff125da?q=80&w=800" },
+                        { title: "Grow", desc: "Receba avaliações e construa sua reputação.", img: "https://images.unsplash.com/photo-1520630456184-f2597282cb41?q=80&w=800" }
+                    ].map((item, i) => (
+                        <motion.div
+                            key={i}
+                            className="showcase-card"
+                            initial={{ opacity: 0, x: 50 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ delay: i * 0.1 }}
+                        >
+                            <div className="card-visual">
+                                <img src={item.img} alt={item.title} className="card-image" />
+                            </div>
+                            <h3>{item.title}</h3>
+                            <p style={{ color: 'var(--text-muted)', marginTop: '0.5rem' }}>{item.desc}</p>
+                        </motion.div>
+                    ))}
                 </div>
             </section>
 
-            {/* 5. FOOTER: Manifesto */}
-            <section className="manifesto-footer">
+            {/* 5. FOOTER */}
+            <footer className="manifesto-footer">
                 <div className="container">
-                    <h2 className="manifesto-title">LEGALIZE<br />THE STAGE</h2>
                     <div className="footer-cols">
-                        <div className="footer-col">
+                        <div style={{ maxWidth: '500px' }}>
+                            <h2 className="manifesto-title">VAMOS FAZER<br />BARULHO.</h2>
                             <p className="manifesto-text">
-                                A música ao vivo é uma indústria bilionária tratada como bico.
-                                Nós estamos aqui para mudar isso. Profissionalismo não mata a vibe,
-                                profissionalismo garante o próximo show.
+                                A revolução do mercado da música ao vivo começa aqui. Junte-se a nós.
                             </p>
                         </div>
-                        <div className="footer-col input-col">
-                            <label className="mono-label">JOIN THE MOVEMENT</label>
-                            <div className="minimal-input-group">
-                                <input type="email" placeholder="EMAIL ADDRESS" />
-                                <button><ArrowRight /></button>
-                            </div>
+                        <div className="minimal-input-group">
+                            <input type="email" placeholder="Seu melhor e-mail" />
+                            <button><ArrowRight size={20} /></button>
                         </div>
                     </div>
-                    <div className="footer-bottom">
-                        <span className="mono-text">© 2025 CODA FINANCIAL OS</span>
-                        <span className="mono-text">SÃO PAULO — BRASIL</span>
+                    <div style={{ borderTop: '1px solid #333', paddingTop: '2rem', display: 'flex', justifyContent: 'space-between', color: '#666', fontSize: '0.9rem' }}>
+                        <span>© 2025 Band App Inc.</span>
+                        <div style={{ display: 'flex', gap: '2rem' }}>
+                            <a href="#">Instagram</a>
+                            <a href="#">Twitter</a>
+                            <a href="#">LinkedIn</a>
+                        </div>
                     </div>
                 </div>
-            </section>
+            </footer>
         </div>
     );
 };
