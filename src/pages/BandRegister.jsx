@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Plus, Trash2, Save, DollarSign, Mic2, CreditCard, AlertCircle } from 'lucide-react';
+import { motion } from 'framer-motion';
 import './BandRegister.css';
 
 const BandRegister = () => {
@@ -76,13 +77,36 @@ const BandRegister = () => {
     };
 
     return (
-        <div className="register-page container">
+        <motion.div
+            className="register-page container"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+        >
             <div className="register-header">
-                <h2>Crie o Perfil da Sua Banda</h2>
-                <p>Configure seus splits, membros e prepare-se para os shows.</p>
+                <motion.h2
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.2 }}
+                >
+                    Crie o Perfil da Sua Banda
+                </motion.h2>
+                <motion.p
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.3 }}
+                >
+                    Configure seus splits, membros e prepare-se para os shows.
+                </motion.p>
             </div>
 
-            <form onSubmit={handleSubmit} className="register-form card">
+            <motion.form
+                onSubmit={handleSubmit}
+                className="register-form card"
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.4, duration: 0.4 }}
+            >
                 {/* Band Details */}
                 <div className="form-group-container">
                     <div className="section-title">
@@ -134,12 +158,12 @@ const BandRegister = () => {
                     <div className="section-header">
                         <div>
                             <h3><DollarSign size={20} /> Mixer de Split Financeiro</h3>
-                            <p style={{ color: totalSplit === 100 ? 'var(--color-success)' : 'var(--color-danger)', fontSize: '0.9rem', marginTop: '4px' }}>
+                            <p style={{ color: totalSplit === 100 ? '#4ade80' : '#ef4444', fontSize: '0.9rem', marginTop: '4px' }}>
                                 Alocação Total: {totalSplit}%
                             </p>
                         </div>
                         <div style={{ display: 'flex', gap: '10px' }}>
-                            <button type="button" onClick={autoBalanceSplit} className="btn btn-outline btn-sm">
+                            <button type="button" onClick={autoBalanceSplit} className="btn btn-outline btn-sm" style={{ borderColor: '#333' }}>
                                 Auto-Balancear
                             </button>
                             <button type="button" onClick={addMember} className="btn btn-primary btn-sm">
@@ -150,7 +174,13 @@ const BandRegister = () => {
 
                     <div className="members-list">
                         {formData.members.map((member, index) => (
-                            <div key={index} className="member-card">
+                            <motion.div
+                                key={index}
+                                className="member-card"
+                                initial={{ opacity: 0, x: -20 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                transition={{ delay: 0.5 + (index * 0.1) }}
+                            >
                                 <div className="member-header">
                                     <div className="member-info-inputs">
                                         <input
@@ -218,7 +248,7 @@ const BandRegister = () => {
                                         className="range-slider"
                                     />
                                 </div>
-                            </div>
+                            </motion.div>
                         ))}
                     </div>
 
@@ -247,8 +277,8 @@ const BandRegister = () => {
                         {totalSplit !== 100 ? `Corrigir Split (${totalSplit}%)` : 'Criar Perfil da Banda'}
                     </button>
                 </div>
-            </form>
-        </div>
+            </motion.form>
+        </motion.div>
     );
 };
 

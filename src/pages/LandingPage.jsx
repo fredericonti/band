@@ -4,6 +4,41 @@ import { ArrowRight, ArrowUpRight } from 'lucide-react';
 import { motion, useScroll, useTransform, useSpring, useMotionValue, useMotionTemplate } from 'framer-motion';
 import './LandingPage.css';
 
+const ScrollPath = () => {
+    const { scrollYProgress } = useScroll();
+    const scaleY = useSpring(scrollYProgress, {
+        stiffness: 100,
+        damping: 30,
+        restDelta: 0.001
+    });
+
+    return (
+        <div className="scroll-path-container">
+            <svg viewBox="0 0 100 400" preserveAspectRatio="none" className="scroll-path-svg">
+                <motion.path
+                    d="M 50 0 C 50 50, 20 100, 50 150 C 80 200, 50 250, 50 300 C 50 350, 80 400, 50 450"
+                    fill="none"
+                    strokeWidth="1"
+                    stroke="rgba(255,255,255,0.1)"
+                />
+                <motion.path
+                    d="M 50 0 C 50 50, 20 100, 50 150 C 80 200, 50 250, 50 300 C 50 350, 80 400, 50 450"
+                    fill="none"
+                    strokeWidth="1.5"
+                    stroke="url(#gradient)"
+                    style={{ pathLength: scaleY }}
+                />
+                <defs>
+                    <linearGradient id="gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" stopColor="#3B82F6" />
+                        <stop offset="100%" stopColor="#8B5CF6" />
+                    </linearGradient>
+                </defs>
+            </svg>
+        </div>
+    );
+};
+
 const LandingPage = () => {
     // Scroll Progress for Parallax
     const { scrollYProgress } = useScroll();
@@ -42,6 +77,8 @@ const LandingPage = () => {
 
     return (
         <div className="landing-page">
+            <ScrollPath />
+
             {/* 1. HERO SECTION */}
             <section className="hero-section-new" onMouseMove={handleMouseMove}>
                 <div className="hero-bg">
@@ -108,7 +145,12 @@ const LandingPage = () => {
                 variants={staggerContainer}
             >
                 <Link to="/find-bands" className="split-pane pane-left">
-                    <motion.div variants={fadeInUp} className="pane-content">
+                    <motion.div
+                        variants={fadeInUp}
+                        className="pane-content"
+                        whileHover={{ scale: 1.02 }}
+                        transition={{ type: "spring", stiffness: 300 }}
+                    >
                         <h2 className="pane-title">PARA BARES</h2>
                         <ul className="tech-list">
                             <li>Encontre a banda perfeita</li>
@@ -119,7 +161,12 @@ const LandingPage = () => {
                     </motion.div>
                 </Link>
                 <Link to="/register" className="split-pane pane-right">
-                    <motion.div variants={fadeInUp} className="pane-content">
+                    <motion.div
+                        variants={fadeInUp}
+                        className="pane-content"
+                        whileHover={{ scale: 1.02 }}
+                        transition={{ type: "spring", stiffness: 300 }}
+                    >
                         <h2 className="pane-title">PARA ARTISTAS</h2>
                         <ul className="tech-list">
                             <li>Agenda cheia</li>
@@ -141,21 +188,41 @@ const LandingPage = () => {
                         viewport={{ once: true, margin: "-10%" }}
                         variants={staggerContainer}
                     >
-                        <motion.div variants={fadeInUp} className="bento-item text-item">
+                        <motion.div
+                            variants={fadeInUp}
+                            className="bento-item text-item"
+                            whileHover={{ scale: 1.02, rotate: 1 }}
+                            transition={{ type: "spring", stiffness: 200 }}
+                        >
                             <div>
                                 <h3>Gestão Completa</h3>
                                 <p>Tudo o que você precisa em um só lugar. Do contrato ao pagamento, nossa infraestrutura cuida de tudo.</p>
                             </div>
                         </motion.div>
-                        <motion.div variants={fadeInUp} className="bento-item image-item">
+                        <motion.div
+                            variants={fadeInUp}
+                            className="bento-item image-item"
+                            whileHover={{ scale: 1.02, rotate: -1 }}
+                            transition={{ type: "spring", stiffness: 200 }}
+                        >
                             <img src="https://images.unsplash.com/photo-1514525253440-b393452e2625?q=80&w=800&auto=format&fit=crop" alt="Music" className="card-image" />
                             <div className="img-overlay">LIVE</div>
                         </motion.div>
-                        <motion.div variants={fadeInUp} className="bento-item image-item">
+                        <motion.div
+                            variants={fadeInUp}
+                            className="bento-item image-item"
+                            whileHover={{ scale: 1.02, rotate: 1 }}
+                            transition={{ type: "spring", stiffness: 200 }}
+                        >
                             <img src="https://images.unsplash.com/photo-1501612780327-45045538702b?q=80&w=800&auto=format&fit=crop" alt="Stage" className="card-image" />
                             <div className="img-overlay">STAGE</div>
                         </motion.div>
-                        <motion.div variants={fadeInUp} className="bento-item text-item">
+                        <motion.div
+                            variants={fadeInUp}
+                            className="bento-item text-item"
+                            whileHover={{ scale: 1.02, rotate: -1 }}
+                            transition={{ type: "spring", stiffness: 200 }}
+                        >
                             <div>
                                 <h3>Contratos Digitais</h3>
                                 <p>Segurança jurídica automática para cada show. Assinatura digital integrada e proteção para ambos os lados.</p>
@@ -190,8 +257,9 @@ const LandingPage = () => {
                             className="showcase-card"
                             initial={{ opacity: 0, x: 50 }}
                             whileInView={{ opacity: 1, x: 0 }}
+                            whileHover={{ y: -10, rotate: 1 }}
                             viewport={{ once: true }}
-                            transition={{ delay: i * 0.1 }}
+                            transition={{ delay: i * 0.1, type: "spring", stiffness: 300 }}
                         >
                             <div className="card-visual">
                                 <img src={item.img} alt={item.title} className="card-image" />

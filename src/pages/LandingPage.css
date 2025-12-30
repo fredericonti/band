@@ -1,5 +1,24 @@
 /* ========== LANDING PAGE - MODERN MINDMARKET STYLE ========== */
 
+/* Path Scroll SVG */
+.scroll-path-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 5;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.scroll-path-svg {
+    width: 100%;
+    height: 100%;
+    opacity: 0.6;
+    /* We make it very tall so the path can snake down */
+}
+
 /* 1. HERO: Clean & Infinite */
 .hero-section-new {
     position: relative;
@@ -205,7 +224,7 @@
 }
 
 .bento-item:hover {
-    transform: translateY(-5px);
+    /* transform handled by JS motion now, keyframe animation removed */
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
     border-color: rgba(255, 255, 255, 0.1);
 }
@@ -223,6 +242,8 @@
     padding: 0;
     overflow: hidden;
     position: relative;
+    z-index: 10;
+    /* Ensure images are above path */
 }
 
 .img-overlay {
@@ -267,6 +288,7 @@
     border-radius: 20px;
     padding: 2rem;
     border: 1px solid rgba(255, 255, 255, 0.05);
+    /* Hover handled by JS motion */
 }
 
 .card-visual {
