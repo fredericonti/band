@@ -73,7 +73,7 @@
 }
 
 .calendar-day.empty {
-    background: white;
+    background: var(--bg-app);
 }
 
 .calendar-day.empty:hover {

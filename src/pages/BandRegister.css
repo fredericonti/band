@@ -28,10 +28,10 @@
 
 .register-form.card {
     padding: 3rem;
-    background: var(--bg-panel);
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    background: var(--bg-card);
+    border: 1px solid var(--border-strong);
     border-radius: 32px;
-    box-shadow: 0 0 100px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0 100px rgba(0, 0, 0, 0.8);
 }
 
 .form-group-container {

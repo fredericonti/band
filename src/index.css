@@ -6,7 +6,18 @@
   --text-muted: #A1A1A1;
   --text-inverse: #000000;
 
+  /* Burnt Red Dark Premium Palette - PURE BLACK EDITION */
+  --bg-app: #000000;
+  /* Pure Black */
+  --bg-panel: #000000;
+  /* Pure Black for Sections */
+  --bg-card: #0A0A0A;
+  /* Very Dark Gray for Cards */
+
+  --bg-card-hover: #111111;
+  /* Visible hover state */
   --border-strong: #333333;
+  /* Stronger borders for contrast */
   --border-subtle: #222222;
 
   /* Typography */
