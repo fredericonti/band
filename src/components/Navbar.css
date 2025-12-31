@@ -1,5 +1,6 @@
 .navbar {
-    background: var(--bg-app);
+    background: rgba(13, 13, 13, 0.95);
+    backdrop-filter: blur(12px);
     border-bottom: 1px solid var(--border-strong);
     padding: 1.5rem 0;
     position: sticky;

@@ -1,15 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;700&display=swap');
 
 :root {
-  /* Modern Dark Premium Palette */
-  --bg-app: #050505;
-  --bg-panel: #111111;
-  --bg-card: #1A1A1A;
-
-  --color-primary: #FFFFFF;
-  --color-accent: #3B82F6;
-  /* Modern Blue/Indigo */
-  --color-accent-gradient: linear-gradient(135deg, #3B82F6 0%, #8B5CF6 100%);
 
   --text-main: #FFFFFF;
   --text-muted: #A1A1A1;

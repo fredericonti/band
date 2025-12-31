@@ -1,4 +1,4 @@
-/* ========== LANDING PAGE - MODERN MINDMARKET STYLE ========== */
+/* ========== LANDING PAGE - MODERN BURNT RED STYLE ========== */
 
 /* Path Scroll SVG */
 .scroll-path-container {
@@ -29,6 +29,8 @@
     overflow: hidden;
     background: var(--bg-app);
     color: white;
+    perspective: 1000px;
+    /* Essential for 3D transforms */
 }
 
 .hero-bg {

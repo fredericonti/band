@@ -83,7 +83,7 @@ const ScrollPath = () => {
                     d="M 50 0 C 50 50, 20 100, 50 150 C 80 200, 50 250, 50 300 C 50 350, 80 400, 50 450"
                     fill="none"
                     strokeWidth="1"
-                    stroke="rgba(255,255,255,0.1)"
+                    stroke="rgba(194, 63, 56, 0.2)"
                 />
                 <motion.path
                     d="M 50 0 C 50 50, 20 100, 50 150 C 80 200, 50 250, 50 300 C 50 350, 80 400, 50 450"
@@ -94,8 +94,8 @@ const ScrollPath = () => {
                 />
                 <defs>
                     <linearGradient id="gradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                        <stop offset="0%" stopColor="#3B82F6" />
-                        <stop offset="100%" stopColor="#8B5CF6" />
+                        <stop offset="0%" stopColor="#D85951" />
+                        <stop offset="100%" stopColor="#C23F38" />
                     </linearGradient>
                 </defs>
             </svg>
@@ -115,10 +115,10 @@ const AnimManagement = () => (
         <motion.div
             animate={{ rotate: -360 }}
             transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
-            style={{ width: 60, height: 60, border: '2px solid rgba(59, 130, 246, 0.5)', borderRadius: '50%', position: 'absolute' }}
+            style={{ width: 60, height: 60, border: '2px solid rgba(194, 63, 56, 0.5)', borderRadius: '50%', position: 'absolute' }}
         />
         <div style={{ zIndex: 10 }}>
-            <Globe size={32} color="#3B82F6" />
+            <Globe size={32} color="#C23F38" />
         </div>
     </div>
 );
@@ -130,7 +130,7 @@ const AnimContract = () => (
             animate={{ pathLength: 1, opacity: 1 }}
             transition={{ duration: 2, repeat: Infinity, repeatDelay: 1 }}
         >
-            <svg width="80" height="100" viewBox="0 0 80 100" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ color: '#8B5CF6' }}>
+            <svg width="80" height="100" viewBox="0 0 80 100" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ color: '#D85951' }}>
                 <rect x="10" y="10" width="60" height="80" rx="4" />
                 <line x1="20" y1="30" x2="60" y2="30" />
                 <line x1="20" y1="50" x2="60" y2="50" />
@@ -386,22 +386,22 @@ const LandingPage = () => {
                         {
                             title: "Conecte",
                             desc: "Encontre oportunidades reais baseadas no seu perfil e localização.",
-                            icon: <Globe size={48} color="#60A5FA" />
+                            icon: <Globe size={48} color="#D85951" />
                         },
                         {
                             title: "Negocie",
                             desc: "Envie propostas, discuta valores e feche datas em tempo real.",
-                            icon: <Zap size={48} color="#F472B6" />
+                            icon: <Zap size={48} color="#C23F38" />
                         },
                         {
                             title: "Toque",
                             desc: "Foque apenas na música. A parte burocrática é com a gente.",
-                            icon: <Shield size={48} color="#34D399" />
+                            icon: <Shield size={48} color="#9B2C26" />
                         },
                         {
                             title: "Cresça",
                             desc: "Receba avaliações, suba de nível e consiga cachês melhores.",
-                            icon: <ArrowUpRight size={48} color="#A78BFA" />
+                            icon: <ArrowUpRight size={48} color="#D85951" />
                         }
                     ].map((item, i) => (
                         <motion.div
