@@ -132,7 +132,7 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     min-height: 80vh;
-    background: var(--bg-app);
+    background: var(--bg-panel);
     gap: 1px;
     background-color: var(--border-subtle);
     /* Gap color */
@@ -311,7 +311,7 @@
 /* 4. PRODUCT: Clean Horizontal Scroll */
 .product-showcase {
     padding: 6rem 0;
-    background: var(--bg-app);
+    background: var(--bg-panel);
     overflow: hidden;
 }
 
