@@ -27,8 +27,8 @@ const Hero3DBackground = () => {
     const handleMouseMove = (e) => {
         const { clientX, clientY } = e;
         const { innerWidth, innerHeight } = window;
-        const x = (clientX / innerWidth - 0.5) * 2; // -1 to 1
-        const y = (clientY / innerHeight - 0.5) * 2; // -1 to 1
+        const x = (clientX / innerWidth - 0.5) * 2;
+        const y = (clientY / innerHeight - 0.5) * 2;
         mouseX.set(x);
         mouseY.set(y);
     };
@@ -52,29 +52,31 @@ const Hero3DBackground = () => {
                 }}
             >
                 {/* Floating Particles */}
-                {particles.map((particle) => {
-                    const particleX = useTransform(mouseX, [-1, 1], [-particle.speed * 30, particle.speed * 30]);
-                    const particleY = useTransform(mouseY, [-1, 1], [-particle.speed * 30, particle.speed * 30]);
-
-                    return (
-                        <motion.div
-                            key={particle.id}
-                            style={{
-                                position: 'absolute',
-                                left: `${particle.x}%`,
-                                top: `${particle.y}%`,
-                                width: particle.size,
-                                height: particle.size,
-                                borderRadius: '50%',
-                                background: `rgba(194, 63, 56, ${0.3 + Math.random() * 0.4})`,
-                                x: particleX,
-                                y: particleY,
-                                filter: 'blur(1px)',
-                                boxShadow: '0 0 10px rgba(194, 63, 56, 0.5)'
-                            }}
-                        />
-                    );
-                })}
+                {particles.map((particle) => (
+                    <motion.div
+                        key={particle.id}
+                        style={{
+                            position: 'absolute',
+                            left: `${particle.x}%`,
+                            top: `${particle.y}%`,
+                            width: particle.size,
+                            height: particle.size,
+                            borderRadius: '50%',
+                            background: `rgba(194, 63, 56, ${0.3 + Math.random() * 0.4})`,
+                            filter: 'blur(1px)',
+                            boxShadow: '0 0 10px rgba(194, 63, 56, 0.5)'
+                        }}
+                        animate={{
+                            x: [0, particle.speed * 30, 0, -particle.speed * 30, 0],
+                            y: [0, -particle.speed * 20, 0, particle.speed * 20, 0],
+                        }}
+                        transition={{
+                            duration: 10 + particle.speed * 5,
+                            repeat: Infinity,
+                            ease: "easeInOut"
+                        }}
+                    />
+                ))}
             </motion.div>
             <div className="bg-overlay"></div>
         </div>
