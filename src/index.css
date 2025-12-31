@@ -9,9 +9,9 @@
   /* Burnt Red Dark Premium Palette - PURE BLACK EDITION */
   --bg-app: #000000;
   /* Pure Black */
-  --bg-panel: #161616;
-  /* Dark Gray for Sections - Visible contrast against Black */
-  --bg-card: #1C1C1C;
+  --bg-panel: #1A1A1A;
+  /* Original Dark Gray - High contrast against Black */
+  --bg-card: #222222;
   /* Distinct Card Background */
 
   --bg-card-hover: #111111;
