@@ -27,9 +27,9 @@
   /* Keeping it clean, less code-like for main UI */
 
   /* Shape System - Modern Rounded */
-  --radius-sm: 8px;
-  --radius-md: 12px;
-  --radius-lg: 24px;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 16px;
   --radius-full: 9999px;
 
   --spacing-unit: 1rem;

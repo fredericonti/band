@@ -142,30 +142,96 @@ const AnimContract = () => (
 
 const AnimEarlyPayment = () => (
     <div className="anim-container" style={{ justifyContent: 'flex-start', paddingLeft: '2rem' }}>
-        <div style={{ width: '100%', maxWidth: '200px' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem', fontSize: '0.8rem', color: '#aaa' }}>
+        <div style={{ width: '100%', maxWidth: '240px', background: 'var(--bg-card)', padding: '1.5rem', borderRadius: '24px', border: '1px solid var(--border-subtle)', boxShadow: '0 10px 30px rgba(0,0,0,0.5)' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.8rem', fontSize: '0.9rem', color: '#aaa', fontWeight: '500' }}>
                 <span>Transferindo...</span>
-                <span>100%</span>
+                <span style={{ color: '#fff' }}>100%</span>
             </div>
-            <div style={{ height: '8px', background: 'rgba(255,255,255,0.1)', borderRadius: '4px', overflow: 'hidden' }}>
+            <div style={{ height: '12px', background: 'rgba(255,255,255,0.1)', borderRadius: '999px', overflow: 'hidden', padding: '2px' }}>
                 <motion.div
                     initial={{ width: '0%' }}
                     whileInView={{ width: '100%' }}
-                    transition={{ duration: 1.5, ease: "easeOut", delay: 0.5 }}
-                    style={{ height: '100%', background: '#10B981' }}
+                    transition={{ duration: 1.5, ease: [0.25, 0.1, 0.25, 1], delay: 0.5 }}
+                    style={{ height: '100%', background: '#10B981', borderRadius: '999px' }}
                 />
             </div>
             <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: 2 }}
-                style={{ marginTop: '0.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem', color: '#10B981', fontSize: '0.8rem' }}
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 1.8, type: "spring" }}
+                style={{ marginTop: '1rem', display: 'flex', alignItems: 'center', gap: '0.6rem', color: '#10B981', fontSize: '0.9rem', fontWeight: 'bold' }}
             >
-                <Check size={14} /> Pagamento Confirmado
+                <div style={{ background: 'rgba(16, 185, 129, 0.2)', padding: '4px', borderRadius: '50%' }}><Check size={14} /></div>
+                Pagamento Confirmado
             </motion.div>
         </div>
     </div>
 );
+
+const HowItWorks = () => {
+    const targetRef = useRef(null);
+    const { scrollYProgress } = useScroll({
+        target: targetRef,
+    });
+
+    const x = useTransform(scrollYProgress, [0.1, 0.9], ["2%", "-75%"]);
+
+    const cards = [
+        {
+            title: "Conecte",
+            desc: "Encontre oportunidades reais baseadas no seu perfil e localização.",
+            icon: <Globe size={48} color="#D85951" />
+        },
+        {
+            title: "Negocie",
+            desc: "Envie propostas, discuta valores e feche datas em tempo real.",
+            icon: <Zap size={48} color="#C23F38" />
+        },
+        {
+            title: "Toque",
+            desc: "Foque apenas na música. A parte burocrática é com a gente.",
+            icon: <Shield size={48} color="#9B2C26" />
+        },
+        {
+            title: "Cresça",
+            desc: "Receba avaliações, suba de nível e consiga cachês melhores.",
+            icon: <ArrowUpRight size={48} color="#D85951" />
+        }
+    ];
+
+    return (
+        <section ref={targetRef} className="product-showcase" style={{ height: '300vh', position: 'relative' }}>
+            <div className="sticky-wrapper" style={{ position: 'sticky', top: 0, height: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', overflow: 'hidden' }}>
+                <div className="container" style={{ marginBottom: '4rem' }}>
+                    <motion.h2
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.6 }}
+                        style={{ fontSize: '3rem', fontWeight: '700' }}
+                    >
+                        COMO FUNCIONA
+                    </motion.h2>
+                </div>
+
+                <motion.div style={{ x, display: 'flex', gap: '2rem', paddingLeft: 'max(2rem, (100vw - 1280px) / 2)' }} className="showcase-track-horizontal">
+                    {cards.map((item, i) => (
+                        <div
+                            key={i}
+                            className="showcase-card"
+                            style={{ minWidth: '400px', flexShrink: 0 }}
+                        >
+                            <div className="icon-anim-box">
+                                {item.icon}
+                            </div>
+                            <h3>{item.title}</h3>
+                            <p style={{ color: 'var(--text-muted)', marginTop: '0.5rem' }}>{item.desc}</p>
+                        </div>
+                    ))}
+                </motion.div>
+            </div>
+        </section>
+    );
+};
 
 // --- MAIN PAGE ---
 
@@ -269,7 +335,7 @@ const LandingPage = () => {
                         whileHover={{ scale: 1.02 }}
                         transition={{ type: "spring", stiffness: 300 }}
                     >
-                        <h2 className="pane-title">PARA BARES</h2>
+                        <h2 className="pane-title">ESTABELECIMENTOS</h2>
                         <ul className="tech-list">
                             <li>Encontre a banda perfeita</li>
                             <li>Pagamento automatizado</li>
@@ -368,60 +434,8 @@ const LandingPage = () => {
                 </div>
             </section>
 
-            {/* 4. HOW IT WORKS (Localized & Animated) */}
-            <section className="product-showcase">
-                <div className="container" style={{ marginBottom: '2rem' }}>
-                    <motion.h2
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        style={{ fontSize: '2.5rem', fontWeight: '700' }}
-                    >
-                        COMO FUNCIONA
-                    </motion.h2>
-                </div>
-
-                <div className="showcase-track">
-                    {[
-                        {
-                            title: "Conecte",
-                            desc: "Encontre oportunidades reais baseadas no seu perfil e localização.",
-                            icon: <Globe size={48} color="#D85951" />
-                        },
-                        {
-                            title: "Negocie",
-                            desc: "Envie propostas, discuta valores e feche datas em tempo real.",
-                            icon: <Zap size={48} color="#C23F38" />
-                        },
-                        {
-                            title: "Toque",
-                            desc: "Foque apenas na música. A parte burocrática é com a gente.",
-                            icon: <Shield size={48} color="#9B2C26" />
-                        },
-                        {
-                            title: "Cresça",
-                            desc: "Receba avaliações, suba de nível e consiga cachês melhores.",
-                            icon: <ArrowUpRight size={48} color="#D85951" />
-                        }
-                    ].map((item, i) => (
-                        <motion.div
-                            key={i}
-                            className="showcase-card"
-                            initial={{ opacity: 0, x: 50 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            whileHover={{ y: -10 }}
-                            viewport={{ once: true }}
-                            transition={{ delay: i * 0.1, type: "spring", stiffness: 300 }}
-                        >
-                            <div className="icon-anim-box">
-                                {item.icon}
-                            </div>
-                            <h3>{item.title}</h3>
-                            <p style={{ color: 'var(--text-muted)', marginTop: '0.5rem' }}>{item.desc}</p>
-                        </motion.div>
-                    ))}
-                </div>
-            </section>
+            {/* 4. HOW IT WORKS (Horizontal Scroll) */}
+            <HowItWorks />
 
             {/* 5. FOOTER */}
             <footer className="manifesto-footer">
