@@ -117,14 +117,14 @@
     grid-template-columns: 1fr 1fr;
     gap: 20px;
     margin-bottom: 20px;
-    background: rgba(0, 0, 0, 0.2);
+    background: var(--bg-card);
     padding: 20px;
     border-radius: 16px;
 }
 
 /* Range Slider */
 .split-slider-container {
-    background: rgba(255, 255, 255, 0.02);
+    background: var(--bg-card);
     padding: 20px;
     border-radius: 16px;
 }
@@ -158,10 +158,11 @@
     border-radius: 50%;
     background: var(--color-accent);
     cursor: pointer;
-    box-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
+    box-shadow: 0 0 15px rgba(194, 63, 56, 0.5);
+    /* Updated to Red Glow */
     /* Glowing effect */
     transition: transform 0.2s;
-    border: 2px solid white;
+    border: 2px solid var(--text-main);
 }
 
 .range-slider::-webkit-slider-thumb:hover {

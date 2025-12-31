@@ -141,18 +141,18 @@
 }
 
 .pane-venue {
-    background: #000000;
-    color: #FFFFFF;
-    border-right: 1px solid #333;
+    background: var(--bg-app);
+    color: var(--text-main);
+    border-right: 1px solid var(--border-strong);
 }
 
 .pane-artist {
-    background: #FFFFFF;
-    color: #000000;
+    background: var(--bg-panel);
+    color: var(--text-main);
 }
 
 .pane-artist .pane-title {
-    color: #000000;
+    color: var(--text-main);
 }
 
 .pane-content {
