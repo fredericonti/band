@@ -10,6 +10,19 @@ const Hero3DBackground = () => {
     const ref = useRef(null);
     const mouseX = useMotionValue(0);
     const mouseY = useMotionValue(0);
+    const [particles, setParticles] = React.useState([]);
+
+    React.useEffect(() => {
+        // Generate random particles
+        const newParticles = Array.from({ length: 30 }).map((_, i) => ({
+            id: i,
+            x: Math.random() * 100,
+            y: Math.random() * 100,
+            size: Math.random() * 4 + 2,
+            speed: Math.random() * 0.5 + 0.2
+        }));
+        setParticles(newParticles);
+    }, []);
 
     const handleMouseMove = (e) => {
         const { clientX, clientY } = e;
@@ -20,48 +33,48 @@ const Hero3DBackground = () => {
         mouseY.set(y);
     };
 
-    React.useEffect(() => {
-        window.addEventListener('mousemove', handleMouseMove);
-        return () => window.removeEventListener('mousemove', handleMouseMove);
-    }, []);
-
-    const rotateX = useTransform(mouseY, [-1, 1], [10, -10]);
-    const rotateY = useTransform(mouseX, [-1, 1], [-10, 10]);
+    const rotateX = useTransform(mouseY, [-1, 1], [5, -5]);
+    const rotateY = useTransform(mouseX, [-1, 1], [-5, 5]);
 
     return (
-        <div className="hero-bg" style={{ perspective: 1000, overflow: 'hidden' }}>
+        <div className="hero-bg" style={{ perspective: 1000, overflow: 'hidden' }} onMouseMove={handleMouseMove}>
             <motion.div
                 style={{
                     width: '100%',
                     height: '100%',
                     rotateX,
                     rotateY,
-                    scale: 1.1,
-                    background: 'radial-gradient(circle at 50% 50%, #1e293b 0%, #000 100%)',
+                    scale: 1.05,
+                    background: 'radial-gradient(circle at 50% 50%, #1a0a0a 0%, #000 100%)',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
                 }}
             >
-                {/* 3D Grid/Matrix Effect */}
-                <div style={{
-                    display: 'grid',
-                    gridTemplateColumns: 'repeat(10, 1fr)',
-                    gap: '1rem',
-                    width: '120vw',
-                    height: '120vh',
-                    transform: 'rotateX(60deg) translateY(-100px) translateZ(-200px)',
-                    opacity: 0.2
-                }}>
-                    {Array.from({ length: 100 }).map((_, i) => (
-                        <div key={i} style={{
-                            background: 'rgba(255,255,255,0.1)',
-                            borderRadius: '4px',
-                            width: '100%',
-                            height: '100%'
-                        }} />
-                    ))}
-                </div>
+                {/* Floating Particles */}
+                {particles.map((particle) => {
+                    const particleX = useTransform(mouseX, [-1, 1], [-particle.speed * 30, particle.speed * 30]);
+                    const particleY = useTransform(mouseY, [-1, 1], [-particle.speed * 30, particle.speed * 30]);
+
+                    return (
+                        <motion.div
+                            key={particle.id}
+                            style={{
+                                position: 'absolute',
+                                left: `${particle.x}%`,
+                                top: `${particle.y}%`,
+                                width: particle.size,
+                                height: particle.size,
+                                borderRadius: '50%',
+                                background: `rgba(194, 63, 56, ${0.3 + Math.random() * 0.4})`,
+                                x: particleX,
+                                y: particleY,
+                                filter: 'blur(1px)',
+                                boxShadow: '0 0 10px rgba(194, 63, 56, 0.5)'
+                            }}
+                        />
+                    );
+                })}
             </motion.div>
             <div className="bg-overlay"></div>
         </div>
@@ -172,9 +185,10 @@ const HowItWorks = () => {
     const targetRef = useRef(null);
     const { scrollYProgress } = useScroll({
         target: targetRef,
+        offset: ["start start", "end end"]
     });
 
-    const x = useTransform(scrollYProgress, [0.1, 0.9], ["2%", "-75%"]);
+    const x = useTransform(scrollYProgress, [0, 0.95], ["1%", "-82%"]);
 
     const cards = [
         {
@@ -200,7 +214,7 @@ const HowItWorks = () => {
     ];
 
     return (
-        <section ref={targetRef} className="product-showcase" style={{ height: '300vh', position: 'relative' }}>
+        <section ref={targetRef} className="product-showcase horizontal-scroll-section" style={{ height: '400vh', position: 'relative' }}>
             <div className="sticky-wrapper" style={{ position: 'sticky', top: 0, height: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', overflow: 'hidden' }}>
                 <div className="container" style={{ marginBottom: '4rem' }}>
                     <motion.h2
@@ -213,19 +227,31 @@ const HowItWorks = () => {
                     </motion.h2>
                 </div>
 
-                <motion.div style={{ x, display: 'flex', gap: '2rem', paddingLeft: 'max(2rem, (100vw - 1280px) / 2)' }} className="showcase-track-horizontal">
+                <motion.div
+                    style={{
+                        x,
+                        display: 'flex',
+                        gap: '2rem',
+                        paddingLeft: 'max(2rem, (100vw - 1280px) / 2)',
+                        willChange: 'transform'
+                    }}
+                    className="showcase-track-horizontal"
+                >
                     {cards.map((item, i) => (
-                        <div
+                        <motion.div
                             key={i}
                             className="showcase-card"
                             style={{ minWidth: '400px', flexShrink: 0 }}
+                            initial={{ opacity: 0.6, scale: 0.95 }}
+                            whileInView={{ opacity: 1, scale: 1 }}
+                            transition={{ duration: 0.3 }}
                         >
                             <div className="icon-anim-box">
                                 {item.icon}
                             </div>
                             <h3>{item.title}</h3>
                             <p style={{ color: 'var(--text-muted)', marginTop: '0.5rem' }}>{item.desc}</p>
-                        </div>
+                        </motion.div>
                     ))}
                 </motion.div>
             </div>
