@@ -184,14 +184,6 @@ const AnimEarlyPayment = () => (
 );
 
 const HowItWorks = () => {
-    const targetRef = useRef(null);
-    const { scrollYProgress } = useScroll({
-        target: targetRef,
-        offset: ["start start", "end end"]
-    });
-
-    const x = useTransform(scrollYProgress, [0, 0.95], ["1%", "-82%"]);
-
     const cards = [
         {
             title: "Conecte",
@@ -216,37 +208,32 @@ const HowItWorks = () => {
     ];
 
     return (
-        <section ref={targetRef} className="product-showcase horizontal-scroll-section" style={{ height: '400vh', position: 'relative' }}>
-            <div className="sticky-wrapper" style={{ position: 'sticky', top: 0, height: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', overflow: 'hidden' }}>
-                <div className="container" style={{ marginBottom: '4rem' }}>
-                    <motion.h2
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.6 }}
-                        style={{ fontSize: '3rem', fontWeight: '700' }}
-                    >
-                        COMO FUNCIONA
-                    </motion.h2>
-                </div>
+        <section className="product-showcase vertical-section" style={{ padding: '8rem 0' }}>
+            <div className="container">
+                <motion.h2
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6 }}
+                    style={{ fontSize: '3rem', fontWeight: '700', marginBottom: '4rem' }}
+                >
+                    COMO FUNCIONA
+                </motion.h2>
 
-                <motion.div
+                <div
                     style={{
-                        x,
-                        display: 'flex',
+                        display: 'grid',
+                        gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
                         gap: '2rem',
-                        paddingLeft: 'max(2rem, (100vw - 1280px) / 2)',
-                        willChange: 'transform'
                     }}
-                    className="showcase-track-horizontal"
                 >
                     {cards.map((item, i) => (
                         <motion.div
                             key={i}
                             className="showcase-card"
-                            style={{ minWidth: '400px', flexShrink: 0 }}
-                            initial={{ opacity: 0.6, scale: 0.95 }}
-                            whileInView={{ opacity: 1, scale: 1 }}
-                            transition={{ duration: 0.3 }}
+                            initial={{ opacity: 0, y: 30 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.5, delay: i * 0.1 }}
+                            viewport={{ once: true }}
                         >
                             <div className="icon-anim-box">
                                 {item.icon}
@@ -255,7 +242,7 @@ const HowItWorks = () => {
                             <p style={{ color: 'var(--text-muted)', marginTop: '0.5rem' }}>{item.desc}</p>
                         </motion.div>
                     ))}
-                </motion.div>
+                </div>
             </div>
         </section>
     );
