@@ -220,6 +220,78 @@ npm run deploy
 
 ---
 
+### 5. Render.com
+
+**Vantagens:**
+- Deploy automático via Git
+- HTTPS gratuito
+- Fácil configuração
+- Suporte a variáveis de ambiente
+- Domínio gratuito (.onrender.com)
+
+**Método 1: Via Dashboard (Recomendado)**
+
+1. **Acesse Render.com**
+   - Vá para https://render.com
+   - Faça login ou crie uma conta
+
+2. **Crie um novo Static Site**
+   - Clique em "New +" → "Static Site"
+   - Conecte seu repositório GitHub
+
+3. **Configure o projeto**
+   - **Name**: band-app (ou nome de sua escolha)
+   - **Branch**: main
+   - **Build Command**: `npm install && npm run build`
+   - **Publish Directory**: `dist`
+
+4. **Adicione variáveis de ambiente**
+   - Na seção "Environment", adicione todas as variáveis necessárias:
+     - `VITE_FIREBASE_API_KEY`
+     - `VITE_FIREBASE_AUTH_DOMAIN`
+     - `VITE_FIREBASE_PROJECT_ID`
+     - `VITE_FIREBASE_STORAGE_BUCKET`
+     - `VITE_FIREBASE_MESSAGING_SENDER_ID`
+     - `VITE_FIREBASE_APP_ID`
+     - `VITE_GOOGLE_MAPS_API_KEY`
+     - `VITE_GA_MEASUREMENT_ID`
+     - `VITE_EMAILJS_SERVICE_ID`
+     - `VITE_EMAILJS_TEMPLATE_ID`
+     - `VITE_EMAILJS_PUBLIC_KEY`
+
+5. **Deploy**
+   - Clique em "Create Static Site"
+   - O deploy será feito automaticamente
+
+**Método 2: Via render.yaml (Infraestrutura como Código)**
+
+O projeto já inclui um arquivo `render.yaml` configurado. Basta:
+
+1. **Push para o GitHub**
+```bash
+git add .
+git commit -m "Configuração para Render"
+git push
+```
+
+2. **Conecte no Render**
+   - Vá para https://dashboard.render.com
+   - Clique em "New +" → "Blueprint"
+   - Conecte seu repositório
+   - Render detectará automaticamente o `render.yaml`
+
+3. **Configure variáveis de ambiente**
+   - Adicione as variáveis necessárias no dashboard
+
+**Configuração de Redirects:**
+
+Para SPAs, o Render já está configurado no `render.yaml` para redirecionar todas as rotas para `index.html`.
+
+**Atualizações Automáticas:**
+- Cada push para a branch `main` dispara um novo deploy automaticamente
+
+---
+
 ## 🔧 Configurações Importantes
 
 ### Variáveis de Ambiente
