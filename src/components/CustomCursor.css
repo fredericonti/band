@@ -1,3 +1,13 @@
+.custom-cursor-container {
+    pointer-events: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 9999;
+}
+
 .custom-cursor-dot {
     position: fixed;
     top: 14px;
@@ -6,7 +16,7 @@
     height: 4px;
     background-color: #fff;
     border-radius: 50%;
-    z-index: 9999;
+    z-index: 10000;
     pointer-events: none;
 }
 
@@ -18,21 +28,19 @@
     height: 32px;
     border: 1px solid rgba(255, 255, 255, 0.5);
     border-radius: 50%;
-    z-index: 9998;
+    z-index: 9999;
     pointer-events: none;
     transition: width 0.3s, height 0.3s, border-color 0.3s;
 }
 
 .custom-cursor-ring.hovering {
     border-color: #fff;
-    border-width: 1px;
 }
 
-/* Esconder o cursor padrão em toda a aplicação */
-html,
-body,
-a,
-button {
+/* Esconder o cursor padrão apenas quando a classe estiver ativa */
+.hide-default-cursor,
+.hide-default-cursor a,
+.hide-default-cursor button {
     cursor: none !important;
 }
 
