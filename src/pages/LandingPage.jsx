@@ -200,11 +200,6 @@ const HowItWorks = () => {
             desc: "Foque apenas na música. A parte burocrática é com a gente.",
             icon: <Shield size={48} color="#9B2C26" />
         },
-        {
-            title: "Cresça",
-            desc: "Receba avaliações, suba de nível e consiga cachês melhores.",
-            icon: <ArrowUpRight size={48} color="#D85951" />
-        }
     ];
 
     return (
@@ -350,7 +345,7 @@ const LandingPage = () => {
                         whileHover={{ scale: 1.02 }}
                         transition={{ type: "spring", stiffness: 300 }}
                     >
-                        <h2 className="pane-title">ESTABELECIMENTOS</h2>
+                        <h2 className="pane-title">PARA ESTABELECIMENTOS</h2>
                         <ul className="tech-list">
                             <li>Encontre a banda perfeita</li>
                             <li>Pagamento automatizado</li>
