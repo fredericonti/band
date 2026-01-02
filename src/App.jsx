@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-route
 import { AnimatePresence } from 'framer-motion';
 import PageTransition from './components/PageTransition';
 import Navbar from './components/Navbar';
+import CustomCursor from './components/CustomCursor';
 import LandingPage from './pages/LandingPage';
 import UserRegister from './pages/UserRegister';
 import FindBands from './pages/FindBands';
@@ -32,6 +33,7 @@ function App() {
     return (
         <Router>
             <RouteTracker />
+            <CustomCursor />
             <div className="app-container">
                 <Navbar />
                 <main>
