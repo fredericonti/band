@@ -157,7 +157,7 @@ const AnimContract = () => (
 
 const AnimEarlyPayment = () => (
     <div className="anim-container" style={{ justifyContent: 'flex-start', paddingLeft: '2rem' }}>
-        <div style={{ width: '100%', maxWidth: '240px', background: 'var(--bg-card)', padding: '1.5rem', borderRadius: '24px', border: '1px solid var(--border-subtle)', boxShadow: '0 10px 30px rgba(0,0,0,0.5)' }}>
+        <div style={{ width: '100%', maxWidth: '240px', background: 'transparent', padding: '1.5rem', borderRadius: '24px', border: '1px solid var(--border-subtle)' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.8rem', fontSize: '0.9rem', color: '#aaa', fontWeight: '500' }}>
                 <span>Transferindo...</span>
                 <span style={{ color: '#fff' }}>100%</span>

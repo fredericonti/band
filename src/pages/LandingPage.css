@@ -92,6 +92,7 @@
     margin-bottom: 1.5rem;
     background: linear-gradient(to bottom, #fff 40%, rgba(255, 255, 255, 0.4));
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
@@ -267,7 +268,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.01));
+    background: transparent;
     overflow: hidden;
     position: relative;
 }
@@ -372,6 +373,7 @@
     margin-bottom: 3rem;
     background: linear-gradient(to right, #fff, #666);
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
