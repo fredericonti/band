@@ -298,10 +298,6 @@ const LandingPage = () => {
                     initial="hidden"
                     animate="show"
                 >
-                    <motion.div variants={fadeInUp} className="hero-badge">
-                        PLATAFORMA BETA
-                    </motion.div>
-
                     <motion.h1 variants={fadeInUp} className="hero-title-new">
                         A NOVA ERA DA<br />
                         MÚSICA AO VIVO
@@ -330,47 +326,60 @@ const LandingPage = () => {
                 </motion.div>
             </section>
 
-            {/* 2. NAVIGATION SPLIT */}
-            <motion.section
-                className="split-nav-section"
-                initial="hidden"
-                whileInView="show"
-                viewport={{ once: true, margin: "-10%" }}
-                variants={staggerContainer}
-            >
-                <Link to="/find-bands" className="split-pane pane-left">
+            {/* 2. NAVIGATION CARDS */}
+            <section className="nav-cards-section">
+                <div className="container">
                     <motion.div
-                        variants={fadeInUp}
-                        className="pane-content"
-                        whileHover={{ scale: 1.02 }}
-                        transition={{ type: "spring", stiffness: 300 }}
+                        className="nav-cards-grid"
+                        initial="hidden"
+                        whileInView="show"
+                        viewport={{ once: true, margin: "-10%" }}
+                        variants={staggerContainer}
                     >
-                        <h2 className="pane-title">PARA ESTABELECIMENTOS</h2>
-                        <ul className="tech-list">
-                            <li>Encontre a banda perfeita</li>
-                            <li>Pagamento automatizado</li>
-                            <li>Avaliações reais</li>
-                        </ul>
-                        <span className="pane-cta">Começar Agora <ArrowUpRight size={20} /></span>
+                        <Link to="/find-bands" className="nav-card-item">
+                            <motion.div
+                                variants={fadeInUp}
+                                className="nav-card-inner"
+                                whileHover={{ scale: 1.02 }}
+                                transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                            >
+                                <span className="nav-card-label">PARA ESTABELECIMENTOS</span>
+                                <h2 className="nav-card-title">Encontre o artista ideal para sua noite</h2>
+                                <ul className="nav-card-features">
+                                    <li>Curadoria Inteligente</li>
+                                    <li>Gestão de Pagamentos</li>
+                                    <li>Avaliações Verificadas</li>
+                                </ul>
+                                <div className="nav-card-footer">
+                                    <span className="nav-card-cta">Começar Agora</span>
+                                    <ArrowUpRight size={20} />
+                                </div>
+                            </motion.div>
+                        </Link>
+
+                        <Link to="/register" className="nav-card-item">
+                            <motion.div
+                                variants={fadeInUp}
+                                className="nav-card-inner"
+                                whileHover={{ scale: 1.02 }}
+                                transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                            >
+                                <span className="nav-card-label">PARA ARTISTAS</span>
+                                <h2 className="nav-card-title">Transforme sua paixão em carreira sólida</h2>
+                                <ul className="nav-card-features">
+                                    <li>Agenda Centralizada</li>
+                                    <li>Cachê Antecipado</li>
+                                    <li>Perfil Profissional</li>
+                                </ul>
+                                <div className="nav-card-footer">
+                                    <span className="nav-card-cta">Criar Perfil</span>
+                                    <ArrowUpRight size={20} />
+                                </div>
+                            </motion.div>
+                        </Link>
                     </motion.div>
-                </Link>
-                <Link to="/register" className="split-pane pane-right">
-                    <motion.div
-                        variants={fadeInUp}
-                        className="pane-content"
-                        whileHover={{ scale: 1.02 }}
-                        transition={{ type: "spring", stiffness: 300 }}
-                    >
-                        <h2 className="pane-title">PARA ARTISTAS</h2>
-                        <ul className="tech-list">
-                            <li>Agenda cheia</li>
-                            <li>Cachê garantido</li>
-                            <li>Perfil profissional</li>
-                        </ul>
-                        <span className="pane-cta">Criar Perfil <ArrowUpRight size={20} /></span>
-                    </motion.div>
-                </Link>
-            </motion.section>
+                </div>
+            </section>
 
             {/* 3. BENTO GRID */}
             <section className="bento-grid-section">

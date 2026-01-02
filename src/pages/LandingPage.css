@@ -51,7 +51,8 @@
 .bg-overlay {
     position: absolute;
     inset: 0;
-    background: radial-gradient(circle at center, transparent 0%, var(--bg-app) 90%);
+    background: linear-gradient(to bottom, transparent 60%, var(--bg-app) 100%),
+        radial-gradient(circle at center, transparent 0%, var(--bg-app) 100%);
 }
 
 .hero-spotlight {
@@ -128,76 +129,88 @@
     border-radius: 50%;
 }
 
-/* 2. NAVIGATION: Modern Split */
-.split-nav-section {
+/* 2. NAVIGATION: Modern Bento Cards */
+.nav-cards-section {
+    padding: 4rem 0;
+    background: var(--bg-app);
+}
+
+.nav-cards-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    min-height: 80vh;
-    background: var(--bg-panel);
-    gap: 1px;
-    background-color: var(--border-subtle);
-    /* Gap color */
+    gap: 1.5rem;
 }
 
-.split-pane {
-    position: relative;
-    background: var(--bg-app);
-    padding: 4rem;
+.nav-card-item {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.nav-card-inner {
+    background: var(--bg-card);
+    border-radius: 24px;
+    padding: 3rem;
+    height: 100%;
+    border: 1px solid rgba(255, 255, 255, 0.05);
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    overflow: hidden;
-    transition: background 0.5s ease;
+    justify-content: space-between;
+    min-height: 400px;
+    transition: border-color 0.3s ease;
 }
 
-.split-pane:hover {
-    background: var(--bg-panel);
+.nav-card-inner:hover {
+    border-color: rgba(255, 255, 255, 0.1);
 }
 
-.pane-content {
-    position: relative;
-    z-index: 10;
-    max-width: 450px;
-    margin: 0 auto;
-}
-
-.pane-title {
-    font-size: clamp(2rem, 4vw, 3rem);
-    margin-bottom: 1.5rem;
-    color: var(--text-main);
-}
-
-.tech-list li {
-    list-style: none;
+.nav-card-label {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
     color: var(--text-muted);
-    margin-bottom: 0.75rem;
+    letter-spacing: 0.1em;
+    margin-bottom: 1.5rem;
+    display: block;
+}
+
+.nav-card-title {
+    font-size: 2.5rem;
+    line-height: 1.1;
+    margin-bottom: 2rem;
+    font-weight: 700;
+}
+
+.nav-card-features {
+    list-style: none;
+    margin-bottom: 2rem;
+}
+
+.nav-card-features li {
+    color: var(--text-muted);
+    margin-bottom: 0.5rem;
     display: flex;
     align-items: center;
-    gap: 0.75rem;
-    font-size: 1rem;
+    gap: 0.5rem;
 }
 
-.tech-list li::before {
-    content: '';
-    width: 6px;
-    height: 6px;
-    background: var(--text-muted);
-    border-radius: 50%;
+.nav-card-features li::before {
+    content: '→';
+    color: var(--text-muted);
+    opacity: 0.5;
 }
 
-.pane-cta {
-    display: inline-flex;
+.nav-card-footer {
+    display: flex;
     align-items: center;
-    gap: 0.75rem;
-    margin-top: 2rem;
-    font-weight: 600;
-    color: var(--color-primary);
-    border-bottom: 1px solid transparent;
-    transition: all 0.3s;
+    justify-content: space-between;
+    margin-top: auto;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-.pane-cta:hover {
-    gap: 1.25rem;
+.nav-card-cta {
+    font-weight: 600;
+    font-size: 1.1rem;
 }
 
 /* 3. GRID: Modern Bento */
@@ -426,9 +439,18 @@
 /* Responsive */
 @media (max-width: 768px) {
 
-    .split-nav-section,
+    .nav-cards-grid,
     .bento-grid {
         grid-template-columns: 1fr;
+    }
+
+    .nav-card-title {
+        font-size: 2rem;
+    }
+
+    .nav-card-inner {
+        padding: 2rem;
+        min-height: auto;
     }
 
     .hero-title-new {
