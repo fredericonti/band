@@ -1,83 +1,101 @@
-/* ========== STICKY STACK LAYOUT ========== */
+/* ========== FIND ARTISTS - AWWWARDS MINIMALIST STYLE ========== */
 .find-artists-page-new {
-    background: var(--bg-app);
+    background: var(--color-background);
     padding-bottom: 10vh;
 }
 
 .search-header-sticky {
     position: sticky;
-    top: 0;
+    top: 72px;
+    /* Height of Navbar */
     z-index: 50;
-    padding: 2rem 2rem 4rem;
-    background: linear-gradient(to bottom, var(--bg-app) 80%, transparent);
+    padding: 3rem 40px;
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(10px);
     display: flex;
     justify-content: space-between;
     align-items: center;
-    max-width: 1000px;
-    margin: 0 auto;
+    border-bottom: 1px solid var(--border-subtle);
 }
 
 .search-header-sticky h2 {
-    font-size: 2rem;
+    font-size: 2.5rem;
+    font-weight: 900;
     margin: 0;
+    letter-spacing: -1.5px;
+    text-transform: uppercase;
 }
 
 .search-bar-modern {
-    background: var(--bg-card);
+    background: var(--color-background);
     border: 1px solid var(--border-subtle);
     border-radius: 100px;
     padding: 0.75rem 1.5rem;
     display: flex;
     align-items: center;
-    gap: 10px;
-    width: 300px;
-    color: white;
+    gap: 12px;
+    width: 350px;
+    color: var(--color-primary);
+    transition: border-color 0.3s;
+}
+
+.search-bar-modern:focus-within {
+    border-color: var(--color-primary);
 }
 
 .search-bar-modern input {
     background: transparent;
     border: none;
-    color: white;
+    color: var(--color-primary);
     width: 100%;
     outline: none;
+    font-size: 0.9rem;
+    font-weight: 500;
 }
 
 /* Stack List */
 .stack-list {
-    margin-top: 10vh;
-    padding: 0 2rem;
-    width: 100%;
+    margin-top: 4rem;
+    padding: 0 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+    max-width: 1440px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .cardContainer {
     height: 100vh;
-    /* Creates the scroll space */
     display: flex;
     justify-content: center;
     position: sticky;
-    top: 0;
+    top: 180px;
 }
 
 .stack-card {
-    width: 1000px;
-    max-width: 100%;
-    height: 500px;
-    background: var(--bg-card);
-    border-radius: 30px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    width: 100%;
+    max-width: 1200px;
+    height: 600px;
+    background: var(--color-background);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-subtle);
     position: relative;
-    top: 0;
-    /* Controlled by React inline style */
     display: flex;
     overflow: hidden;
     transform-origin: top;
-    box-shadow: 0 -20px 50px -10px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.03);
     cursor: pointer;
+    transition: box-shadow 0.4s ease;
+}
+
+.stack-card:hover {
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
 }
 
 .card-body {
     flex: 1;
-    padding: 3rem;
+    padding: 4rem;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -91,49 +109,58 @@
 }
 
 .genre-pill {
-    padding: 0.5rem 1rem;
-    border-radius: 100px;
-    font-weight: 700;
-    font-size: 0.8rem;
+    padding: 6px 14px;
+    border-radius: var(--radius-sm);
+    font-weight: 800;
+    font-size: 0.7rem;
     color: white;
     text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
 .card-rating {
     display: flex;
     align-items: center;
-    gap: 5px;
-    font-weight: 600;
+    gap: 6px;
+    font-weight: 800;
+    font-size: 0.9rem;
 }
 
 .card-title-new {
-    font-size: 3.5rem;
-    margin: 0;
-    line-height: 1;
+    font-size: 5rem;
+    margin: 1.5rem 0;
+    line-height: 0.9;
+    font-weight: 900;
+    letter-spacing: -3px;
+    text-transform: uppercase;
 }
 
 .card-tags-cloud {
     display: flex;
-    gap: 10px;
+    gap: 15px;
     flex-wrap: wrap;
 }
 
 .cloud-tag {
-    font-size: 1rem;
-    color: var(--text-muted);
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    font-weight: 700;
 }
 
 .card-footer-new {
     display: flex;
-    gap: 2rem;
+    gap: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border-subtle);
 }
 
 .venue-detail {
     display: flex;
     align-items: center;
-    gap: 8px;
-    color: white;
-    font-weight: 500;
+    gap: 10px;
+    color: var(--color-primary);
+    font-weight: 700;
+    font-size: 0.9rem;
 }
 
 /* Image Side */
@@ -142,7 +169,7 @@
     height: 100%;
     overflow: hidden;
     position: relative;
-    border-left: 1px solid rgba(255, 255, 255, 0.05);
+    border-left: 1px solid var(--border-subtle);
 }
 
 .card-inner-image {
@@ -150,35 +177,41 @@
     height: 100%;
     background-size: cover;
     background-position: center;
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.stack-card:hover .card-inner-image {
+    transform: scale(1.05) !important;
 }
 
 /* Responsive */
 @media (max-width: 900px) {
     .stack-card {
         flex-direction: column-reverse;
-        height: 600px;
-        width: 100%;
+        height: auto;
+        min-height: 600px;
     }
 
     .card-body {
-        padding: 1.5rem;
+        padding: 2.5rem;
     }
 
     .card-title-new {
-        font-size: 2rem;
-        margin: 1rem 0;
+        font-size: 2.5rem;
     }
 
     .card-image-wrapper {
-        flex: 1;
+        flex: none;
+        height: 300px;
         border-left: none;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        border-bottom: 1px solid var(--border-subtle);
     }
 
     .search-header-sticky {
+        padding: 2rem 20px;
         flex-direction: column;
-        gap: 1rem;
         align-items: flex-start;
+        gap: 1.5rem;
     }
 
     .search-bar-modern {

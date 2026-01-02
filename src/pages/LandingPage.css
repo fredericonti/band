@@ -1,36 +1,33 @@
-/* ========== LANDING PAGE - MODERN BURNT RED STYLE ========== */
+/* ========== LANDING PAGE - AWWWARDS MINIMALIST STYLE ========== */
 
-/* Path Scroll SVG */
+/* Path Scroll SVG - Subtle accent */
 .scroll-path-container {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: 5;
+    z-index: 1;
     pointer-events: none;
     overflow: hidden;
+    opacity: 0.3;
 }
 
 .scroll-path-svg {
     width: 100%;
     height: 100%;
-    opacity: 0.6;
-    /* We make it very tall so the path can snake down */
 }
 
-/* 1. HERO: Clean & Infinite */
+/* 1. HERO section */
 .hero-section-new {
     position: relative;
-    min-height: 100vh;
+    min-height: 90vh;
     display: flex;
     align-items: center;
     justify-content: center;
     overflow: hidden;
-    background: var(--bg-app);
-    color: white;
-    perspective: 1000px;
-    /* Essential for 3D transforms */
+    background: var(--color-background);
+    color: var(--color-primary);
 }
 
 .hero-bg {
@@ -39,70 +36,37 @@
     z-index: 0;
 }
 
-.bg-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    opacity: 0.3;
-    filter: saturate(0) contrast(1.2);
-    /* Black & White artistic feel */
-}
-
 .bg-overlay {
     position: absolute;
     inset: 0;
-    background: linear-gradient(to bottom, transparent 60%, var(--bg-app) 100%),
-        radial-gradient(circle at center, transparent 0%, var(--bg-app) 100%);
-}
-
-.hero-spotlight {
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    z-index: 1;
-    mix-blend-mode: screen;
+    background: radial-gradient(circle at center, transparent 0%, var(--color-background) 80%);
 }
 
 .hero-content-new {
     position: relative;
     z-index: 10;
-    max-width: 1000px;
-    padding: 0 2rem;
+    max-width: 1200px;
+    padding: 0 40px;
     text-align: center;
 }
 
-.hero-badge {
-    display: inline-flex;
-    align-items: center;
-    padding: 0.5rem 1rem;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 100px;
-    font-size: 0.875rem;
-    font-weight: 500;
-    margin-bottom: 2rem;
-    backdrop-filter: blur(10px);
-    color: var(--text-muted);
-}
-
 .hero-title-new {
-    font-size: clamp(3rem, 8vw, 6rem);
-    font-weight: 700;
-    line-height: 1.1;
-    letter-spacing: -0.03em;
-    margin-bottom: 1.5rem;
-    background: linear-gradient(to bottom, #fff 40%, rgba(255, 255, 255, 0.4));
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
+    font-size: clamp(3.5rem, 10vw, 8rem);
+    font-weight: 900;
+    line-height: 0.95;
+    letter-spacing: -0.05em;
+    margin-bottom: 2rem;
+    color: var(--color-primary);
+    text-transform: uppercase;
 }
 
 .hero-description {
-    font-size: clamp(1.1rem, 2vw, 1.25rem);
-    color: var(--text-muted);
-    max-width: 600px;
-    margin: 0 auto 3rem;
-    line-height: 1.6;
+    font-size: clamp(1.1rem, 2vw, 1.5rem);
+    color: var(--color-text-muted);
+    max-width: 800px;
+    margin: 0 auto 4rem;
+    line-height: 1.4;
+    font-weight: 500;
 }
 
 .scroll-indicator {
@@ -113,32 +77,29 @@
 }
 
 .scroll-pill {
-    width: 24px;
-    height: 48px;
-    border: 2px solid rgba(255, 255, 255, 0.2);
-    border-radius: 12px;
-    display: flex;
-    justify-content: center;
-    padding-top: 8px;
+    width: 1px;
+    height: 60px;
+    background: var(--color-gray-200);
+    position: relative;
 }
 
 .scroll-dot {
-    width: 4px;
-    height: 4px;
-    background: white;
-    border-radius: 50%;
+    width: 1px;
+    height: 20px;
+    background: var(--color-primary);
 }
 
-/* 2. NAVIGATION: Modern Bento Cards */
+/* 2. NAVIGATION CARDS */
 .nav-cards-section {
-    padding: 4rem 0;
-    background: var(--bg-app);
+    padding: 6rem 0;
+    background: var(--color-background);
+    border-top: 1px solid var(--border-subtle);
 }
 
 .nav-cards-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 1.5rem;
+    gap: 40px;
 }
 
 .nav-card-item {
@@ -148,289 +109,211 @@
 }
 
 .nav-card-inner {
-    background: var(--bg-card);
-    border-radius: 24px;
-    padding: 3rem;
+    background: var(--color-background);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    padding: 3.5rem;
     height: 100%;
-    border: 1px solid rgba(255, 255, 255, 0.05);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    min-height: 400px;
-    transition: border-color 0.3s ease;
+    min-height: 440px;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .nav-card-inner:hover {
-    border-color: rgba(255, 255, 255, 0.1);
+    transform: translateY(-8px);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+    border-color: var(--color-primary);
 }
 
 .nav-card-label {
-    font-family: var(--font-mono);
-    font-size: 0.8rem;
-    color: var(--text-muted);
-    letter-spacing: 0.1em;
-    margin-bottom: 1.5rem;
+    font-size: 0.75rem;
+    color: var(--color-accent);
+    font-weight: 800;
+    letter-spacing: 1px;
+    margin-bottom: 2rem;
     display: block;
 }
 
 .nav-card-title {
-    font-size: 2.5rem;
-    line-height: 1.1;
+    font-size: 2.75rem;
+    line-height: 1.05;
     margin-bottom: 2rem;
-    font-weight: 700;
+    font-weight: 800;
+    letter-spacing: -1px;
 }
 
 .nav-card-features {
     list-style: none;
-    margin-bottom: 2rem;
+    margin-bottom: 3rem;
 }
 
 .nav-card-features li {
-    color: var(--text-muted);
-    margin-bottom: 0.5rem;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-.nav-card-features li::before {
-    content: '→';
-    color: var(--text-muted);
-    opacity: 0.5;
+    color: var(--color-text-muted);
+    margin-bottom: 0.75rem;
+    font-size: 1rem;
+    font-weight: 500;
 }
 
 .nav-card-footer {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-top: auto;
     padding-top: 2rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    border-top: 1px solid var(--border-subtle);
 }
 
 .nav-card-cta {
-    font-weight: 600;
-    font-size: 1.1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    letter-spacing: 1px;
 }
 
-/* 3. GRID: Modern Bento */
+/* 3. BENTO GRID */
 .bento-grid-section {
-    padding: 6rem 2rem;
-    background: var(--bg-app);
+    padding: 8rem 0;
+    background: var(--color-gray-100);
 }
 
 .bento-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 1.5rem;
-    max-width: 1280px;
-    margin: 0 auto;
+    gap: 30px;
 }
 
 .bento-item {
-    background: var(--bg-card);
-    border-radius: 24px;
-    padding: 3rem;
+    background: var(--color-background);
+    border-radius: var(--radius-md);
+    padding: 3.5rem;
     min-height: 400px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    transition: transform 0.4s ease, box-shadow 0.4s ease;
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-subtle);
+    transition: all 0.3s ease;
 }
 
 .bento-item:hover {
-    /* transform handled by JS motion now, keyframe animation removed */
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
-    border-color: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
 }
 
 .text-item h3 {
     font-size: 2rem;
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
+    font-weight: 800;
 }
 
 .text-item p {
-    color: var(--text-muted);
+    color: var(--color-text-muted);
+    font-size: 1.125rem;
+    line-height: 1.5;
 }
 
-/* ... (previous styles) */
-
-/* 1. HERO: 3D Interactive settings are largely inline/framer-motion, 
-   but we need a container for the perspective */
-.hero-section-new {
-    perspective: 1000px;
-    /* Essential for 3D transforms */
-}
-
-/* 2. BENTO GRID: New Layout & Animation Containers */
 .col-span-2 {
     grid-column: span 2;
 }
 
-@media (max-width: 768px) {
-    .col-span-2 {
-        grid-column: span 1;
-    }
-}
-
-/* Custom Animation Containers */
 .anim-container {
     width: 100%;
     height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: transparent;
-    overflow: hidden;
     position: relative;
 }
 
-/* Specific adjustments for the new Payment block */
 .payment-block {
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: space-between;
-    gap: 2rem;
+    gap: 4rem;
 }
 
-@media (max-width: 768px) {
-    .payment-block {
-        flex-direction: column;
-        text-align: center;
-    }
+/* 4. SHOWCASE */
+.product-showcase {
+    background: var(--color-background);
 }
 
-/* 3. SHOWCASE: Animated Icon Containers */
 .icon-anim-box {
-    height: 180px;
-    background: rgba(255, 255, 255, 0.02);
-    border-radius: 16px;
+    height: 160px;
+    background: var(--color-gray-100);
+    border-radius: 8px;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 1.5rem;
-    overflow: hidden;
-}
-
-/* Removing old image-item specific styles that might conflict */
-.image-item {
-    padding: 0;
-    overflow: hidden;
-    position: relative;
-    z-index: 10;
-}
-
-/* 4. PRODUCT: Clean Horizontal Scroll */
-.product-showcase {
-    padding: 6rem 0;
-    background: var(--bg-panel);
-    overflow: hidden;
-}
-
-.showcase-track {
-    display: flex;
-    gap: 2rem;
-    padding: 0 2rem;
-    overflow-x: auto;
-    scroll-padding: 0 2rem;
-    -ms-overflow-style: none;
-    /* Hide scrollbar IE/Edge */
-    scrollbar-width: none;
-    /* Hide scrollbar Firefox */
-}
-
-.showcase-track::-webkit-scrollbar {
-    display: none;
-    /* Hide scrollbar Chrome/Safari */
+    margin-bottom: 2rem;
 }
 
 .showcase-card {
-    min-width: 350px;
-    background: var(--bg-card);
-    border-radius: 20px;
-    padding: 2rem;
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    /* Hover handled by JS motion */
+    background: var(--color-background);
+    border: 1px solid var(--border-subtle);
+    padding: 3rem;
+    transition: all 0.3s ease;
 }
 
-.card-visual {
-    height: 220px;
-    border-radius: 12px;
-    overflow: hidden;
-    margin-bottom: 1.5rem;
-    position: relative;
+.showcase-card:hover {
+    border-color: var(--color-primary);
 }
 
-.card-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.5s ease;
-}
-
-.showcase-card:hover .card-image {
-    transform: scale(1.05);
-}
-
-/* 5. FOOTER: Minimal */
+/* 5. FOOTER */
 .manifesto-footer {
-    padding: 6rem 2rem;
-    background: linear-gradient(to top, #000, var(--bg-app));
-    border-top: 1px solid var(--border-subtle);
+    padding: 8rem 0;
+    background: var(--color-primary);
+    color: var(--color-background);
 }
 
 .manifesto-title {
-    font-size: clamp(3rem, 6vw, 5rem);
-    margin-bottom: 3rem;
-    background: linear-gradient(to right, #fff, #666);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
+    font-size: clamp(3.5rem, 8vw, 6rem);
+    font-weight: 900;
+    line-height: 0.95;
+    letter-spacing: -2px;
+    margin-bottom: 4rem;
+    color: var(--color-background);
 }
 
 .footer-cols {
     display: flex;
     justify-content: space-between;
-    align-items: flex-end;
+    align-items: flex-start;
     gap: 4rem;
-    flex-wrap: wrap;
-    margin-bottom: 4rem;
+    margin-bottom: 6rem;
 }
 
 .manifesto-text {
-    max-width: 500px;
-    font-size: 1.25rem;
-    color: var(--text-muted);
+    font-size: 1.5rem;
+    line-height: 1.3;
+    color: #999;
 }
 
 .minimal-input-group {
     display: flex;
     align-items: center;
-    background: var(--bg-card);
-    padding: 0.5rem;
+    background: #111;
+    padding: 8px;
     border-radius: 100px;
-    border: 1px solid var(--border-subtle);
+    border: 1px solid #333;
     width: 100%;
-    max-width: 400px;
+    max-width: 450px;
 }
 
 .minimal-input-group input {
     background: transparent;
     border: none;
-    padding: 0.75rem 1.5rem;
+    padding: 1rem 1.5rem;
     color: white;
     flex: 1;
     outline: none;
+    font-size: 1rem;
 }
 
 .minimal-input-group button {
     background: white;
     color: black;
-    border-radius: 100px;
-    width: 40px;
-    height: 40px;
+    border-radius: 50%;
+    width: 48px;
+    height: 48px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -445,20 +328,29 @@
     }
 
     .nav-card-title {
-        font-size: 2rem;
+        font-size: 2.25rem;
     }
 
     .nav-card-inner {
-        padding: 2rem;
+        padding: 2.5rem;
         min-height: auto;
     }
 
     .hero-title-new {
+        font-size: 4rem;
+    }
+
+    .manifesto-title {
         font-size: 3rem;
     }
 
     .footer-cols {
         flex-direction: column;
-        align-items: flex-start;
+        gap: 3rem;
+    }
+
+    .payment-block {
+        flex-direction: column;
+        text-align: left;
     }
 }

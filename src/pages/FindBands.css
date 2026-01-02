@@ -1,35 +1,46 @@
+/* ========== FIND BANDS - AWWWARDS MINIMALIST STYLE ========== */
 .find-bands-page {
-    padding-top: 40px;
-    padding-bottom: 80px;
-    background: var(--bg-app);
+    padding-top: 80px;
+    padding-bottom: 120px;
+    background: var(--color-background);
 }
 
 .search-header {
-    text-align: center;
-    margin-bottom: 80px;
+    text-align: left;
+    margin-bottom: 100px;
+    max-width: 1440px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 40px;
 }
 
 .search-header h2 {
-    font-size: 5rem;
-    margin-bottom: 16px;
+    font-size: 6rem;
+    font-weight: 900;
     line-height: 0.9;
+    letter-spacing: -4px;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
 }
 
 .search-header p {
-    color: var(--text-muted);
-    margin-bottom: 40px;
-    font-size: 1.2rem;
-    font-family: var(--font-mono);
+    color: var(--color-text-muted);
+    font-size: 1.25rem;
+    font-weight: 500;
+    max-width: 600px;
+    line-height: 1.4;
 }
 
 .search-controls {
-    max-width: 700px;
-    margin: 0 auto;
+    margin-top: 4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
 }
 
 .search-bar {
     position: relative;
-    margin-bottom: 32px;
+    max-width: 500px;
 }
 
 .search-icon {
@@ -37,136 +48,125 @@
     left: 20px;
     top: 50%;
     transform: translateY(-50%);
-    color: var(--text-muted);
+    color: var(--color-text-muted);
 }
 
 .search-bar input {
     width: 100%;
-    padding: 20px 20px 20px 56px;
-    background: var(--bg-panel);
-    border: 1px solid var(--border-strong);
-    border-radius: 0;
-    color: var(--text-main);
-    font-size: 1.2rem;
-    font-weight: 700;
-    font-family: var(--font-mono);
-    transition: all 0.2s;
+    padding: 16px 20px 16px 56px;
+    background: var(--color-background);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-full);
+    color: var(--color-primary);
+    font-size: 0.95rem;
+    font-weight: 600;
+    transition: all 0.3s;
 }
 
 .search-bar input:focus {
-    border-color: var(--color-accent);
-    box-shadow: 8px 8px 0 var(--border-strong);
-    transform: translate(-4px, -4px);
+    border-color: var(--color-primary);
     outline: none;
 }
 
 .genre-filters {
     display: flex;
-    justify-content: center;
     gap: 12px;
     flex-wrap: wrap;
 }
 
 .filter-chip {
     background: transparent;
-    border: 1px solid var(--border-strong);
-    color: var(--text-muted);
+    border: 1px solid var(--border-subtle);
+    color: var(--color-text-muted);
     padding: 10px 24px;
-    border-radius: 0;
-    font-size: 0.8rem;
-    font-weight: 700;
+    border-radius: var(--radius-full);
+    font-size: 0.75rem;
+    font-weight: 800;
     text-transform: uppercase;
-    transition: all 0.1s;
-    font-family: var(--font-mono);
+    letter-spacing: 0.5px;
+    transition: all 0.2s;
 }
 
 .filter-chip:hover {
-    border-color: var(--text-main);
-    color: var(--text-main);
-    background: var(--bg-panel);
-    transform: translateY(-2px);
-    box-shadow: 4px 4px 0 var(--color-accent);
+    border-color: var(--color-primary);
+    color: var(--color-primary);
 }
 
 .filter-chip.active {
     background: var(--color-primary);
     border-color: var(--color-primary);
-    color: var(--text-inverse);
-    box-shadow: 4px 4px 0 var(--color-accent);
-    transform: translateY(-2px);
+    color: var(--color-background);
 }
 
 .bands-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
     gap: 40px;
 }
 
 .band-card {
-    background: var(--bg-panel);
-    border-radius: 0;
+    background: var(--color-background);
+    border-radius: var(--radius-md);
     overflow: hidden;
-    border: 1px solid var(--border-strong);
-    transition: all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
+    border: 1px solid var(--border-subtle);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .band-card:hover {
-    transform: translate(-8px, -8px);
-    box-shadow: 12px 12px 0 var(--color-primary);
+    transform: translateY(-8px);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08);
     border-color: var(--color-primary);
 }
 
 .band-image {
-    height: 240px;
+    height: 280px;
     background-size: cover;
     background-position: center;
     position: relative;
-    border-bottom: 1px solid var(--border-strong);
-    filter: grayscale(100%);
-    transition: filter 0.2s;
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .band-card:hover .band-image {
-    filter: grayscale(0%);
+    transform: scale(1.05);
 }
 
 .band-overlay {
     position: absolute;
-    top: 16px;
-    left: 16px;
+    top: 20px;
+    left: 20px;
 }
 
 .genre-badge {
-    background: var(--color-accent);
-    color: var(--text-inverse);
+    background: var(--color-primary);
+    color: var(--color-background);
     padding: 6px 12px;
-    border-radius: 0;
-    font-size: 0.7rem;
-    font-weight: 700;
+    border-radius: var(--radius-sm);
+    font-size: 0.65rem;
+    font-weight: 800;
     text-transform: uppercase;
-    border: 1px solid var(--border-strong);
-    font-family: var(--font-mono);
+    letter-spacing: 0.5px;
 }
 
 .band-info {
-    padding: 24px;
+    padding: 2.5rem;
 }
 
 .band-info h3 {
-    font-size: 1.8rem;
-    margin-bottom: 16px;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    font-weight: 800;
     text-transform: uppercase;
-    line-height: 1;
+    line-height: 1.1;
+    letter-spacing: -0.5px;
 }
 
 .band-meta {
     display: flex;
     justify-content: space-between;
-    color: var(--text-muted);
-    font-size: 0.8rem;
-    font-weight: 600;
-    margin-bottom: 20px;
-    font-family: var(--font-mono);
+    color: var(--color-text-muted);
+    font-size: 0.85rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
 }
 
 .meta-item {
@@ -177,71 +177,47 @@
 
 .band-tags {
     display: flex;
-    gap: 8px;
+    gap: 10px;
     flex-wrap: wrap;
-    margin-bottom: 24px;
+    margin-bottom: 2.5rem;
 }
 
 .tag {
-    background: transparent;
-    padding: 6px 12px;
-    border-radius: 0;
-    font-size: 0.7rem;
-    color: var(--text-main);
-    border: 1px solid var(--border-subtle);
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
     font-weight: 600;
-    text-transform: uppercase;
-    font-family: var(--font-mono);
+}
+
+.tag::before {
+    content: "#";
+    opacity: 0.5;
 }
 
 .btn-block {
     width: 100%;
-    border-width: 1px;
-    font-weight: 700;
-    text-transform: uppercase;
 }
 
 /* Responsive */
 @media (max-width: 768px) {
     .find-bands-page {
-        padding-top: 20px;
-        padding-bottom: 40px;
-    }
-
-    .search-header {
-        margin-bottom: 40px;
+        padding-top: 40px;
+        padding-bottom: 60px;
     }
 
     .search-header h2 {
-        font-size: 2.5rem;
+        font-size: 3rem;
+        letter-spacing: -2px;
     }
 
     .search-header p {
-        font-size: 1rem;
-    }
-
-    .search-bar input {
-        font-size: 1rem;
-        padding: 15px 15px 15px 45px;
-    }
-
-    .search-icon {
-        left: 15px;
+        font-size: 1.125rem;
     }
 
     .bands-grid {
-        grid-template-columns: 1fr;
-        gap: 20px;
+        gap: 30px;
     }
 
     .band-card:hover {
         transform: none;
-        box-shadow: none;
-    }
-}
-
-@media (max-width: 480px) {
-    .search-header h2 {
-        font-size: 2rem;
     }
 }

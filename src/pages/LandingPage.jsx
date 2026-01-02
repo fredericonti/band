@@ -18,7 +18,7 @@ const Hero3DBackground = () => {
             id: i,
             x: Math.random() * 100,
             y: Math.random() * 100,
-            size: Math.random() * 4 + 2,
+            size: Math.random() * 2 + 1,
             speed: Math.random() * 0.5 + 0.2
         }));
         setParticles(newParticles);
@@ -45,13 +45,13 @@ const Hero3DBackground = () => {
                     rotateX,
                     rotateY,
                     scale: 1.05,
-                    background: 'radial-gradient(circle at 50% 50%, #1a0a0a 0%, #000 100%)',
+                    background: 'radial-gradient(circle at 50% 50%, #ffffff 0%, #f5f5f5 100%)',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
                 }}
             >
-                {/* Floating Particles */}
+                {/* Floating Particles - Very subtle */}
                 {particles.map((particle) => (
                     <motion.div
                         key={particle.id}
@@ -62,9 +62,7 @@ const Hero3DBackground = () => {
                             width: particle.size,
                             height: particle.size,
                             borderRadius: '50%',
-                            background: `rgba(194, 63, 56, ${0.3 + Math.random() * 0.4})`,
-                            filter: 'blur(1px)',
-                            boxShadow: '0 0 10px rgba(194, 63, 56, 0.5)'
+                            background: `rgba(0, 0, 0, ${0.05 + Math.random() * 0.1})`,
                         }}
                         animate={{
                             x: [0, particle.speed * 30, 0, -particle.speed * 30, 0],
@@ -97,22 +95,16 @@ const ScrollPath = () => {
                 <motion.path
                     d="M 50 0 C 50 50, 20 100, 50 150 C 80 200, 50 250, 50 300 C 50 350, 80 400, 50 450"
                     fill="none"
-                    strokeWidth="1"
-                    stroke="rgba(194, 63, 56, 0.2)"
+                    strokeWidth="0.5"
+                    stroke="rgba(0, 0, 0, 0.05)"
                 />
                 <motion.path
                     d="M 50 0 C 50 50, 20 100, 50 150 C 80 200, 50 250, 50 300 C 50 350, 80 400, 50 450"
                     fill="none"
-                    strokeWidth="1.5"
-                    stroke="url(#gradient)"
+                    strokeWidth="1"
+                    stroke="#000000"
                     style={{ pathLength: scaleY }}
                 />
-                <defs>
-                    <linearGradient id="gradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                        <stop offset="0%" stopColor="#D85951" />
-                        <stop offset="100%" stopColor="#C23F38" />
-                    </linearGradient>
-                </defs>
             </svg>
         </div>
     );
@@ -124,16 +116,16 @@ const AnimManagement = () => (
     <div className="anim-container">
         <motion.div
             animate={{ rotate: 360 }}
-            transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-            style={{ width: 100, height: 100, border: '2px dashed rgba(255,255,255,0.2)', borderRadius: '50%', position: 'absolute' }}
+            transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
+            style={{ width: 140, height: 140, border: '1px solid rgba(0,0,0,0.05)', borderRadius: '50%', position: 'absolute' }}
         />
         <motion.div
             animate={{ rotate: -360 }}
-            transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
-            style={{ width: 60, height: 60, border: '2px solid rgba(194, 63, 56, 0.5)', borderRadius: '50%', position: 'absolute' }}
+            transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
+            style={{ width: 100, height: 100, border: '1px solid rgba(0,0,0,0.1)', borderRadius: '50%', position: 'absolute' }}
         />
         <div style={{ zIndex: 10 }}>
-            <Globe size={32} color="#C23F38" />
+            <Globe size={40} color="#000" strokeWidth={1} />
         </div>
     </div>
 );
@@ -145,39 +137,39 @@ const AnimContract = () => (
             animate={{ pathLength: 1, opacity: 1 }}
             transition={{ duration: 2, repeat: Infinity, repeatDelay: 1 }}
         >
-            <svg width="80" height="100" viewBox="0 0 80 100" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ color: '#D85951' }}>
-                <rect x="10" y="10" width="60" height="80" rx="4" />
-                <line x1="20" y1="30" x2="60" y2="30" />
-                <line x1="20" y1="50" x2="60" y2="50" />
-                <path d="M 20 70 Q 30 65, 40 70 T 60 70" />
+            <svg width="80" height="100" viewBox="0 0 80 100" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" style={{ color: '#000' }}>
+                <rect x="10" y="10" width="60" height="80" rx="2" />
+                <line x1="25" y1="35" x2="55" y2="35" />
+                <line x1="25" y1="50" x2="55" y2="50" />
+                <path d="M 25 70 Q 35 65, 45 70 T 55 70" />
             </svg>
         </motion.div>
     </div>
 );
 
 const AnimEarlyPayment = () => (
-    <div className="anim-container" style={{ justifyContent: 'flex-start', paddingLeft: '2rem' }}>
-        <div style={{ width: '100%', maxWidth: '240px', background: 'transparent', padding: '1.5rem', borderRadius: '24px', border: '1px solid var(--border-subtle)' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.8rem', fontSize: '0.9rem', color: '#aaa', fontWeight: '500' }}>
-                <span>Transferindo...</span>
-                <span style={{ color: '#fff' }}>100%</span>
+    <div className="anim-container" style={{ justifyContent: 'center' }}>
+        <div style={{ width: '100%', maxWidth: '280px', background: '#f9f9f9', padding: '2rem', borderRadius: '12px', border: '1px solid #eee' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '1rem', fontSize: '0.75rem', color: '#999', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '1px' }}>
+                <span>Status Bancário</span>
+                <span style={{ color: '#000' }}>Processando</span>
             </div>
-            <div style={{ height: '12px', background: 'rgba(255,255,255,0.1)', borderRadius: '999px', overflow: 'hidden', padding: '2px' }}>
+            <div style={{ height: '4px', background: '#eee', borderRadius: '999px', overflow: 'hidden' }}>
                 <motion.div
                     initial={{ width: '0%' }}
                     whileInView={{ width: '100%' }}
-                    transition={{ duration: 1.5, ease: [0.25, 0.1, 0.25, 1], delay: 0.5 }}
-                    style={{ height: '100%', background: '#10B981', borderRadius: '999px' }}
+                    transition={{ duration: 2, ease: "easeInOut", delay: 0.5 }}
+                    style={{ height: '100%', background: '#000', borderRadius: '999px' }}
                 />
             </div>
             <motion.div
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 1.8, type: "spring" }}
-                style={{ marginTop: '1rem', display: 'flex', alignItems: 'center', gap: '0.6rem', color: '#10B981', fontSize: '0.9rem', fontWeight: 'bold' }}
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: 2.2 }}
+                style={{ marginTop: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.75rem', color: '#000', fontSize: '0.875rem', fontWeight: '700' }}
             >
-                <div style={{ background: 'rgba(16, 185, 129, 0.2)', padding: '4px', borderRadius: '50%' }}><Check size={14} /></div>
-                Pagamento Confirmado
+                <div style={{ border: '1px solid #000', padding: '4px', borderRadius: '50%' }}><Check size={12} strokeWidth={3} /></div>
+                PAGAMENTO REALIZADO
             </motion.div>
         </div>
     </div>
@@ -186,30 +178,30 @@ const AnimEarlyPayment = () => (
 const HowItWorks = () => {
     const cards = [
         {
-            title: "Conecte",
+            title: "CONECTE",
             desc: "Encontre oportunidades reais baseadas no seu perfil e localização.",
-            icon: <Globe size={48} color="#D85951" />
+            icon: <Globe size={40} color="#000" strokeWidth={1} />
         },
         {
-            title: "Negocie",
+            title: "NEGOCIE",
             desc: "Envie propostas, discuta valores e feche datas em tempo real.",
-            icon: <Zap size={48} color="#C23F38" />
+            icon: <Zap size={40} color="#000" strokeWidth={1} />
         },
         {
-            title: "Toque",
+            title: "TOQUE",
             desc: "Foque apenas na música. A parte burocrática é com a gente.",
-            icon: <Shield size={48} color="#9B2C26" />
+            icon: <Shield size={40} color="#000" strokeWidth={1} />
         },
     ];
 
     return (
-        <section className="product-showcase vertical-section" style={{ padding: '8rem 0' }}>
+        <section className="product-showcase vertical-section" style={{ padding: '10rem 0' }}>
             <div className="container">
                 <motion.h2
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6 }}
-                    style={{ fontSize: '3rem', fontWeight: '700', marginBottom: '4rem' }}
+                    style={{ fontSize: '3.5rem', fontWeight: '900', marginBottom: '6rem', letterSpacing: '-2px' }}
                 >
                     COMO FUNCIONA
                 </motion.h2>
@@ -217,8 +209,8 @@ const HowItWorks = () => {
                 <div
                     style={{
                         display: 'grid',
-                        gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-                        gap: '2rem',
+                        gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+                        gap: '30px',
                     }}
                 >
                     {cards.map((item, i) => (
@@ -233,8 +225,8 @@ const HowItWorks = () => {
                             <div className="icon-anim-box">
                                 {item.icon}
                             </div>
-                            <h3>{item.title}</h3>
-                            <p style={{ color: 'var(--text-muted)', marginTop: '0.5rem' }}>{item.desc}</p>
+                            <h3 style={{ textTransform: 'uppercase', fontSize: '1.25rem', letterSpacing: '1px' }}>{item.title}</h3>
+                            <p style={{ color: 'var(--color-text-muted)', marginTop: '1rem', fontSize: '1rem', lineHeight: '1.5' }}>{item.desc}</p>
                         </motion.div>
                     ))}
                 </div>
@@ -246,7 +238,7 @@ const HowItWorks = () => {
 // --- MAIN PAGE ---
 
 const LandingPage = () => {
-    // Mouse Spotlight
+    // Mouse Spotlight - Subtle white light
     const mouseX = useMotionValue(0);
     const mouseY = useMotionValue(0);
 
@@ -288,7 +280,7 @@ const LandingPage = () => {
                 <motion.div
                     className="hero-spotlight"
                     style={{
-                        background: useMotionTemplate`radial-gradient(800px circle at ${mouseX}px ${mouseY}px, rgba(59, 130, 246, 0.1), transparent 80%)`
+                        background: useMotionTemplate`radial-gradient(1000px circle at ${mouseX}px ${mouseY}px, rgba(0, 0, 0, 0.02), transparent 80%)`
                     }}
                 />
 
@@ -316,13 +308,13 @@ const LandingPage = () => {
                     transition={{ delay: 1.5, duration: 1 }}
                     className="scroll-indicator"
                 >
-                    <motion.div
-                        animate={{ y: [0, 8, 0] }}
-                        transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-                        className="scroll-pill"
-                    >
-                        <div className="scroll-dot" />
-                    </motion.div>
+                    <div className="scroll-pill">
+                        <motion.div
+                            animate={{ y: [0, 40, 0] }}
+                            transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
+                            className="scroll-dot"
+                        />
+                    </div>
                 </motion.div>
             </section>
 
@@ -340,8 +332,6 @@ const LandingPage = () => {
                             <motion.div
                                 variants={fadeInUp}
                                 className="nav-card-inner"
-                                whileHover={{ scale: 1.02 }}
-                                transition={{ type: "spring", stiffness: 300, damping: 20 }}
                             >
                                 <span className="nav-card-label">PARA ESTABELECIMENTOS</span>
                                 <h2 className="nav-card-title">Encontre o artista ideal para sua noite</h2>
@@ -351,8 +341,8 @@ const LandingPage = () => {
                                     <li>Avaliações Verificadas</li>
                                 </ul>
                                 <div className="nav-card-footer">
-                                    <span className="nav-card-cta">Começar Agora</span>
-                                    <ArrowUpRight size={20} />
+                                    <span className="nav-card-cta">VER PORTFÓLIO</span>
+                                    <ArrowUpRight size={18} />
                                 </div>
                             </motion.div>
                         </Link>
@@ -361,8 +351,6 @@ const LandingPage = () => {
                             <motion.div
                                 variants={fadeInUp}
                                 className="nav-card-inner"
-                                whileHover={{ scale: 1.02 }}
-                                transition={{ type: "spring", stiffness: 300, damping: 20 }}
                             >
                                 <span className="nav-card-label">PARA ARTISTAS</span>
                                 <h2 className="nav-card-title">Transforme sua paixão em carreira sólida</h2>
@@ -372,8 +360,8 @@ const LandingPage = () => {
                                     <li>Perfil Profissional</li>
                                 </ul>
                                 <div className="nav-card-footer">
-                                    <span className="nav-card-cta">Criar Perfil</span>
-                                    <ArrowUpRight size={20} />
+                                    <span className="nav-card-cta">CRIAR PERFIL</span>
+                                    <ArrowUpRight size={18} />
                                 </div>
                             </motion.div>
                         </Link>
@@ -395,8 +383,6 @@ const LandingPage = () => {
                         <motion.div
                             variants={fadeInUp}
                             className="bento-item text-item"
-                            whileHover={{ scale: 1.02 }}
-                            transition={{ type: "spring", stiffness: 200 }}
                         >
                             <div>
                                 <h3>Gestão Completa</h3>
@@ -406,8 +392,7 @@ const LandingPage = () => {
                         <motion.div
                             variants={fadeInUp}
                             className="bento-item image-item"
-                            whileHover={{ scale: 1.02 }}
-                            transition={{ type: "spring", stiffness: 200 }}
+                            style={{ background: '#fff' }}
                         >
                             <AnimManagement />
                         </motion.div>
@@ -416,16 +401,13 @@ const LandingPage = () => {
                         <motion.div
                             variants={fadeInUp}
                             className="bento-item image-item"
-                            whileHover={{ scale: 1.02 }}
-                            transition={{ type: "spring", stiffness: 200 }}
+                            style={{ background: '#fff' }}
                         >
                             <AnimContract />
                         </motion.div>
                         <motion.div
                             variants={fadeInUp}
                             className="bento-item text-item"
-                            whileHover={{ scale: 1.02 }}
-                            transition={{ type: "spring", stiffness: 200 }}
                         >
                             <div>
                                 <h3>Contratos Digitais</h3>
@@ -433,12 +415,10 @@ const LandingPage = () => {
                             </div>
                         </motion.div>
 
-                        {/* Pagamento Antecipado (NEW) */}
+                        {/* Pagamento Antecipado */}
                         <motion.div
                             variants={fadeInUp}
                             className="bento-item col-span-2 payment-block"
-                            whileHover={{ scale: 1.01 }}
-                            transition={{ type: "spring", stiffness: 200 }}
                         >
                             <div style={{ flex: 1 }}>
                                 <h3>Pagamento Antecipado</h3>
@@ -453,14 +433,14 @@ const LandingPage = () => {
                 </div>
             </section>
 
-            {/* 4. HOW IT WORKS (Horizontal Scroll) */}
+            {/* 4. HOW IT WORKS */}
             <HowItWorks />
 
             {/* 5. FOOTER */}
             <footer className="manifesto-footer">
                 <div className="container">
                     <div className="footer-cols">
-                        <div style={{ maxWidth: '500px' }}>
+                        <div style={{ maxWidth: '600px' }}>
                             <h2 className="manifesto-title">VAMOS FAZER<br />BARULHO.</h2>
                             <p className="manifesto-text">
                                 A revolução do mercado da música ao vivo começa aqui. Junte-se a nós.
@@ -471,12 +451,12 @@ const LandingPage = () => {
                             <button><ArrowRight size={20} /></button>
                         </div>
                     </div>
-                    <div style={{ borderTop: '1px solid #333', paddingTop: '2rem', display: 'flex', justifyContent: 'space-between', color: '#666', fontSize: '0.9rem' }}>
-                        <span>© 2025 Band App Inc.</span>
-                        <div style={{ display: 'flex', gap: '2rem' }}>
-                            <a href="#">Instagram</a>
-                            <a href="#">Twitter</a>
-                            <a href="#">LinkedIn</a>
+                    <div style={{ borderTop: '1px solid #333', paddingTop: '3rem', display: 'flex', justifyContent: 'space-between', color: '#666', fontSize: '0.8rem', fontWeight: '700', letterSpacing: '1px' }}>
+                        <span>© 2026 BAND APP. ALL RIGHTS RESERVED.</span>
+                        <div style={{ display: 'flex', gap: '2.5rem' }}>
+                            <a href="#" className="nav-link">INSTAGRAM</a>
+                            <a href="#" className="nav-link">TWITTER</a>
+                            <a href="#" className="nav-link">LINKEDIN</a>
                         </div>
                     </div>
                 </div>
@@ -484,5 +464,6 @@ const LandingPage = () => {
         </div>
     );
 };
+
 
 export default LandingPage;
