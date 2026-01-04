@@ -18,7 +18,7 @@ const CustomCursor = () => {
         const onMouseUp = () => (targetScale.current = 1);
 
         const updateAnimation = () => {
-            const lerpFactor = 0.15;
+            const lerpFactor = 0.4;
 
             // Smooth position
             delayedPos.current.x += (mousePos.current.x - delayedPos.current.x) * lerpFactor;
