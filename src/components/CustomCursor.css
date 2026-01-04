@@ -5,34 +5,36 @@
     left: 0;
     width: 100vw;
     height: 100vh;
-    z-index: 999999;
-    /* isolation: auto; importante para o mix-blend-mode funcionar com o que está atrás */
+    z-index: 2147483647;
+    isolation: auto;
 }
 
 .custom-cursor-dot-difference {
     position: fixed;
-    top: 0;
-    left: 0;
     width: 20px;
-    /* Aumentado para o efeito ser bem visível */
     height: 20px;
-    background-color: #ffffff;
-    /* Branco puro é necessário para a inversão total */
+    background-color: #ffffff !important;
     border-radius: 50%;
     mix-blend-mode: difference !important;
-    /* Aplica o efeito de inversão */
     pointer-events: none;
-    z-index: 1000000;
-    will-change: transform;
+    transform: translate(-50%, -50%);
+    /* Centraliza o ponto na coordenada exata */
+    will-change: auto;
+    /* Removido para evitar bugs de renderização com blend mode */
+    z-index: 2147483647;
 }
 
-/* Esconde o cursor padrão em todo o site */
-.hide-default-cursor,
-.hide-default-cursor * {
+/* Garante que o cursor padrão suma em qualquer elemento */
+html,
+body,
+* {
     cursor: none !important;
 }
 
-/* Responsividade: Volta o cursor padrão em dispositivos touch */
+.hide-default-cursor {
+    cursor: none !important;
+}
+
 @media (hover: none) and (pointer: coarse) {
     .custom-cursor-container {
         display: none;

@@ -33,13 +33,13 @@ function App() {
     return (
         <Router>
             <RouteTracker />
-            <CustomCursor />
             <div className="app-container">
                 <Navbar />
                 <main>
                     <AnimatedRoutes />
                 </main>
             </div>
+            <CustomCursor />
         </Router>
     );
 }

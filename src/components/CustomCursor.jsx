@@ -1,16 +1,19 @@
-import React, { useEffect } from 'react';
-import { motion, useMotionValue } from 'framer-motion';
+import React, { useEffect, useRef } from 'react';
 import './CustomCursor.css';
 
 const CustomCursor = () => {
-    const cursorX = useMotionValue(-100);
-    const cursorY = useMotionValue(-100);
+    const cursorRef = useRef(null);
 
     useEffect(() => {
         const moveCursor = (e) => {
-            // Centraliza o cursor (ponto de 20px -> subtrai 10px)
-            cursorX.set(e.clientX - 10);
-            cursorY.set(e.clientY - 10);
+            if (cursorRef.current) {
+                const x = e.clientX;
+                const y = e.clientY;
+                // Usando left/top em vez de translate para evitar criação de camada compositora
+                // que às vezes impede o mix-blend-mode de interagir com o que está atrás.
+                cursorRef.current.style.left = `${x}px`;
+                cursorRef.current.style.top = `${y}px`;
+            }
         };
 
         window.addEventListener('mousemove', moveCursor);
@@ -20,16 +23,13 @@ const CustomCursor = () => {
             window.removeEventListener('mousemove', moveCursor);
             document.body.classList.remove('hide-default-cursor');
         };
-    }, [cursorX, cursorY]);
+    }, []);
 
     return (
         <div className="custom-cursor-container">
-            <motion.div
+            <div
+                ref={cursorRef}
                 className="custom-cursor-dot-difference"
-                style={{
-                    x: cursorX,
-                    y: cursorY,
-                }}
             />
         </div>
     );
