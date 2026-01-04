@@ -1,47 +1,34 @@
-.custom-cursor-container {
-    pointer-events: none;
+.custom-cursor-dot-difference {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100vw;
-    height: 100vh;
-    z-index: 2147483647;
-    isolation: auto;
-}
-
-.custom-cursor-dot-difference {
-    position: fixed;
     width: 20px;
     height: 20px;
-    background-color: #ffffff !important;
+    background-color: #ffffff;
     border-radius: 50%;
-    mix-blend-mode: difference !important;
+    mix-blend-mode: difference;
+    /* Funciona agora porque não há container */
+    z-index: 9999999999;
     pointer-events: none;
-    transform: translate(-50%, -50%);
-    /* Centraliza o ponto na coordenada exata */
-    will-change: auto;
-    /* Removido para evitar bugs de renderização com blend mode */
-    z-index: 2147483647;
+    will-change: transform;
+    transition: none;
+    /* JS controla a suavização */
 }
 
-/* Garante que o cursor padrão suma em qualquer elemento */
+/* Esconde o cursor padrão em tudo */
 html,
 body,
+a,
+button,
 * {
     cursor: none !important;
 }
 
-.hide-default-cursor {
-    cursor: none !important;
-}
-
 @media (hover: none) and (pointer: coarse) {
-    .custom-cursor-container {
+    .custom-cursor-dot-difference {
         display: none;
     }
 
-    html,
-    body,
     * {
         cursor: auto !important;
     }
