@@ -6,29 +6,33 @@
     width: 100vw;
     height: 100vh;
     z-index: 999999;
+    /* isolation: auto; importante para o mix-blend-mode funcionar com o que está atrás */
 }
 
-.custom-cursor-dot-contrast {
+.custom-cursor-dot-difference {
     position: fixed;
     top: 0;
     left: 0;
-    width: 10px;
-    height: 10px;
+    width: 20px;
+    /* Aumentado para o efeito ser bem visível */
+    height: 20px;
     background-color: #ffffff;
-    /* Essential for mix-blend-mode: difference to work correctly */
+    /* Branco puro é necessário para a inversão total */
     border-radius: 50%;
-    mix-blend-mode: difference;
+    mix-blend-mode: difference !important;
+    /* Aplica o efeito de inversão */
     pointer-events: none;
+    z-index: 1000000;
     will-change: transform;
 }
 
-/* Hide default cursor globally */
+/* Esconde o cursor padrão em todo o site */
 .hide-default-cursor,
 .hide-default-cursor * {
     cursor: none !important;
 }
 
-/* Revert for touch devices */
+/* Responsividade: Volta o cursor padrão em dispositivos touch */
 @media (hover: none) and (pointer: coarse) {
     .custom-cursor-container {
         display: none;

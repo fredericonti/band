@@ -8,9 +8,9 @@ const CustomCursor = () => {
 
     useEffect(() => {
         const moveCursor = (e) => {
-            // Subtract half of the dot size (10px / 2 = 5px) to center it
-            cursorX.set(e.clientX - 5);
-            cursorY.set(e.clientY - 5);
+            // Centraliza o cursor (ponto de 20px -> subtrai 10px)
+            cursorX.set(e.clientX - 10);
+            cursorY.set(e.clientY - 10);
         };
 
         window.addEventListener('mousemove', moveCursor);
@@ -25,7 +25,7 @@ const CustomCursor = () => {
     return (
         <div className="custom-cursor-container">
             <motion.div
-                className="custom-cursor-dot-contrast"
+                className="custom-cursor-dot-difference"
                 style={{
                     x: cursorX,
                     y: cursorY,
