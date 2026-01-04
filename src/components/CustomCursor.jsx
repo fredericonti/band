@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { motion, useMotionValue } from 'framer-motion';
 import './CustomCursor.css';
 
@@ -8,28 +8,27 @@ const CustomCursor = () => {
 
     useEffect(() => {
         const moveCursor = (e) => {
-            cursorX.set(e.clientX);
-            cursorY.set(e.clientY);
+            // Subtract half of the dot size (10px / 2 = 5px) to center it
+            cursorX.set(e.clientX - 5);
+            cursorY.set(e.clientY - 5);
         };
 
         window.addEventListener('mousemove', moveCursor);
-
-        // Hide default cursor globally for a consistent experience if we want the custom one everywhere
         document.body.classList.add('hide-default-cursor');
 
         return () => {
             window.removeEventListener('mousemove', moveCursor);
             document.body.classList.remove('hide-default-cursor');
         };
-    }, []);
+    }, [cursorX, cursorY]);
 
     return (
         <div className="custom-cursor-container">
             <motion.div
                 className="custom-cursor-dot-contrast"
                 style={{
-                    left: cursorX,
-                    top: cursorY,
+                    x: cursorX,
+                    y: cursorY,
                 }}
             />
         </div>

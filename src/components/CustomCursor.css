@@ -5,31 +5,30 @@
     left: 0;
     width: 100vw;
     height: 100vh;
-    z-index: 99999;
-    /* Higher z-index to stay on top of everything */
+    z-index: 999999;
 }
 
 .custom-cursor-dot-contrast {
     position: fixed;
-    width: 12px;
-    height: 12px;
-    background-color: #fff;
-    /* White base for contrast */
+    top: 0;
+    left: 0;
+    width: 10px;
+    height: 10px;
+    background-color: #ffffff;
+    /* Essential for mix-blend-mode: difference to work correctly */
     border-radius: 50%;
-    z-index: 100000;
-    transform: translate(-50%, -50%);
     mix-blend-mode: difference;
-    /* This makes it always visible (inverted colors) */
     pointer-events: none;
+    will-change: transform;
 }
 
-/* Esconder o cursor padrão globalmente */
+/* Hide default cursor globally */
 .hide-default-cursor,
 .hide-default-cursor * {
     cursor: none !important;
 }
 
-/* Voltar o cursor padrão se for um dispositivo touch */
+/* Revert for touch devices */
 @media (hover: none) and (pointer: coarse) {
     .custom-cursor-container {
         display: none;
