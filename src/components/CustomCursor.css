@@ -5,57 +5,39 @@
     left: 0;
     width: 100vw;
     height: 100vh;
-    z-index: 9999;
+    z-index: 99999;
+    /* Higher z-index to stay on top of everything */
 }
 
-.custom-cursor-dot {
+.custom-cursor-dot-contrast {
     position: fixed;
-    top: 14px;
-    left: 14px;
-    width: 4px;
-    height: 4px;
+    width: 12px;
+    height: 12px;
     background-color: #fff;
+    /* White base for contrast */
     border-radius: 50%;
-    z-index: 10000;
+    z-index: 100000;
+    transform: translate(-50%, -50%);
+    mix-blend-mode: difference;
+    /* This makes it always visible (inverted colors) */
     pointer-events: none;
 }
 
-.custom-cursor-ring {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 32px;
-    height: 32px;
-    border: 1px solid rgba(255, 255, 255, 0.5);
-    border-radius: 50%;
-    z-index: 9999;
-    pointer-events: none;
-    transition: width 0.3s, height 0.3s, border-color 0.3s;
-}
-
-.custom-cursor-ring.hovering {
-    border-color: #fff;
-}
-
-/* Esconder o cursor padrão apenas quando a classe estiver ativa */
+/* Esconder o cursor padrão globalmente */
 .hide-default-cursor,
-.hide-default-cursor a,
-.hide-default-cursor button {
+.hide-default-cursor * {
     cursor: none !important;
 }
 
 /* Voltar o cursor padrão se for um dispositivo touch */
 @media (hover: none) and (pointer: coarse) {
-
-    .custom-cursor-dot,
-    .custom-cursor-ring {
+    .custom-cursor-container {
         display: none;
     }
 
     html,
     body,
-    a,
-    button {
+    * {
         cursor: auto !important;
     }
 }
