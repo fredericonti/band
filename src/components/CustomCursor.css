@@ -4,31 +4,51 @@
     left: 0;
     width: 20px;
     height: 20px;
-    background-color: #ffffff;
+    background-color: #ffffff !important;
+    /* Pure white is essential for inversion */
     border-radius: 50%;
-    mix-blend-mode: difference;
-    /* Funciona agora porque não há container */
-    z-index: 9999999999;
+
+    /* Difference ensures black on white background, white on black background */
+    mix-blend-mode: difference !important;
+
+    /* Maximum possible z-index to stay above everything (Portals included) */
+    z-index: 2147483647;
     pointer-events: none;
+
+    /* Ensure no isolation context is created on the element itself */
+    isolation: auto !important;
+
+    /* Avoid filters that might interfere with blend modes */
+    filter: none !important;
+
+    /* Performance */
     will-change: transform;
     transition: none;
-    /* JS controla a suavização */
+    /* JS (Lerp) handles smoothness */
 }
 
-/* Esconde o cursor padrão em tudo */
+/* Force hide system cursor globally and aggressively */
 html,
 body,
 a,
 button,
+input,
+select,
+textarea,
 * {
     cursor: none !important;
 }
+
+/* Fallback visibility: If difference is still problematic in some zones, 
+   we can optionally add a suttle border, but let's try the portal fix first. */
 
 @media (hover: none) and (pointer: coarse) {
     .custom-cursor-dot-difference {
         display: none;
     }
 
+    html,
+    body,
     * {
         cursor: auto !important;
     }
