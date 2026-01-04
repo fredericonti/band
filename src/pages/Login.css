@@ -149,16 +149,46 @@
 }
 
 /* Responsive */
-@media (max-width: 768px) {
+@media (max-width: 900px) {
+    .login-container {
+        padding: 1.5rem;
+    }
+
     .login-title {
-        font-size: 3rem;
+        font-size: clamp(2.5rem, 10vw, 4rem);
+        letter-spacing: -2px;
     }
 
     .login-header {
         margin-bottom: 3rem;
     }
 
+    .headline-input-small {
+        font-size: 1.1rem;
+        padding: 14px 18px;
+    }
+
+    .otp-grid {
+        gap: 10px;
+    }
+
     .otp-digit {
         font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .login-container {
+        padding: 1rem;
+        align-items: flex-start;
+        padding-top: 4rem;
+    }
+
+    .login-title {
+        font-size: 2.25rem;
+    }
+
+    .btn-giant {
+        padding: 16px;
     }
 }

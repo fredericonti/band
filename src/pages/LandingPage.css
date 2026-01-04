@@ -320,37 +320,91 @@
 }
 
 /* Responsive */
-@media (max-width: 768px) {
+@media (max-width: 900px) {
+    .nav-cards-grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
 
-    .nav-cards-grid,
     .bento-grid {
         grid-template-columns: 1fr;
+        gap: 20px;
     }
 
-    .nav-card-title {
-        font-size: 2.25rem;
-    }
-
-    .nav-card-inner {
-        padding: 2.5rem;
-        min-height: auto;
+    .col-span-2 {
+        grid-column: span 1;
     }
 
     .hero-title-new {
-        font-size: 4rem;
+        font-size: clamp(3rem, 12vw, 5rem);
+        margin-bottom: 1.5rem;
+    }
+
+    .hero-description {
+        margin-bottom: 3rem;
+        font-size: 1.1rem;
+    }
+
+    .nav-card-inner,
+    .bento-item {
+        padding: 2.5rem 1.5rem;
+    }
+
+    .nav-card-title {
+        font-size: 2rem;
+    }
+
+    .manifesto-footer {
+        padding: 6rem 0;
     }
 
     .manifesto-title {
-        font-size: 3rem;
+        font-size: clamp(2.5rem, 10vw, 4rem);
+        margin-bottom: 3rem;
     }
 
     .footer-cols {
         flex-direction: column;
         gap: 3rem;
+        margin-bottom: 4rem;
+    }
+
+    .manifesto-text {
+        font-size: 1.25rem;
+    }
+
+    .minimal-input-group {
+        max-width: 100%;
+        padding: 4px;
+    }
+
+    .minimal-input-group input {
+        padding: 0.75rem 1rem;
     }
 
     .payment-block {
         flex-direction: column;
-        text-align: left;
+        align-items: flex-start;
+        gap: 2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-section-new {
+        min-height: 80vh;
+    }
+
+    .nav-card-inner,
+    .bento-item,
+    .showcase-card {
+        padding: 2rem 1.25rem;
+    }
+
+    .nav-card-title {
+        font-size: 1.75rem;
+    }
+
+    .manifesto-title {
+        font-size: 2.25rem;
     }
 }

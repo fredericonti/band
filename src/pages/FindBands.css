@@ -198,26 +198,52 @@
 }
 
 /* Responsive */
-@media (max-width: 768px) {
+@media (max-width: 900px) {
     .find-bands-page {
         padding-top: 40px;
         padding-bottom: 60px;
     }
 
+    .search-header {
+        margin-bottom: 60px;
+        padding: 0 24px;
+    }
+
     .search-header h2 {
-        font-size: 3rem;
+        font-size: clamp(3rem, 12vw, 5rem);
         letter-spacing: -2px;
     }
 
     .search-header p {
-        font-size: 1.125rem;
+        font-size: 1.1rem;
+    }
+
+    .search-bar {
+        max-width: 100%;
     }
 
     .bands-grid {
-        gap: 30px;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 24px;
+        padding: 0 24px;
     }
 
     .band-card:hover {
         transform: none;
+    }
+
+    .band-info {
+        padding: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .search-header {
+        padding: 0 16px;
+    }
+
+    .bands-grid {
+        grid-template-columns: 1fr;
+        padding: 0 16px;
     }
 }

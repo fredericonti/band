@@ -186,35 +186,88 @@
 
 /* Responsive */
 @media (max-width: 900px) {
-    .stack-card {
-        flex-direction: column-reverse;
-        height: auto;
-        min-height: 600px;
-    }
-
-    .card-body {
-        padding: 2.5rem;
-    }
-
-    .card-title-new {
-        font-size: 2.5rem;
-    }
-
-    .card-image-wrapper {
-        flex: none;
-        height: 300px;
-        border-left: none;
-        border-bottom: 1px solid var(--border-subtle);
+    .find-artists-page-new {
+        padding-bottom: 5vh;
     }
 
     .search-header-sticky {
-        padding: 2rem 20px;
+        top: 0;
+        /* Align with navbar mobile or stick to top if navbar is hidden */
+        padding: 1.5rem 24px;
         flex-direction: column;
         align-items: flex-start;
-        gap: 1.5rem;
+        gap: 1.25rem;
+    }
+
+    .search-header-sticky h2 {
+        font-size: 1.75rem;
     }
 
     .search-bar-modern {
         width: 100%;
+        padding: 0.6rem 1.25rem;
+    }
+
+    .stack-list {
+        margin-top: 2rem;
+        padding: 0 16px;
+        gap: 3rem;
+    }
+
+    .cardContainer {
+        height: auto;
+        position: relative;
+        top: 0;
+        margin-bottom: 2rem;
+    }
+
+    .stack-card {
+        flex-direction: column-reverse;
+        height: auto;
+        min-height: 500px;
+        border-radius: var(--radius-md);
+    }
+
+    .card-body {
+        padding: 1.5rem;
+    }
+
+    .card-title-new {
+        font-size: clamp(2rem, 8vw, 3rem);
+        margin: 1rem 0;
+    }
+
+    .card-image-wrapper {
+        flex: none;
+        height: 240px;
+        border-left: none;
+        border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .card-footer-new {
+        gap: 1.5rem;
+        flex-wrap: wrap;
+    }
+}
+
+@media (max-width: 480px) {
+    .search-header-sticky {
+        padding: 1rem 16px;
+    }
+
+    .stack-list {
+        padding: 0 12px;
+    }
+
+    .card-body {
+        padding: 1.25rem;
+    }
+
+    .card-title-new {
+        font-size: 1.75rem;
+    }
+
+    .card-image-wrapper {
+        height: 200px;
     }
 }
