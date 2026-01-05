@@ -1,268 +1,202 @@
-/* ========== FIND ARTISTS REBORN - AWWWARDS EDITORIAL ========== */
-.find-artists-page-new {
-    background: var(--color-background);
+/* ========== ARTISTAS SIMPLES - ESTILO EDITORIAL ========== */
+.find-artists-page-simple {
+    background: #fff;
+    min-height: 100vh;
 }
 
-/* 1. Hero Artists */
-.hero-section-artists {
-    min-height: 80vh;
-    display: flex;
-    align-items: center;
-    position: relative;
-    padding: 120px 0 60px;
-    background: var(--color-background);
-    overflow: hidden;
+/* 1. Herói Simples */
+.artists-simple-hero {
+    padding: 180px 0 100px;
 }
 
-.hero-bg-dimmed {
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    background: radial-gradient(circle at 70% 30%, #f0f0f0 0%, var(--color-background) 70%);
-}
-
-.hero-content-artists {
-    position: relative;
-    z-index: 10;
-    width: 100%;
-}
-
-.mega-title-editorial {
+.mega-title-simple {
     font-size: clamp(3.5rem, 10vw, 8rem);
     font-weight: 900;
     line-height: 0.85;
     letter-spacing: -4px;
     text-transform: uppercase;
-    margin-bottom: 4rem;
+    margin-bottom: 5rem;
 }
 
-.filter-editorial-group {
+.filter-simple-row {
     display: flex;
-    gap: 3rem;
+    gap: 2.5rem;
     flex-wrap: wrap;
+    border-bottom: 1px solid #000;
+    padding-bottom: 2rem;
 }
 
-.filter-text-btn {
+.filter-simple-btn {
     background: none;
     border: none;
-    font-size: 1rem;
-    font-weight: 800;
-    letter-spacing: 2px;
-    color: var(--color-text-muted);
-    cursor: pointer;
-    padding-bottom: 0.5rem;
-    border-bottom: 2px solid transparent;
-    transition: all 0.3s ease;
-}
-
-.filter-text-btn:hover,
-.filter-text-btn.active {
-    color: var(--color-primary);
-    border-color: var(--color-primary);
-}
-
-/* 2. Contextual Search Header */
-.search-header-contextual {
-    position: sticky;
-    top: 72px;
-    z-index: 100;
-    background: rgba(255, 255, 255, 0.9);
-    backdrop-filter: blur(20px);
-    border-bottom: 1px solid var(--border-subtle);
-    padding: 1.5rem 0;
-}
-
-.search-flex {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.search-bar-minimal {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    flex: 1;
-    max-width: 500px;
-}
-
-.search-bar-minimal input {
-    background: none;
-    border: none;
-    width: 100%;
-    font-family: var(--font-mono);
-    font-size: 0.85rem;
-    font-weight: 700;
-    outline: none;
-}
-
-.active-filters-pill {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    background: var(--color-primary);
-    color: white;
-    padding: 8px 16px;
-    border-radius: 100px;
-    font-size: 0.7rem;
-    font-weight: 800;
-    letter-spacing: 1px;
-}
-
-/* 3. Bento Stack List */
-.stack-list-bento {
-    margin: 10rem auto;
-    max-width: 1440px;
-}
-
-.cardContainer {
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    position: sticky;
-    top: 150px;
-}
-
-.stack-card {
-    width: 90%;
-    max-width: 1200px;
-    height: 650px;
-    background: #fff;
-    border: 1px solid var(--border-strong);
-    display: flex;
-    overflow: hidden;
-    transform-origin: top;
-    cursor: pointer;
-    box-shadow: 20px 20px 0 rgba(0, 0, 0, 0.05);
-}
-
-.card-body {
-    flex: 1;
-    padding: 5rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-
-.genre-pill {
-    align-self: flex-start;
-    padding: 6px 12px;
-    font-size: 0.7rem;
-    font-weight: 800;
-    color: #fff;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-.card-title-new {
-    font-size: 5.5rem;
-    font-weight: 900;
-    letter-spacing: -3px;
-    line-height: 0.9;
-    text-transform: uppercase;
-    margin: 2rem 0;
-}
-
-.card-tags-cloud {
-    display: flex;
-    gap: 12px;
-}
-
-.cloud-tag {
-    font-family: var(--font-mono);
+    font-family: inherit;
     font-size: 0.8rem;
-    color: var(--color-text-muted);
+    font-weight: 900;
+    letter-spacing: 2px;
+    color: #999;
+    cursor: pointer;
+    transition: all 0.3s;
 }
 
-.card-footer-new {
-    display: flex;
-    gap: 3rem;
-    border-top: 1px solid var(--border-subtle);
-    padding-top: 2rem;
+.filter-simple-btn:hover,
+.filter-simple-btn.active {
+    color: #000;
 }
 
-.venue-detail {
+/* 2. Busca e Grid */
+.artists-grid-wrapper {
+    padding: 4rem 0 10rem;
+}
+
+.search-minimal-grid {
     display: flex;
     align-items: center;
-    gap: 8px;
-    font-weight: 800;
+    gap: 1.5rem;
+    margin-bottom: 6rem;
+    padding: 0 1rem;
+}
+
+.search-minimal-grid input {
+    flex: 1;
+    background: none;
+    border: none;
+    border-bottom: 1px solid #eee;
+    padding: 1rem 0;
+    font-family: var(--font-mono);
     font-size: 0.85rem;
+    font-weight: 800;
+    outline: none;
+    transition: border-color 0.3s;
 }
 
-.card-image-wrapper {
-    flex: 1.2;
+.search-minimal-grid input:focus {
+    border-color: #000;
+}
+
+.artists-grid-simple {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 60px 40px;
+}
+
+.artist-card-simple {
+    cursor: pointer;
+}
+
+.artist-image-container {
+    width: 100%;
+    aspect-ratio: 4/5;
     overflow: hidden;
+    position: relative;
     background: #f5f5f5;
-    border-left: 1px solid var(--border-strong);
+    margin-bottom: 1.5rem;
 }
 
-.card-inner-image {
+.artist-image {
     width: 100%;
     height: 100%;
     background-size: cover;
     background-position: center;
+    transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* 4. Artists Footer CTA */
-.artists-footer-cta {
-    padding: 10rem 0;
-    background: var(--color-primary);
-    color: white;
+.artist-card-simple:hover .artist-image {
+    transform: scale(1.08);
+}
+
+.artist-overlay {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+}
+
+.artist-genre-pill {
+    padding: 6px 14px;
+    color: #fff;
+    font-size: 0.65rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.artist-info-simple {
+    padding: 0 0.5rem;
+}
+
+.artist-name-simple {
+    font-size: 1.75rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+}
+
+.artist-meta-simple {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.8rem;
+    font-weight: 800;
+    color: #999;
+    margin-bottom: 0.75rem;
+    text-transform: uppercase;
+}
+
+.artist-rating-simple {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 900;
+    font-size: 0.85rem;
+}
+
+/* 3. Rodapé CTA */
+.artists-footer-cta-simple {
+    background: #000;
+    color: #fff;
+    padding: 12rem 0;
     text-align: center;
 }
 
-.cta-title {
+.artists-footer-cta-simple h2 {
     font-size: 3.5rem;
     font-weight: 900;
-    margin-bottom: 2rem;
     letter-spacing: -2px;
+    margin-bottom: 2rem;
 }
 
-.cta-text {
+.artists-footer-cta-simple p {
     font-size: 1.1rem;
-    opacity: 0.8;
-    margin-bottom: 3rem;
+    opacity: 0.6;
+    margin-bottom: 4rem;
+}
+
+/* 4. No Results */
+.no-results-simple {
+    text-align: center;
+    padding: 10rem 0;
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: #ccc;
+    text-transform: uppercase;
 }
 
 /* Responsive */
-@media (max-width: 768px) {
-    .hero-section-artists {
-        padding-top: 80px;
-        min-height: 60vh;
+@media (max-width: 1024px) {
+    .artists-grid-simple {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 640px) {
+    .artists-grid-simple {
+        grid-template-columns: 1fr;
     }
 
-    .mega-title-editorial {
+    .mega-title-simple {
         font-size: 3rem;
     }
 
-    .filter-editorial-group {
-        gap: 1.5rem;
-    }
-
-    .search-flex {
-        flex-direction: column;
-        gap: 1rem;
-        align-items: flex-start;
-    }
-
-    .stack-card {
-        flex-direction: column-reverse;
-        height: auto;
-        min-height: 600px;
-        width: 100%;
-    }
-
-    .card-body {
-        padding: 2.5rem;
-    }
-
-    .card-title-new {
-        font-size: 3rem;
-    }
-
-    .card-image-wrapper {
-        min-height: 250px;
-        border-left: none;
-        border-bottom: 1px solid var(--border-strong);
+    .artists-footer-cta-simple h2 {
+        font-size: 2.25rem;
     }
 }

@@ -62,149 +62,111 @@ const MOCK_ARTISTS = [
     }
 ];
 
-const Card = ({ i, artist, progress, range, targetScale, navigate }) => {
-    const container = useRef(null);
-    const { scrollYProgress } = useScroll({
-        target: container,
-        offset: ['start end', 'start start']
-    });
-
-    const imageScale = useTransform(scrollYProgress, [0, 1], [2, 1]);
-    const scale = useTransform(progress, range, [1, targetScale]);
-
+const Card = ({ artist, navigate }) => {
     return (
-        <div ref={container} className="cardContainer">
-            <motion.div
-                className="stack-card"
-                style={{ scale, top: `calc(-5vh + ${i * 25}px)` }}
-                onClick={() => navigate(`/band/${artist.id}`)}
-                whileHover={{ scale: 1.02, rotate: -1 }}
-                transition={{ type: "spring", stiffness: 300 }}
-            >
-                <div className="card-body">
-                    <div className="card-header-new">
-                        <span className="genre-pill" style={{ backgroundColor: artist.color }}>{artist.genre}</span>
-                        <div className="card-rating">
-                            <Star size={16} fill="currentColor" /> 4.9
-                        </div>
-                    </div>
-
-                    <h2 className="card-title-new">{artist.name}</h2>
-
-                    <div className="card-tags-cloud">
-                        {artist.tags.map(tag => (
-                            <span key={tag} className="cloud-tag">#{tag}</span>
-                        ))}
-                    </div>
-
-                    <div className="card-footer-new">
-                        <div className="venue-detail">
-                            <MapPin size={16} style={{ color: artist.color }} />
-                            <span>{artist.lastVenueLocation}</span>
-                        </div>
-                        <div className="venue-detail">
-                            <Music size={16} />
-                            <span>{artist.members} Integrantes</span>
-                        </div>
-                    </div>
+        <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="artist-card-simple"
+            onClick={() => navigate(`/band/${artist.id}`)}
+        >
+            <div className="artist-image-container">
+                <div className="artist-image" style={{ backgroundImage: `url(${artist.image})` }} />
+                <div className="artist-overlay">
+                    <span className="artist-genre-pill" style={{ backgroundColor: artist.color }}>{artist.genre}</span>
                 </div>
+            </div>
 
-                <div className="card-image-wrapper">
-                    <motion.div
-                        className="card-inner-image"
-                        style={{ scale: imageScale, backgroundImage: `url(${artist.image})` }}
-                    />
+            <div className="artist-info-simple">
+                <h3 className="artist-name-simple">{artist.name}</h3>
+                <div className="artist-meta-simple">
+                    <span>{artist.lastVenueLocation}</span>
+                    <span className="dot-divider">•</span>
+                    <span>{artist.members} Integrantes</span>
                 </div>
-            </motion.div>
-        </div>
-    )
+                <div className="artist-rating-simple">
+                    <Star size={14} fill="currentColor" />
+                    <span>4.9</span>
+                </div>
+            </div>
+        </motion.div>
+    );
 }
 
 const FindArtists = () => {
     const navigate = useNavigate();
-    const container = useRef(null);
-    const { scrollYProgress } = useScroll({
-        target: container,
-        offset: ['start start', 'end end']
+    const [filter, setFilter] = React.useState('Todos');
+    const [searchTerm, setSearchTerm] = React.useState('');
+
+    const filteredArtists = MOCK_ARTISTS.filter(artist => {
+        const matchesFilter = filter === 'Todos' || artist.genre === filter;
+        const matchesSearch = artist.name.toLowerCase().includes(searchTerm.toLowerCase());
+        return matchesFilter && matchesSearch;
     });
 
-    const [filter, setFilter] = React.useState('Todos');
-
     return (
-        <div ref={container} className="find-artists-page-new">
-            {/* 1. HERO SECTION (Mirroring Home) */}
-            <section className="hero-section-artists">
-                <div className="hero-bg-dimmed">
-                    <div className="bg-overlay-light"></div>
-                </div>
-
-                <div className="container hero-content-artists">
+        <div className="find-artists-page-simple">
+            {/* HERÓI SIMPLES */}
+            <section className="artists-simple-hero">
+                <div className="container">
                     <motion.h1
                         initial={{ opacity: 0, y: 30 }}
                         animate={{ opacity: 1, y: 0 }}
-                        className="mega-title-editorial"
+                        className="mega-title-simple"
                     >
-                        DESCUBRA<br />O PRÓXIMO<br />GRANDE SHOW
+                        ARTISTAS<br />SELECIONADOS
                     </motion.h1>
 
-                    <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ delay: 0.5 }}
-                        className="filter-editorial-group"
-                    >
+                    <div className="filter-simple-row">
                         {['Todos', 'Rock', 'Jazz', 'Samba', 'Eletrônica'].map(cat => (
                             <button
                                 key={cat}
-                                className={`filter-text-btn ${filter === cat ? 'active' : ''}`}
+                                className={`filter-simple-btn ${filter === cat ? 'active' : ''}`}
                                 onClick={() => setFilter(cat)}
                             >
                                 {cat.toUpperCase()}
                             </button>
                         ))}
-                    </motion.div>
+                    </div>
                 </div>
             </section>
 
-            {/* 2. STICKY SEARCH (Minimized) */}
-            <div className="search-header-contextual">
-                <div className="container search-flex">
-                    <div className="search-bar-minimal">
-                        <Search size={18} />
-                        <input type="text" placeholder="BUSCAR POR NOME OU ESTILO..." />
-                    </div>
-                    <div className="active-filters-pill">
-                        <MapPin size={14} /> <span>SÃO PAULO, SP</span>
-                    </div>
+            {/* BUSCA E RESULTADOS */}
+            <div className="container artists-grid-wrapper">
+                <div className="search-minimal-grid">
+                    <Search size={18} />
+                    <input
+                        type="text"
+                        placeholder="BUSCAR ARTISTA PELO NOME..."
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                    />
                 </div>
+
+                <div className="artists-grid-simple">
+                    {filteredArtists.map((artist) => (
+                        <Card
+                            key={artist.id}
+                            artist={artist}
+                            navigate={navigate}
+                        />
+                    ))}
+                </div>
+
+                {filteredArtists.length === 0 && (
+                    <div className="no-results-simple">
+                        Nenhum artista encontrado para sua busca.
+                    </div>
+                )}
             </div>
 
-            {/* 3. STACK LIST (Bento Style) */}
-            <div className="stack-list-bento">
-                {MOCK_ARTISTS
-                    .filter(a => filter === 'Todos' || a.genre === filter)
-                    .map((artist, i) => {
-                        const targetScale = 1 - ((MOCK_ARTISTS.length - i) * 0.03);
-                        return (
-                            <Card
-                                key={artist.id}
-                                i={i}
-                                artist={artist}
-                                progress={scrollYProgress}
-                                range={[i * (1 / MOCK_ARTISTS.length), 1]}
-                                targetScale={targetScale}
-                                navigate={navigate}
-                            />
-                        );
-                    })}
-            </div>
-
-            {/* 4. FOOTER CALL TO ACTION */}
-            <section className="artists-footer-cta">
+            {/* RODAPÉ CTA */}
+            <section className="artists-footer-cta-simple">
                 <div className="container">
-                    <h2 className="cta-title">NÃO ENCONTROU O QUE PROCURAVA?</h2>
-                    <p className="cta-text">Temos uma curadoria personalizada para eventos exclusivos.</p>
-                    <button className="btn btn-primary btn-large">FALAR COM ESPECIALISTA</button>
+                    <h2>NÃO ENCONTROU O QUE PROCURAVA?</h2>
+                    <p>Temos uma curadoria personalizada para eventos exclusivos.</p>
+                    <button className="btn btn-primary btn-giant">FALAR COM ESPECIALISTA</button>
                 </div>
             </section>
         </div>
