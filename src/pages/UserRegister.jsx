@@ -47,18 +47,55 @@ const UserRegister = () => {
     // Venue data
     const [venueData, setVenueData] = useState({
         name: '',
+        cnpj: '',
+        type: 'Bar', // Bar, Restaurante, Casa de shows, Hotel, Evento corporativo
         address: '',
         googlePlaceId: '',
         coordinates: null,
+        capacity: 100,
         genres: [],
-        operatingDays: []
+        operatingDays: [],
+        budgetMin: 300,
+        budgetMax: 1500,
+        paymentType: 'Por noite', // Por noite, Por hora, Por set
+        negotiable: true,
+        preferredFormats: ['Banda'], // Solo, Duo, Trio, Banda, Todos
+        techRider: {
+            hasStage: false,
+            stageSize: '',
+            hasSoundSystem: false,
+            mixerChannels: 0,
+            micsCount: 0,
+            hasReturns: false,
+            hasLighting: false,
+            hasDressingRoom: false,
+            notes: ''
+        },
+        benefits: [], // Alimentação, Bebidas, Estacionamento, Hospedagem, Couvert, Porcentagem
+        photos: []
     });
 
     // Artist data
     const [artistData, setArtistData] = useState({
         name: '',
+        projectType: 'Banda', // Solo, Duo, Trio, Banda
+        lineup: [],
+        location: '',
+        radius: 'Apenas minha cidade',
+        instagram: '',
+        video: null,
+        videoUrl: '', // For links
         genres: [],
-        cache: 1500 // Default cache value
+        cacheMin: 800,
+        cacheMax: 3000,
+        cacheType: 'Noite completa',
+        negotiable: true,
+        techNeeds: {
+            type: 'Preciso de som da casa', // Trago todo equipamento, Preciso de som da casa, Parcial
+            details: '',
+            checklist: []
+        },
+        availability: []
     });
 
     // Autocomplete State
@@ -195,6 +232,8 @@ const UserRegister = () => {
         if (step === 1) {
             setUserType(null);
             setStep(0);
+        } else if (userType === 'artist' && step === 4 && artistData.projectType === 'Solo') {
+            setStep(2);
         } else {
             setStep(step - 1);
         }
@@ -235,7 +274,7 @@ const UserRegister = () => {
     };
 
     // Determine max steps based on user type
-    const maxSteps = userType === 'venue' ? 8 : 6;
+    const maxSteps = userType === 'venue' ? 10 : 10;
     const progress = step === 0 ? 0 : (step / maxSteps) * 100;
 
     return (
@@ -299,31 +338,55 @@ const UserRegister = () => {
                         initial={{ opacity: 0, x: 50 }}
                         animate={{ opacity: 1, x: 0 }}
                         exit={{ opacity: 0, x: -50 }}
-                        transition={{ type: "spring", stiffness: 400, damping: 30 }}
+                        transition={{ duration: 0.2 }}
                         className="step-screen"
                     >
-                        <h1 className="mega-title">QUAL O NOME<br />DO SEU ESTABELECIMENTO?</h1>
+                        <h1 className="mega-title">DADOS DO<br />ESTABELECIMENTO</h1>
 
-                        <div className="autocomplete-wrapper">
+                        <div className="input-group-vertical">
+                            <div className="autocomplete-wrapper">
+                                <input
+                                    ref={venueInputRef}
+                                    type="text"
+                                    className="headline-input-small"
+                                    placeholder="NOME DO LOCAL"
+                                    value={venueData.name}
+                                    onChange={handleSimulationInput}
+                                />
+                                {showVenueSuggestions && filteredVenues.length > 0 && (
+                                    <div className="autocomplete-dropdown">
+                                        {filteredVenues.map((venue, idx) => (
+                                            <div key={idx} className="autocomplete-item" onClick={() => selectVenue(venue)}>
+                                                <strong>{venue.name}</strong>
+                                                <small>{venue.address}</small>
+                                            </div>
+                                        ))}
+                                    </div>
+                                )}
+                            </div>
+
                             <input
-                                ref={venueInputRef}
                                 type="text"
-                                className="headline-input"
-                                placeholder="DIGITE O NOME DO LOCAL"
-                                value={venueData.name}
-                                onChange={handleSimulationInput}
+                                className="headline-input-small"
+                                placeholder="CNPJ"
+                                value={venueData.cnpj}
+                                onChange={(e) => setVenueData({ ...venueData, cnpj: e.target.value })}
                             />
-                            {showVenueSuggestions && filteredVenues.length > 0 && (
-                                <div className="autocomplete-dropdown">
-                                    {filteredVenues.map((venue, idx) => (
-                                        <div key={idx} className="autocomplete-item" onClick={() => selectVenue(venue)}>
-                                            <strong>{venue.name}</strong>
-                                            <small>{venue.address}</small>
-                                        </div>
+
+                            <div className="type-selector shadow-none">
+                                <h3 className="section-label">TIPO DE LOCAL</h3>
+                                <div className="floating-chips small-chips">
+                                    {['Bar', 'Restaurante', 'Casa de Shows', 'Hotel', 'Evento Corporativo'].map(t => (
+                                        <button
+                                            key={t}
+                                            className={`chip ${venueData.type === t ? 'chip-selected' : ''}`}
+                                            onClick={() => setVenueData({ ...venueData, type: t })}
+                                        >
+                                            {t.toUpperCase()}
+                                        </button>
                                     ))}
                                 </div>
-                            )}
-                            {!isMapsLoaded && <p className="mono-text">CARREGANDO MAPS...</p>}
+                            </div>
                         </div>
 
                         <div className="button-group">
@@ -333,7 +396,7 @@ const UserRegister = () => {
                             <button
                                 className="btn btn-primary btn-large"
                                 onClick={handleNext}
-                                disabled={!venueData.name}
+                                disabled={!venueData.name || !venueData.cnpj}
                             >
                                 CONTINUAR <ArrowRight size={20} />
                             </button>
@@ -387,6 +450,7 @@ const UserRegister = () => {
                     </motion.div>
                 )}
 
+                {/* VENUE STEP 3: CAPACITY & DAYS (US-02) */}
                 {userType === 'venue' && step === 3 && (
                     <motion.div
                         key="venue-step3"
@@ -396,107 +460,35 @@ const UserRegister = () => {
                         transition={{ duration: 0.2 }}
                         className="step-screen"
                     >
-                        <motion.h1
-                            className="mega-title"
-                            initial={{ opacity: 0, y: -20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.2, delay: 0.1 }}
-                        >
-                            O QUE TOCA<br />NA {venueData.name.split(' ')[0].toUpperCase()}?
-                        </motion.h1>
+                        <h1 className="mega-title">CAPACIDADE<br />E DIAS</h1>
 
-                        <motion.div
-                            className="floating-chips"
-                            initial="hidden"
-                            animate="visible"
-                            variants={{
-                                visible: {
-                                    transition: {
-                                        staggerChildren: 0.03
-                                    }
-                                }
-                            }}
-                        >
-                            {GENRES.map(genre => (
-                                <motion.button
-                                    key={genre}
-                                    className={`chip ${venueData.genres.includes(genre) ? 'chip-selected' : ''}`}
-                                    onClick={() => toggleGenre(genre, 'venue')}
-                                    variants={{
-                                        hidden: { opacity: 0, scale: 0.8 },
-                                        visible: { opacity: 1, scale: 1 }
-                                    }}
-                                >
-                                    {genre.toUpperCase()}
-                                </motion.button>
-                            ))}
-                        </motion.div>
+                        <div className="capacity-selector">
+                            <h3 className="section-label">CAPACIDADE (PESSOAS)</h3>
+                            <div className="cache-display">
+                                <span className="cache-value">{venueData.capacity}</span>
+                            </div>
+                            <input
+                                type="range"
+                                className="cache-slider"
+                                min="10"
+                                max="5000"
+                                step="10"
+                                value={venueData.capacity}
+                                onChange={(e) => setVenueData({ ...venueData, capacity: parseInt(e.target.value) })}
+                            />
+                        </div>
 
-                        <motion.button
-                            className="btn btn-primary btn-large"
-                            onClick={handleNext}
-                            disabled={venueData.genres.length === 0}
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.3, delay: 0.4 }}
-                        >
-                            PRÓXIMO <ArrowRight size={20} />
-                        </motion.button>
-                    </motion.div>
-                )}
-
-                {userType === 'venue' && step === 4 && (
-                    <motion.div
-                        key="venue-step4"
-                        initial={{ opacity: 0, x: 50 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        exit={{ opacity: 0, x: -50 }}
-                        transition={{ duration: 0.2 }}
-                        className="step-screen"
-                    >
-                        <motion.h1
-                            className="mega-title"
-                            initial={{ opacity: 0, y: -20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.2, delay: 0.1 }}
-                        >
-                            QUAIS DIAS<br />VOCÊ TEM SHOWS?
-                        </motion.h1>
-
-                        <motion.div
-                            className="days-toggle-group"
-                            initial="hidden"
-                            animate="visible"
-                            variants={{
-                                visible: {
-                                    transition: {
-                                        staggerChildren: 0.04
-                                    }
-                                }
-                            }}
-                        >
+                        <div className="days-toggle-group">
                             {DAYS.map((day, idx) => (
-                                <motion.button
+                                <button
                                     key={idx}
                                     className={`day-toggle ${venueData.operatingDays.includes(day.full) ? 'day-active' : ''}`}
                                     onClick={() => toggleDay(day.full)}
-                                    variants={{
-                                        hidden: { opacity: 0, y: 20 },
-                                        visible: { opacity: 1, y: 0 }
-                                    }}
                                 >
                                     {day.short}
-                                </motion.button>
+                                </button>
                             ))}
-                        </motion.div>
-
-                        <button
-                            className={`btn btn-outline btn-block ${venueData.operatingDays.length === DAYS.length ? 'btn-accent' : ''}`}
-                            onClick={toggleAllDays}
-                            style={{ marginBottom: '1rem' }}
-                        >
-                            {venueData.operatingDays.length === DAYS.length ? 'REMOVER TODOS' : 'TODOS OS DIAS'}
-                        </button>
+                        </div>
 
                         <button
                             className="btn btn-primary btn-large"
@@ -508,31 +500,66 @@ const UserRegister = () => {
                     </motion.div>
                 )}
 
-                {/* STEP 5: BUDGET */}
-                {userType === 'venue' && step === 5 && (
+                {/* VENUE STEP 4: INFRASTRUCTURE (US-03) */}
+                {userType === 'venue' && step === 4 && (
                     <motion.div
-                        key="venue-step5"
+                        key="venue-step4"
                         initial={{ opacity: 0, x: 50 }}
                         animate={{ opacity: 1, x: 0 }}
                         exit={{ opacity: 0, x: -50 }}
                         transition={{ duration: 0.2 }}
                         className="step-screen"
                     >
-                        <h1 className="mega-title">QUAL SEU ORÇAMENTO<br />MÉDIO POR BANDA?</h1>
+                        <h1 className="mega-title">INFRAESTRUTURA<br />TÉCNICA</h1>
 
-                        <div className="cache-display">
-                            <span className="cache-value">R$ {venueData.budget ? venueData.budget.toLocaleString('pt-BR') : '1.500'}</span>
+                        <div className="infrastructure-checklist">
+                            {[
+                                { key: 'hasStage', label: 'POSSUI PALCO' },
+                                { key: 'hasSoundSystem', label: 'SISTEMA DE SOM PRÓPRIO' },
+                                { key: 'hasReturns', label: 'RETORNOS DE PALCO' },
+                                { key: 'hasLighting', label: 'ILUMINAÇÃO DE PALCO' },
+                                { key: 'hasDressingRoom', label: 'CAMARIM' }
+                            ].map(item => (
+                                <div
+                                    key={item.key}
+                                    className={`tech-chip-item ${venueData.techRider[item.key] ? 'active' : ''}`}
+                                    onClick={() => setVenueData({
+                                        ...venueData,
+                                        techRider: { ...venueData.techRider, [item.key]: !venueData.techRider[item.key] }
+                                    })}
+                                >
+                                    <div className="toggle-box-small"></div>
+                                    <span className="mono-text">{item.label}</span>
+                                </div>
+                            ))}
                         </div>
 
-                        <input
-                            type="range"
-                            className="cache-slider"
-                            min="300"
-                            max="5000"
-                            step="100"
-                            value={venueData.budget || 1500}
-                            onChange={(e) => setVenueData({ ...venueData, budget: parseInt(e.target.value) })}
-                        />
+                        <div className="tech-details-row">
+                            <div className="input-field">
+                                <label className="mono-label">CANAIS NA MESA</label>
+                                <input
+                                    type="number"
+                                    className="headline-input-small"
+                                    value={venueData.techRider.mixerChannels}
+                                    onChange={(e) => setVenueData({
+                                        ...venueData,
+                                        techRider: { ...venueData.techRider, mixerChannels: parseInt(e.target.value) }
+                                    })}
+                                />
+                            </div>
+                            <div className="input-field">
+                                <label className="mono-label">MICROFONES</label>
+                                <input
+                                    type="number"
+                                    className="headline-input-small"
+                                    value={venueData.techRider.micsCount}
+                                    onChange={(e) => setVenueData({
+                                        ...venueData,
+                                        techRider: { ...venueData.techRider, micsCount: parseInt(e.target.value) }
+                                    })}
+                                />
+                            </div>
+                        </div>
 
                         <button
                             className="btn btn-primary btn-large"
@@ -543,7 +570,39 @@ const UserRegister = () => {
                     </motion.div>
                 )}
 
-                {/* STEP 6: TECH RIDER */}
+                {/* VENUE STEP 5: PHOTOS (US-04) */}
+                {userType === 'venue' && step === 5 && (
+                    <motion.div
+                        key="venue-step5"
+                        initial={{ opacity: 0, x: 50 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        exit={{ opacity: 0, x: -50 }}
+                        transition={{ duration: 0.2 }}
+                        className="step-screen"
+                    >
+                        <h1 className="mega-title">FOTOS DO<br />LOCAL</h1>
+
+                        <div className="photo-upload-placeholder">
+                            <div className="photo-grid-simulated">
+                                <div className="photo-box-sim add-photo">
+                                    <span>+ ADICIONAR FOTO</span>
+                                </div>
+                                <div className="photo-box-sim"></div>
+                                <div className="photo-box-sim"></div>
+                            </div>
+                            <p className="mono-text muted-text" style={{ marginTop: '2rem' }}>MÍNIMO 1 FOTO PARA CONTINUAR</p>
+                        </div>
+
+                        <button
+                            className="btn btn-primary btn-large"
+                            onClick={handleNext}
+                        >
+                            CONTINUAR <ArrowRight size={20} />
+                        </button>
+                    </motion.div>
+                )}
+
+                {/* VENUE STEP 6: GENRES (US-06) */}
                 {userType === 'venue' && step === 6 && (
                     <motion.div
                         key="venue-step6"
@@ -553,44 +612,160 @@ const UserRegister = () => {
                         transition={{ duration: 0.2 }}
                         className="step-screen"
                     >
-                        <h1 className="mega-title">TECH RIDER<br />DA CASA</h1>
+                        <h1 className="mega-title">O QUE TOCA<br />NA CASA?</h1>
 
-                        <div className="tech-rider-section">
-                            <h3 className="section-label">O QUE A CASA OFERECE?</h3>
+                        <div className="floating-chips">
+                            {GENRES.map(genre => (
+                                <button
+                                    key={genre}
+                                    className={`chip ${venueData.genres.includes(genre) ? 'chip-selected' : ''}`}
+                                    onClick={() => toggleGenre(genre, 'venue')}
+                                >
+                                    {genre.toUpperCase()}
+                                </button>
+                            ))}
+                        </div>
+
+                        <button
+                            className="btn btn-primary btn-large"
+                            onClick={handleNext}
+                            disabled={venueData.genres.length === 0}
+                        >
+                            PRÓXIMO <ArrowRight size={20} />
+                        </button>
+                    </motion.div>
+                )}
+
+                {/* VENUE STEP 7: BUDGET (US-05) */}
+                {userType === 'venue' && step === 7 && (
+                    <motion.div
+                        key="venue-step7"
+                        initial={{ opacity: 0, x: 50 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        exit={{ opacity: 0, x: -50 }}
+                        transition={{ duration: 0.2 }}
+                        className="step-screen"
+                    >
+                        <h1 className="mega-title">BUDGET PARA<br />ARTISTAS</h1>
+
+                        <div className="cache-range-inputs">
+                            <div className="range-field">
+                                <label className="mono-label">MÍNIMO (R$)</label>
+                                <input
+                                    type="number"
+                                    className="headline-input-small"
+                                    value={venueData.budgetMin}
+                                    onChange={(e) => setVenueData({ ...venueData, budgetMin: parseInt(e.target.value) })}
+                                />
+                            </div>
+                            <div className="range-field">
+                                <label className="mono-label">MÁXIMO (R$)</label>
+                                <input
+                                    type="number"
+                                    className="headline-input-small"
+                                    value={venueData.budgetMax}
+                                    onChange={(e) => setVenueData({ ...venueData, budgetMax: parseInt(e.target.value) })}
+                                />
+                            </div>
+                        </div>
+
+                        <div className="cache-type-selector">
+                            <h3 className="section-label">TIPO DE PAGAMENTO</h3>
                             <div className="floating-chips small-chips">
-                                {['PA COM MESA DE SOM', 'MICROFONES', 'BATERIA COMPLETA', 'AMPLIFICADORES', 'RETORNO', 'ILUMINAÇÃO DE PALCO', 'PAINEL DE LED'].map(item => (
+                                {['Por noite', 'Por hora', 'Por set'].map(t => (
                                     <button
-                                        key={item}
-                                        className={`chip ${venueData.techRider?.offered?.includes(item) ? 'chip-selected' : ''}`}
-                                        onClick={() => {
-                                            const current = venueData.techRider?.offered || [];
-                                            const updated = current.includes(item) ? current.filter(i => i !== item) : [...current, item];
-                                            setVenueData({ ...venueData, techRider: { ...venueData.techRider, offered: updated } });
-                                        }}
+                                        key={t}
+                                        className={`chip ${venueData.paymentType === t ? 'chip-selected' : ''}`}
+                                        onClick={() => setVenueData({ ...venueData, paymentType: t })}
                                     >
-                                        {item}
+                                        {t.toUpperCase()}
                                     </button>
                                 ))}
                             </div>
                         </div>
 
-                        <div className="tech-rider-section">
-                            <h3 className="section-label">O QUE A BANDA DEVE TRAZER?</h3>
-                            <div className="floating-chips small-chips">
-                                {['INSTRUMENTOS', 'PRATOS DE BATERIA', 'CABOS', 'PEDAIS', 'CUBOS'].map(item => (
-                                    <button
-                                        key={item}
-                                        className={`chip ${venueData.techRider?.needed?.includes(item) ? 'chip-selected' : ''}`}
-                                        onClick={() => {
-                                            const current = venueData.techRider?.needed || [];
-                                            const updated = current.includes(item) ? current.filter(i => i !== item) : [...current, item];
-                                            setVenueData({ ...venueData, techRider: { ...venueData.techRider, needed: updated } });
-                                        }}
-                                    >
-                                        {item}
-                                    </button>
-                                ))}
-                            </div>
+                        <div className="negotiable-toggle" onClick={() => setVenueData({ ...venueData, negotiable: !venueData.negotiable })}>
+                            <div className={`toggle-box ${venueData.negotiable ? 'active' : ''}`}></div>
+                            <span className="mono-text">VALOR NEGOCIÁVEL</span>
+                        </div>
+
+                        <button
+                            className="btn btn-primary btn-large"
+                            onClick={handleNext}
+                        >
+                            PRÓXIMO <ArrowRight size={20} />
+                        </button>
+                    </motion.div>
+                )}
+
+                {/* VENUE STEP 8: FORMATS (US-07) */}
+                {userType === 'venue' && step === 8 && (
+                    <motion.div
+                        key="venue-step8"
+                        initial={{ opacity: 0, x: 50 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        exit={{ opacity: 0, x: -50 }}
+                        transition={{ duration: 0.2 }}
+                        className="step-screen"
+                    >
+                        <h1 className="mega-title">FORMATOS<br />PREFERIDOS</h1>
+
+                        <div className="floating-chips">
+                            {['Solo', 'Duo', 'Trio', 'Banda', 'Todos os formatos'].map(format => (
+                                <button
+                                    key={format}
+                                    className={`chip ${venueData.preferredFormats.includes(format) ? 'chip-selected' : ''}`}
+                                    onClick={() => {
+                                        const current = venueData.preferredFormats;
+                                        const updated = current.includes(format)
+                                            ? current.filter(f => f !== format)
+                                            : [...current, format];
+                                        setVenueData({ ...venueData, preferredFormats: updated });
+                                    }}
+                                >
+                                    {format.toUpperCase()}
+                                </button>
+                            ))}
+                        </div>
+
+                        <button
+                            className="btn btn-primary btn-large"
+                            onClick={handleNext}
+                            disabled={venueData.preferredFormats.length === 0}
+                        >
+                            PRÓXIMO <ArrowRight size={20} />
+                        </button>
+                    </motion.div>
+                )}
+
+                {/* VENUE STEP 9: BENEFITS (US-08) */}
+                {userType === 'venue' && step === 9 && (
+                    <motion.div
+                        key="venue-step9"
+                        initial={{ opacity: 0, x: 50 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        exit={{ opacity: 0, x: -50 }}
+                        transition={{ duration: 0.2 }}
+                        className="step-screen"
+                    >
+                        <h1 className="mega-title">BENEFÍCIOS PARA<br />OS ARTISTAS</h1>
+
+                        <div className="floating-chips">
+                            {['Alimentação inclusa', 'Bebidas inclusas', 'Estacionamento', 'Hospedagem', 'Couvert artístico', 'Porcentagem bilheteria'].map(benefit => (
+                                <button
+                                    key={benefit}
+                                    className={`chip ${venueData.benefits.includes(benefit) ? 'chip-selected' : ''}`}
+                                    onClick={() => {
+                                        const current = venueData.benefits;
+                                        const updated = current.includes(benefit)
+                                            ? current.filter(b => b !== benefit)
+                                            : [...current, benefit];
+                                        setVenueData({ ...venueData, benefits: updated });
+                                    }}
+                                >
+                                    {benefit.toUpperCase()}
+                                </button>
+                            ))}
                         </div>
 
                         <button
@@ -602,10 +777,10 @@ const UserRegister = () => {
                     </motion.div>
                 )}
 
-                {/* STEP 7: SUMMARY */}
-                {userType === 'venue' && step === 7 && (
+                {/* VENUE STEP 10: SUMMARY */}
+                {userType === 'venue' && step === 10 && (
                     <motion.div
-                        key="venue-step7"
+                        key="venue-step10"
                         initial={{ opacity: 0, x: 50 }}
                         animate={{ opacity: 1, x: 0 }}
                         exit={{ opacity: 0, x: -50 }}
@@ -620,8 +795,8 @@ const UserRegister = () => {
                                 <span className="summary-value">{venueData.name}</span>
                             </div>
                             <div className="summary-item">
-                                <span className="summary-label">ENDEREÇO</span>
-                                <span className="summary-value">{venueData.address}</span>
+                                <span className="summary-label">CAPACIDADE</span>
+                                <span className="summary-value">{venueData.capacity} PESSOAS</span>
                             </div>
                             <div className="summary-item">
                                 <span className="summary-label">GÊNEROS</span>
@@ -632,16 +807,16 @@ const UserRegister = () => {
                                 <span className="summary-value">{venueData.operatingDays.join(', ')}</span>
                             </div>
                             <div className="summary-item">
-                                <span className="summary-label">ORÇAMENTO MÉDIO</span>
-                                <span className="summary-value">R$ {venueData.budget ? venueData.budget.toLocaleString('pt-BR') : '1.500'}</span>
+                                <span className="summary-label">ORÇAMENTO</span>
+                                <span className="summary-value">R$ {venueData.budgetMin.toLocaleString('pt-BR')} - R$ {venueData.budgetMax.toLocaleString('pt-BR')} / {venueData.paymentType.toUpperCase()}</span>
                             </div>
                             <div className="summary-item">
-                                <span className="summary-label">OFERECE</span>
-                                <span className="summary-value">{venueData.techRider?.offered?.join(', ') || '-'}</span>
+                                <span className="summary-label">FORMATOS</span>
+                                <span className="summary-value">{venueData.preferredFormats.join(', ')}</span>
                             </div>
                             <div className="summary-item">
-                                <span className="summary-label">NECESSITA</span>
-                                <span className="summary-value">{venueData.techRider?.needed?.join(', ') || '-'}</span>
+                                <span className="summary-label">BENEFÍCIOS</span>
+                                <span className="summary-value">{venueData.benefits.join(', ') || '-'}</span>
                             </div>
                         </div>
 
@@ -691,6 +866,7 @@ const UserRegister = () => {
                     </motion.div>
                 )}
 
+                {/* ARTIST STEP 2: PROJECT TYPE (US-02) */}
                 {userType === 'artist' && step === 2 && (
                     <motion.div
                         key="artist-step2"
@@ -700,46 +876,37 @@ const UserRegister = () => {
                         transition={{ duration: 0.2 }}
                         className="step-screen"
                     >
-                        <h1 className="mega-title">QUAL É A SUA<br />PEGADA PRINCIPAL?</h1>
+                        <h1 className="mega-title">QUAL O FORMATO<br />DO SEU PROJETO?</h1>
 
-                        <motion.div
-                            className="floating-chips"
-                            initial="hidden"
-                            animate="visible"
-                            variants={{
-                                visible: {
-                                    transition: {
-                                        staggerChildren: 0.03
-                                    }
-                                }
-                            }}
-                        >
-                            {GENRES.map(genre => (
-                                <motion.button
-                                    key={genre}
-                                    className={`chip ${artistData.genres.includes(genre) ? 'chip-selected' : ''}`}
-                                    onClick={() => toggleGenre(genre, 'artist')}
-                                    variants={{
-                                        hidden: { opacity: 0, scale: 0.8 },
-                                        visible: { opacity: 1, scale: 1 }
-                                    }}
+                        <div className="floating-chips">
+                            {['Solo', 'Duo', 'Trio', 'Banda'].map(type => (
+                                <button
+                                    key={type}
+                                    className={`chip ${artistData.projectType === type ? 'chip-selected' : ''}`}
+                                    onClick={() => setArtistData({ ...artistData, projectType: type })}
                                 >
-                                    {genre.toUpperCase()}
-                                </motion.button>
+                                    {type.toUpperCase()}
+                                </button>
                             ))}
-                        </motion.div>
+                        </div>
 
                         <button
                             className="btn btn-primary btn-large"
-                            onClick={handleNext}
-                            disabled={artistData.genres.length === 0}
+                            onClick={() => {
+                                // If Solo, skip Step 3 (Lineup)
+                                if (artistData.projectType === 'Solo') {
+                                    setStep(4);
+                                } else {
+                                    handleNext();
+                                }
+                            }}
                         >
                             PRÓXIMO <ArrowRight size={20} />
                         </button>
                     </motion.div>
                 )}
 
-                {/* STEP 3: AVAILABILITY */}
+                {/* ARTIST STEP 3: LINEUP (US-03) */}
                 {userType === 'artist' && step === 3 && (
                     <motion.div
                         key="artist-step3"
@@ -749,86 +916,7 @@ const UserRegister = () => {
                         transition={{ duration: 0.2 }}
                         className="step-screen"
                     >
-                        <h1 className="mega-title">QUANDO VOCÊS<br />PODEM TOCAR?</h1>
-
-                        <div className="days-toggle-group">
-                            {DAYS.map((day, idx) => (
-                                <button
-                                    key={idx}
-                                    className={`day-toggle ${artistData.availability?.includes(day.full) ? 'day-active' : ''}`}
-                                    onClick={() => {
-                                        const current = artistData.availability || [];
-                                        const updated = current.includes(day.full) ? current.filter(d => d !== day.full) : [...current, day.full];
-                                        setArtistData({ ...artistData, availability: updated });
-                                    }}
-                                >
-                                    {day.short}
-                                </button>
-                            ))}
-                        </div>
-
-                        <button
-                            className="btn btn-primary btn-large"
-                            onClick={handleNext}
-                            disabled={!artistData.availability || artistData.availability.length === 0}
-                        >
-                            CONTINUAR <ArrowRight size={20} />
-                        </button>
-                    </motion.div>
-                )}
-
-                {/* STEP 4: CACHE */}
-                {userType === 'artist' && step === 4 && (
-                    <motion.div
-                        key="artist-step4"
-                        initial={{ opacity: 0, x: 50 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        exit={{ opacity: 0, x: -50 }}
-                        transition={{ duration: 0.2 }}
-                        className="step-screen"
-                    >
-                        <h1 className="mega-title">QUAL O SEU<br />CACHÊ MÉDIO?</h1>
-
-                        <div className="cache-display">
-                            {artistData.cache === 0 ? (
-                                <span className="cache-value">A COMBINAR</span>
-                            ) : artistData.cache >= 10000 ? (
-                                <span className="cache-value">R$ 10.000+</span>
-                            ) : (
-                                <span className="cache-value">R$ {artistData.cache.toLocaleString('pt-BR')}</span>
-                            )}
-                        </div>
-
-                        <input
-                            type="range"
-                            className="cache-slider"
-                            min="0"
-                            max="10000"
-                            step="50"
-                            value={artistData.cache}
-                            onChange={(e) => setArtistData({ ...artistData, cache: parseInt(e.target.value) })}
-                        />
-
-                        <button
-                            className="btn btn-primary btn-large"
-                            onClick={handleNext}
-                        >
-                            CONTINUAR <ArrowRight size={20} />
-                        </button>
-                    </motion.div>
-                )}
-
-                {/* STEP 5: LINEUP */}
-                {userType === 'artist' && step === 5 && (
-                    <motion.div
-                        key="artist-step5"
-                        initial={{ opacity: 0, x: 50 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        exit={{ opacity: 0, x: -50 }}
-                        transition={{ duration: 0.2 }}
-                        className="step-screen"
-                    >
-                        <h1 className="mega-title">QUEM TOCA<br />COM VOCÊ?</h1>
+                        <h1 className="mega-title">QUEM SÃO OS<br />INTEGRANTES?</h1>
 
                         <div className="lineup-container">
                             {(artistData.lineup || []).map((member, idx) => (
@@ -838,21 +926,15 @@ const UserRegister = () => {
                                         <span className="member-role">{member.role || 'Instrumento'}</span>
                                     </div>
                                     <div className="member-actions">
-                                        <label className="leader-toggle">
-                                            <input
-                                                type="radio"
-                                                name="leader"
-                                                checked={member.isLeader}
-                                                onChange={() => {
-                                                    const updated = (artistData.lineup || []).map((m, i) => ({
-                                                        ...m,
-                                                        isLeader: i === idx
-                                                    }));
-                                                    setArtistData({ ...artistData, lineup: updated });
-                                                }}
-                                            />
-                                            <span className="leader-label">LÍDER</span>
-                                        </label>
+                                        <button
+                                            className="btn-text-danger"
+                                            onClick={() => {
+                                                const updated = artistData.lineup.filter((_, i) => i !== idx);
+                                                setArtistData({ ...artistData, lineup: updated });
+                                            }}
+                                        >
+                                            REMOVER
+                                        </button>
                                     </div>
                                 </div>
                             ))}
@@ -868,14 +950,111 @@ const UserRegister = () => {
                         <button
                             className="btn btn-primary btn-large"
                             onClick={handleNext}
-                            disabled={!artistData.lineup || artistData.lineup.length === 0}
+                            disabled={!artistData.lineup || artistData.lineup.length < (artistData.projectType === 'Duo' ? 1 : artistData.projectType === 'Trio' ? 2 : 3)}
                         >
-                            CONTINUAR <ArrowRight size={20} />
+                            PRÓXIMO <ArrowRight size={20} />
                         </button>
                     </motion.div>
                 )}
 
-                {/* STEP 6: VIDEO */}
+                {/* ARTIST STEP 4: LOCATION & RADIUS (US-04) */}
+                {userType === 'artist' && step === 4 && (
+                    <motion.div
+                        key="artist-step4"
+                        initial={{ opacity: 0, x: 50 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        exit={{ opacity: 0, x: -50 }}
+                        transition={{ duration: 0.2 }}
+                        className="step-screen"
+                    >
+                        <h1 className="mega-title">ONDE VOCÊS<br />ESTÃO BASEADOS?</h1>
+
+                        <div className="location-inputs">
+                            <div className="autocomplete-wrapper">
+                                <input
+                                    type="text"
+                                    className="headline-input"
+                                    placeholder="SUA CIDADE/BAIRRO"
+                                    value={artistData.location}
+                                    onChange={(e) => setArtistData({ ...artistData, location: e.target.value })}
+                                />
+                            </div>
+
+                            <div className="radius-selector">
+                                <h3 className="section-label">ATÉ ONDE ACEITAM TOCAR?</h3>
+                                <div className="floating-chips small-chips">
+                                    {['Apenas minha cidade', 'Até 30km', 'Até 50km', 'Até 100km', 'Todo o estado', 'Nacional'].map(r => (
+                                        <button
+                                            key={r}
+                                            className={`chip ${artistData.radius === r ? 'chip-selected' : ''}`}
+                                            onClick={() => setArtistData({ ...artistData, radius: r })}
+                                        >
+                                            {r.toUpperCase()}
+                                        </button>
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
+
+                        <button
+                            className="btn btn-primary btn-large"
+                            onClick={handleNext}
+                            disabled={!artistData.location.trim()}
+                        >
+                            PRÓXIMO <ArrowRight size={20} />
+                        </button>
+                    </motion.div>
+                )}
+
+                {/* ARTIST STEP 5: MATERIAL (US-05) */}
+                {userType === 'artist' && step === 5 && (
+                    <motion.div
+                        key="artist-step5"
+                        initial={{ opacity: 0, x: 50 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        exit={{ opacity: 0, x: -50 }}
+                        transition={{ duration: 0.2 }}
+                        className="step-screen"
+                    >
+                        <h1 className="mega-title">MOSTRE O<br />SEU TRABALHO</h1>
+
+                        <div className="material-inputs">
+                            <div className="input-field">
+                                <label className="mono-label">LINK DO INSTAGRAM</label>
+                                <input
+                                    type="text"
+                                    className="headline-input-small"
+                                    placeholder="@seu_perfil"
+                                    value={artistData.instagram}
+                                    onChange={(e) => setArtistData({ ...artistData, instagram: e.target.value })}
+                                />
+                            </div>
+
+                            <div className="divider-minimal">OU</div>
+
+                            <div className="input-field">
+                                <label className="mono-label">LINK DE VÍDEO (YouTube/Vimeo)</label>
+                                <input
+                                    type="text"
+                                    className="headline-input-small"
+                                    placeholder="https://youtube.com/..."
+                                    value={artistData.videoUrl}
+                                    onChange={(e) => setArtistData({ ...artistData, videoUrl: e.target.value })}
+                                />
+                            </div>
+                        </div>
+
+                        <button
+                            className="btn btn-primary btn-large"
+                            onClick={handleNext}
+                            disabled={!artistData.instagram && !artistData.videoUrl}
+                        >
+                            PRÓXIMO <ArrowRight size={20} />
+                        </button>
+                    </motion.div>
+                )}
+
+                {/* ARTIST STEP 6: STYLE (US-06) */}
                 {userType === 'artist' && step === 6 && (
                     <motion.div
                         key="artist-step6"
@@ -885,22 +1064,220 @@ const UserRegister = () => {
                         transition={{ duration: 0.2 }}
                         className="step-screen"
                     >
-                        <h1 className="mega-title">MOSTRE SEU<br />TRABALHO</h1>
+                        <h1 className="mega-title">QUAL O SEU<br />ESTILO MUSICAL?</h1>
 
-                        <div className="video-input-wrapper">
-                            <input
-                                type="text"
-                                className="headline-input"
-                                placeholder="LINK DO YOUTUBE"
-                                value={artistData.videoUrl || ''}
-                                onChange={(e) => setArtistData({ ...artistData, videoUrl: e.target.value })}
+                        <div className="floating-chips">
+                            {GENRES.map(genre => (
+                                <button
+                                    key={genre}
+                                    className={`chip ${artistData.genres.includes(genre) ? 'chip-selected' : ''}`}
+                                    onClick={() => toggleGenre(genre, 'artist')}
+                                >
+                                    {genre.toUpperCase()}
+                                </button>
+                            ))}
+                        </div>
+
+                        <button
+                            className="btn btn-primary btn-large"
+                            onClick={handleNext}
+                            disabled={artistData.genres.length === 0}
+                        >
+                            PRÓXIMO <ArrowRight size={20} />
+                        </button>
+                    </motion.div>
+                )}
+
+                {/* ARTIST STEP 7: CACHE RANGE (US-07) */}
+                {userType === 'artist' && step === 7 && (
+                    <motion.div
+                        key="artist-step7"
+                        initial={{ opacity: 0, x: 50 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        exit={{ opacity: 0, x: -50 }}
+                        transition={{ duration: 0.2 }}
+                        className="step-screen"
+                    >
+                        <h1 className="mega-title">QUAL O SEU<br />CACHÊ PRETENDIDO?</h1>
+
+                        <div className="cache-range-inputs">
+                            <div className="range-field">
+                                <label className="mono-label">MÍNIMO (R$)</label>
+                                <input
+                                    type="number"
+                                    className="headline-input-small"
+                                    value={artistData.cacheMin}
+                                    onChange={(e) => setArtistData({ ...artistData, cacheMin: parseInt(e.target.value) })}
+                                />
+                            </div>
+                            <div className="range-field">
+                                <label className="mono-label">MÁXIMO (R$)</label>
+                                <input
+                                    type="number"
+                                    className="headline-input-small"
+                                    value={artistData.cacheMax}
+                                    onChange={(e) => setArtistData({ ...artistData, cacheMax: parseInt(e.target.value) })}
+                                />
+                            </div>
+                        </div>
+
+                        <div className="cache-type-selector">
+                            <h3 className="section-label">TIPO DE CACHÊ</h3>
+                            <div className="floating-chips small-chips">
+                                {['Noite completa', 'Por hora', 'Por set'].map(t => (
+                                    <button
+                                        key={t}
+                                        className={`chip ${artistData.cacheType === t ? 'chip-selected' : ''}`}
+                                        onClick={() => setArtistData({ ...artistData, cacheType: t })}
+                                    >
+                                        {t.toUpperCase()}
+                                    </button>
+                                ))}
+                            </div>
+                        </div>
+
+                        <div className="negotiable-toggle" onClick={() => setArtistData({ ...artistData, negotiable: !artistData.negotiable })}>
+                            <div className={`toggle-box ${artistData.negotiable ? 'active' : ''}`}></div>
+                            <span className="mono-text">VALOR NEGOCIÁVEL</span>
+                        </div>
+
+                        <button
+                            className="btn btn-primary btn-large"
+                            onClick={handleNext}
+                        >
+                            PRÓXIMO <ArrowRight size={20} />
+                        </button>
+                    </motion.div>
+                )}
+
+                {/* ARTIST STEP 8: TECH NEEDS (US-08) */}
+                {userType === 'artist' && step === 8 && (
+                    <motion.div
+                        key="artist-step8"
+                        initial={{ opacity: 0, x: 50 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        exit={{ opacity: 0, x: -50 }}
+                        transition={{ duration: 0.2 }}
+                        className="step-screen"
+                    >
+                        <h1 className="mega-title">O QUE VOCÊS<br />PRECISAM?</h1>
+
+                        <div className="tech-needs-selector">
+                            {['Trago todo equipamento', 'Preciso de som da casa', 'Parcial'].map(t => (
+                                <button
+                                    key={t}
+                                    className={`chip ${artistData.techNeeds.type === t ? 'chip-selected' : ''}`}
+                                    onClick={() => setArtistData({ ...artistData, techNeeds: { ...artistData.techNeeds, type: t } })}
+                                >
+                                    {t.toUpperCase()}
+                                </button>
+                            ))}
+                        </div>
+
+                        {artistData.techNeeds.type === 'Parcial' && (
+                            <textarea
+                                className="headline-input-small"
+                                style={{ width: '100%', marginTop: '2rem', minHeight: '100px', textAlign: 'left' }}
+                                placeholder="DETALHE O QUE PRECISA (EX: MESA DE SOM, MICROFONES...)"
+                                value={artistData.techNeeds.details}
+                                onChange={(e) => setArtistData({ ...artistData, techNeeds: { ...artistData.techNeeds, details: e.target.value } })}
                             />
+                        )}
+
+                        <button
+                            className="btn btn-primary btn-large"
+                            onClick={handleNext}
+                            style={{ marginTop: '3rem' }}
+                        >
+                            PRÓXIMO <ArrowRight size={20} />
+                        </button>
+                    </motion.div>
+                )}
+
+                {/* ARTIST STEP 9: AVAILABILITY (US-10) */}
+                {userType === 'artist' && step === 9 && (
+                    <motion.div
+                        key="artist-step9"
+                        initial={{ opacity: 0, x: 50 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        exit={{ opacity: 0, x: -50 }}
+                        transition={{ duration: 0.2 }}
+                        className="step-screen"
+                    >
+                        <h1 className="mega-title">QUANDO VOCÊS<br />ESTÃO LIVRES?</h1>
+
+                        <div className="days-toggle-group">
+                            {DAYS.map((day, idx) => (
+                                <button
+                                    key={idx}
+                                    className={`day-toggle ${artistData.availability.includes(day.full) ? 'day-active' : ''}`}
+                                    onClick={() => {
+                                        const current = artistData.availability;
+                                        const updated = current.includes(day.full) ? current.filter(d => d !== day.full) : [...current, day.full];
+                                        setArtistData({ ...artistData, availability: updated });
+                                    }}
+                                >
+                                    {day.short}
+                                </button>
+                            ))}
+                        </div>
+
+                        <button
+                            className="btn btn-primary btn-large"
+                            onClick={handleNext}
+                        >
+                            REVISAR DADOS <ArrowRight size={20} />
+                        </button>
+                    </motion.div>
+                )}
+
+                {/* ARTIST STEP 10: SUMMARY */}
+                {userType === 'artist' && step === 10 && (
+                    <motion.div
+                        key="artist-step10"
+                        initial={{ opacity: 0, x: 50 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        exit={{ opacity: 0, x: -50 }}
+                        transition={{ duration: 0.2 }}
+                        className="step-screen"
+                    >
+                        <h1 className="mega-title">RESUMO DO<br />PERFIL</h1>
+
+                        <div className="summary-card">
+                            <div className="summary-item">
+                                <span className="summary-label">NOME</span>
+                                <span className="summary-value">{artistData.name}</span>
+                            </div>
+                            <div className="summary-item">
+                                <span className="summary-label">FORMATO</span>
+                                <span className="summary-value">{artistData.projectType}</span>
+                            </div>
+                            <div className="summary-item">
+                                <span className="summary-label">LOCALIZAÇÃO</span>
+                                <span className="summary-value">{artistData.location} ({artistData.radius})</span>
+                            </div>
+                            <div className="summary-item">
+                                <span className="summary-label">ESTILOS</span>
+                                <span className="summary-value">{artistData.genres.join(', ')}</span>
+                            </div>
+                            <div className="summary-item">
+                                <span className="summary-label">CACHÊ</span>
+                                <span className="summary-value">R$ {artistData.cacheMin.toLocaleString('pt-BR')} - R$ {artistData.cacheMax.toLocaleString('pt-BR')} / {artistData.cacheType.toUpperCase()} {artistData.negotiable ? '(NEGOCIÁVEL)' : ''}</span>
+                            </div>
+                            <div className="summary-item">
+                                <span className="summary-label">TIPO DE SOM</span>
+                                <span className="summary-value">{artistData.techNeeds.type.toUpperCase()}</span>
+                            </div>
+                            <div className="summary-item">
+                                <span className="summary-label">DISPONIBILIDADE</span>
+                                <span className="summary-value">{artistData.availability.join(', ')}</span>
+                            </div>
                         </div>
 
                         <button
                             className="btn btn-primary btn-large"
                             onClick={handleSubmit}
-                            disabled={!artistData.videoUrl || isSaving}
+                            disabled={isSaving}
                         >
                             {isSaving ? 'SALVANDO...' : 'FINALIZAR PERFIL'} <ArrowRight size={20} />
                         </button>

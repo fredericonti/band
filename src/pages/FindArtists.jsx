@@ -13,7 +13,7 @@ const MOCK_ARTISTS = [
         image: 'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&q=80&w=1000',
         lastVenue: 'Blue Note São Paulo',
         lastVenueLocation: 'Bela Vista, SP',
-        tags: ['Synthwave', 'Upbeat'],
+        tags: ['Synthwave', 'Eletrizante'],
         color: '#FF0055'
     },
     {
@@ -24,7 +24,7 @@ const MOCK_ARTISTS = [
         image: 'https://images.unsplash.com/photo-1511192336575-5a79af67a629?auto=format&fit=crop&q=80&w=1000',
         lastVenue: 'Bourbon Street Music Club',
         lastVenueLocation: 'Moema, SP',
-        tags: ['Smooth', 'Lounge'],
+        tags: ['Suave', 'Sofisticado'],
         color: '#7B61FF'
     },
     {
@@ -35,7 +35,7 @@ const MOCK_ARTISTS = [
         image: 'https://images.unsplash.com/photo-1498038432885-c6f3f1b912ee?auto=format&fit=crop&q=80&w=1000',
         lastVenue: 'Cine Joia',
         lastVenueLocation: 'Liberdade, SP',
-        tags: ['Classic Rock', 'High Energy'],
+        tags: ['Rock Clássico', 'Alta Energia'],
         color: '#FF9900'
     },
     {
@@ -46,7 +46,7 @@ const MOCK_ARTISTS = [
         image: 'https://images.unsplash.com/photo-1465847899078-b413929f7120?auto=format&fit=crop&q=80&w=1000',
         lastVenue: 'Casa Natura Musical',
         lastVenueLocation: 'Pinheiros, SP',
-        tags: ['Chill', 'Covers'],
+        tags: ['Intimista', 'Acústico'],
         color: '#00CC88'
     },
     {
@@ -104,7 +104,7 @@ const Card = ({ i, artist, progress, range, targetScale, navigate }) => {
                         </div>
                         <div className="venue-detail">
                             <Music size={16} />
-                            <span>{artist.members} Members</span>
+                            <span>{artist.members} Integrantes</span>
                         </div>
                     </div>
                 </div>
@@ -128,32 +128,85 @@ const FindArtists = () => {
         offset: ['start start', 'end end']
     });
 
+    const [filter, setFilter] = React.useState('Todos');
+
     return (
         <div ref={container} className="find-artists-page-new">
-            <div className="search-header-sticky">
-                <h2>Talent Hub</h2>
-                <div className="search-bar-modern">
-                    <Search size={18} />
-                    <input type="text" placeholder="Search for artists..." />
+            {/* 1. HERO SECTION (Mirroring Home) */}
+            <section className="hero-section-artists">
+                <div className="hero-bg-dimmed">
+                    <div className="bg-overlay-light"></div>
+                </div>
+
+                <div className="container hero-content-artists">
+                    <motion.h1
+                        initial={{ opacity: 0, y: 30 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="mega-title-editorial"
+                    >
+                        DESCUBRA<br />O PRÓXIMO<br />GRANDE SHOW
+                    </motion.h1>
+
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ delay: 0.5 }}
+                        className="filter-editorial-group"
+                    >
+                        {['Todos', 'Rock', 'Jazz', 'Samba', 'Eletrônica'].map(cat => (
+                            <button
+                                key={cat}
+                                className={`filter-text-btn ${filter === cat ? 'active' : ''}`}
+                                onClick={() => setFilter(cat)}
+                            >
+                                {cat.toUpperCase()}
+                            </button>
+                        ))}
+                    </motion.div>
+                </div>
+            </section>
+
+            {/* 2. STICKY SEARCH (Minimized) */}
+            <div className="search-header-contextual">
+                <div className="container search-flex">
+                    <div className="search-bar-minimal">
+                        <Search size={18} />
+                        <input type="text" placeholder="BUSCAR POR NOME OU ESTILO..." />
+                    </div>
+                    <div className="active-filters-pill">
+                        <MapPin size={14} /> <span>SÃO PAULO, SP</span>
+                    </div>
                 </div>
             </div>
 
-            <div className="stack-list">
-                {MOCK_ARTISTS.map((artist, i) => {
-                    const targetScale = 1 - ((MOCK_ARTISTS.length - i) * 0.05);
-                    return (
-                        <Card
-                            key={i}
-                            i={i}
-                            artist={artist}
-                            progress={scrollYProgress}
-                            range={[i * 0.25, 1]}
-                            targetScale={targetScale}
-                            navigate={navigate}
-                        />
-                    );
-                })}
+            {/* 3. STACK LIST (Bento Style) */}
+            <div className="stack-list-bento">
+                {MOCK_ARTISTS
+                    .filter(a => filter === 'Todos' || a.genre === filter)
+                    .map((artist, i) => {
+                        const targetScale = 1 - ((MOCK_ARTISTS.length - i) * 0.03);
+                        return (
+                            <Card
+                                key={artist.id}
+                                i={i}
+                                artist={artist}
+                                progress={scrollYProgress}
+                                range={[i * (1 / MOCK_ARTISTS.length), 1]}
+                                targetScale={targetScale}
+                                navigate={navigate}
+                            />
+                        );
+                    })}
             </div>
+
+            {/* 4. FOOTER CALL TO ACTION */}
+            <section className="artists-footer-cta">
+                <div className="container">
+                    <h2 className="cta-title">NÃO ENCONTROU O QUE PROCURAVA?</h2>
+                    <p className="cta-text">Temos uma curadoria personalizada para eventos exclusivos.</p>
+                    <button className="btn btn-primary btn-large">FALAR COM ESPECIALISTA</button>
+                </div>
+            </section>
         </div>
     );
 };

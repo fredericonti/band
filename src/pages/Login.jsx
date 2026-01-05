@@ -48,25 +48,38 @@ const Login = () => {
         }
     };
 
+    const validateEmail = (email) => {
+        return String(email)
+            .toLowerCase()
+            .match(
+                /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+            );
+    };
+
     const handleEmailSubmit = async (e) => {
         e.preventDefault();
-        if (email) {
-            setIsLoading(true);
-            setError('');
-
-            // SIMULATION MODE: Always succeed
-            setTimeout(() => {
-                console.log("Simulated Email OTP Sent to:", email);
-                const code = "1234";
-                setGeneratedOtp(code);
-                setIsLoading(false);
-                setStep('otp-input');
-            }, 1000);
+        if (!validateEmail(email)) {
+            setError('Por favor, insira um e-mail válido.');
+            return;
         }
+
+        setIsLoading(true);
+        setError('');
+
+        // SIMULATION MODE: Realistic behavior + Best Practice Toast/Log
+        setTimeout(() => {
+            console.log("%c[CODA AUTH SIMULATION]", "color: #ff3e00; font-weight: bold", "OTP Sent to: " + email);
+            const code = "1234";
+            setGeneratedOtp(code);
+            setIsLoading(false);
+            setStep('otp-input');
+        }, 1500);
     };
 
     const handleOtpChange = (index, value) => {
-        if (value.length > 1) return;
+        // Only numbers
+        if (value && !/^\d+$/.test(value)) return;
+
         const newOtp = [...otp];
         newOtp[index] = value;
         setOtp(newOtp);
@@ -78,22 +91,40 @@ const Login = () => {
         }
     };
 
+    const handleKeyDown = (index, e) => {
+        if (e.key === 'Backspace' && !otp[index] && index > 0) {
+            const prevInput = document.getElementById(`otp-${index - 1}`);
+            if (prevInput) prevInput.focus();
+        }
+    };
+
     const handleOtpSubmit = (e) => {
         e.preventDefault();
         const enteredOtp = otp.join('');
         if (enteredOtp.length === 4) {
             setIsLoading(true);
+            setError('');
 
-            // SIMULATION MODE: Accept any code or specific code
-            if (enteredOtp === generatedOtp || enteredOtp === '1234') {
-                setTimeout(() => {
+            // SIMULATION MODE
+            setTimeout(() => {
+                if (enteredOtp === '1234' || enteredOtp === generatedOtp) {
+                    const mockUser = {
+                        uid: 'email_user_' + Date.now(),
+                        displayName: email.split('@')[0],
+                        email: email,
+                        isAnonymous: false,
+                        authType: 'email'
+                    };
+                    localStorage.setItem('user', JSON.stringify(mockUser));
                     setIsLoading(false);
                     navigate('/register');
-                }, 1000);
-            } else {
-                setIsLoading(false);
-                setError('Código incorreto. (Dica: use 1234)');
-            }
+                } else {
+                    setIsLoading(false);
+                    setError('Código inválido ou expirado. Tente 1234.');
+                    setOtp(['', '', '', '']);
+                    document.getElementById('otp-0').focus();
+                }
+            }, 1000);
         }
     };
 
@@ -109,7 +140,7 @@ const Login = () => {
 
                 {step === 'initial' && (
                     <div className="login-actions">
-                        <button className="btn btn-primary btn-block btn-giant" onClick={handleGoogleLogin}>
+                        <button className="btn btn-google btn-block btn-giant" onClick={handleGoogleLogin}>
                             CONTINUAR COM GOOGLE
                         </button>
 
@@ -159,11 +190,15 @@ const Login = () => {
                                     key={index}
                                     id={`otp-${index}`}
                                     type="text"
+                                    inputMode="numeric"
+                                    pattern="\d*"
                                     maxLength="1"
                                     className="input otp-digit"
                                     value={digit}
                                     onChange={(e) => handleOtpChange(index, e.target.value)}
+                                    onKeyDown={(e) => handleKeyDown(index, e)}
                                     autoFocus={index === 0}
+                                    autoComplete="one-time-code"
                                 />
                             ))}
                         </div>

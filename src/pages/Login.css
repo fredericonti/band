@@ -48,6 +48,18 @@
     letter-spacing: 1px;
 }
 
+.btn-google {
+    background: white !important;
+    color: black !important;
+    border: 1px solid var(--border-strong) !important;
+}
+
+.btn-google:hover {
+    background: var(--color-gray-100) !important;
+    transform: translate(-2px, -2px);
+    box-shadow: 4px 4px 0 var(--border-strong);
+}
+
 .divider {
     display: flex;
     align-items: center;
