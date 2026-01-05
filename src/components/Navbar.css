@@ -41,16 +41,20 @@
 .login-btn {
     background: var(--color-primary);
     color: var(--color-background);
-    padding: 8px 20px;
-    border-radius: var(--radius-full);
+    padding: 10px 24px;
+    border-radius: var(--radius-md);
     font-size: 0.75rem;
     font-weight: 800;
+    letter-spacing: 1px;
     border: 1px solid var(--color-primary);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .login-btn:hover {
-    background: transparent;
+    background: var(--color-background);
     color: var(--color-primary);
+    transform: translate(-3px, -3px);
+    box-shadow: 4px 4px 0 var(--color-primary);
 }
 
 /* Mobile Menu Toggle */

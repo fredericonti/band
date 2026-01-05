@@ -406,13 +406,9 @@
     transition: transform 0.2s;
 }
 
-/* Large Button */
+/* Large Button - Inherits from global Reborn */
 .btn-large {
-    padding: 1.5rem 3rem;
-    font-size: 1.1rem;
     margin-top: 2rem;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
 }
 
 /* Map Confirmation */

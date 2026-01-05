@@ -123,24 +123,61 @@ a:hover {
 }
 
 /* Base Component Styles */
+/* Base Component Styles - Modern Reborn */
 .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 12px 24px;
-  font-size: 0.875rem;
-  font-weight: 700;
+  padding: clamp(12px, 2vh, 18px) clamp(24px, 4vw, 36px);
+  font-size: 0.8rem;
+  font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
-  border-radius: var(--radius-full);
+  letter-spacing: 1.5px;
+  border-radius: var(--radius-md);
   background: var(--color-primary);
   color: var(--color-background);
   border: 1px solid var(--color-primary);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
 }
 
 .btn:hover {
+  background: var(--color-background);
+  color: var(--color-primary);
+  transform: translate(-4px, -4px);
+  box-shadow: 6px 6px 0 var(--color-primary);
+}
+
+.btn:active {
+  transform: translate(-1px, -1px);
+  box-shadow: 2px 2px 0 var(--color-primary);
+}
+
+.btn-primary {
+  background: var(--color-primary);
+  color: white;
+}
+
+.btn-outline {
   background: transparent;
   color: var(--color-primary);
+  border: 1px solid var(--color-primary);
+}
+
+.btn-outline:hover {
+  background: var(--color-primary);
+  color: white;
+}
+
+.btn-block {
+  display: flex;
+  width: 100%;
+}
+
+.btn-giant {
+  padding: 24px 48px;
+  font-size: 1rem;
 }
 
 .btn-outline {
