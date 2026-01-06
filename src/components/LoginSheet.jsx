@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Mail, Facebook, Github } from 'lucide-react';
+import { X, Mail, Facebook, Apple } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import './LoginSheet.css';
 
@@ -27,7 +27,7 @@ const LoginSheet = ({ isOpen, onClose }) => {
     const handleEmailLogin = (e) => {
         e.preventDefault();
         onClose();
-        navigate('/login'); // For now, redirect to full login page or handle auth logic here
+        navigate('/login');
     };
 
     const variants = {
@@ -56,7 +56,7 @@ const LoginSheet = ({ isOpen, onClose }) => {
                         transition={{ type: 'spring', damping: 25, stiffness: 200 }}
                     >
                         <div className="login-header">
-                            <h2>Entrar no Band</h2>
+                            <h2>Entrar no Tonare</h2>
                             <button className="login-close" onClick={onClose}>
                                 <X size={24} />
                             </button>
@@ -64,8 +64,8 @@ const LoginSheet = ({ isOpen, onClose }) => {
 
                         <div className="social-login">
                             <button className="btn btn-social">
-                                <Github size={20} />
-                                Continuar com Github
+                                <Apple size={20} />
+                                Continuar com Apple
                             </button>
                             <button className="btn btn-social" style={{ color: '#1877F2', borderColor: '#1877F2' }}>
                                 <Facebook size={20} />

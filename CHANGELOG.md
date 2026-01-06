@@ -5,6 +5,19 @@ Todas as mudanças notáveis neste projeto serão documentadas neste arquivo.
 O formato é baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/),
 e este projeto adere ao [Semantic Versioning](https://semver.org/lang/pt-BR/).
 
+## [1.2.0] - 2026-01-06
+
+### ✨ Tonare MVP - Rebranding & Core Features
+
+- **Rebranding**: Transformação completa da identidade visual de "Band App" para **Tonare**.
+- **Dashboards**: Implementação dos painéis de controle para Artistas e Estabelecimentos.
+- **Antecipação**: Novo sistema de antecipação de cachê com termos de compromisso e cálculo de taxas.
+- **Financeiro**: Estrutura para faturamento consolidado mensal e gestão de splits de banda.
+- **Social Login**: Adicionada opção de login via Apple no LoginSheet.
+- **UX**: Harmonização de rotas e navegação para os novos fluxos de marketplace bilateral.
+
+---
+
 ## [1.1.0] - 2026-01-05
 
 ### 🎨 Estilo e UX

@@ -11,6 +11,8 @@ import FindArtists from './pages/FindArtists';
 import FindVenues from './pages/FindVenues';
 import BandProfile from './pages/BandProfile';
 import BandPublicProfile from './pages/BandPublicProfile';
+import ArtistDashboard from './pages/ArtistDashboard';
+import VenueDashboard from './pages/VenueDashboard';
 import Login from './pages/Login';
 import { initGA, logPageView } from './config/analytics';
 
@@ -82,7 +84,12 @@ const AnimatedRoutes = () => {
                 } />
                 <Route path="/profile" element={
                     <PageTransition>
-                        <BandProfile />
+                        <ArtistDashboard />
+                    </PageTransition>
+                } />
+                <Route path="/venue-dashboard" element={
+                    <PageTransition>
+                        <VenueDashboard />
                     </PageTransition>
                 } />
                 <Route path="/band/:id" element={

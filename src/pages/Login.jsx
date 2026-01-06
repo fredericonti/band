@@ -68,7 +68,7 @@ const Login = () => {
 
         // SIMULATION MODE: Realistic behavior + Best Practice Toast/Log
         setTimeout(() => {
-            console.log("%c[CODA AUTH SIMULATION]", "color: #ff3e00; font-weight: bold", "OTP Sent to: " + email);
+            console.log("%c[TONARE AUTH SIMULATION]", "color: #ff3e00; font-weight: bold", "OTP Sent to: " + email);
             const code = "1234";
             setGeneratedOtp(code);
             setIsLoading(false);
@@ -133,7 +133,7 @@ const Login = () => {
             <div className="login-block">
                 <div className="login-header">
                     <h1 className="login-title">IDENTIFICAÇÃO</h1>
-                    <p className="login-subtitle">ACESSO AO SISTEMA CODA</p>
+                    <p className="login-subtitle">ACESSO AO SISTEMA TONARE</p>
                 </div>
 
                 {error && <div className="error-message">{error}</div>}

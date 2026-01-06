@@ -1,4 +1,4 @@
-// Google Maps Configuration for CODA
+// Google Maps Configuration for TONARE
 // Replace 'YOUR_GOOGLE_MAPS_API_KEY' with your actual API key
 
 export const GOOGLE_MAPS_CONFIG = {

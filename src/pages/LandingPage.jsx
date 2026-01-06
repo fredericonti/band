@@ -291,13 +291,13 @@ const LandingPage = () => {
                     animate="show"
                 >
                     <motion.h1 variants={fadeInUp} className="hero-title-new">
-                        A NOVA ERA DA<br />
-                        MÚSICA AO VIVO
+                        CONECTAMOS MÚSICA<br />
+                        AO VIVO E NEGÓCIOS
                     </motion.h1>
 
                     <motion.p variants={fadeInUp} className="hero-description">
-                        Conectando artistas e estabelecimentos de forma inteligente.
-                        Sem intermediários, sem burocracia, apenas música e negócios.
+                        Tonare é o marketplace bilateral que une artistas e estabelecimentos.
+                        Pagamento antecipado com garantia, split automático e gestão completa.
                     </motion.p>
                 </motion.div>
 
@@ -452,7 +452,7 @@ const LandingPage = () => {
                         </div>
                     </div>
                     <div style={{ borderTop: '1px solid #333', paddingTop: '3rem', display: 'flex', justifyContent: 'space-between', color: '#666', fontSize: '0.8rem', fontWeight: '700', letterSpacing: '1px' }}>
-                        <span>© 2026 BAND APP. ALL RIGHTS RESERVED.</span>
+                        <span>© 2026 TONARE. ALL RIGHTS RESERVED.</span>
                         <div style={{ display: 'flex', gap: '2.5rem' }}>
                             <a href="#" className="nav-link">INSTAGRAM</a>
                             <a href="#" className="nav-link">TWITTER</a>
