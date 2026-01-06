@@ -10,10 +10,10 @@
 }
 
 .mega-title-editorial {
-    font-size: clamp(3.5rem, 10vw, 8rem);
-    font-weight: 900;
-    line-height: 0.85;
-    letter-spacing: -4px;
+    font-size: clamp(2.5rem, 8vw, 6rem);
+    font-weight: 800;
+    line-height: 0.95;
+    letter-spacing: -3px;
     text-transform: uppercase;
     margin-bottom: 2rem;
 }
@@ -241,10 +241,10 @@
 }
 
 .sheet-title-mega {
-    font-size: 5rem;
-    font-weight: 900;
+    font-size: clamp(2.5rem, 8vw, 4.5rem);
+    font-weight: 800;
     letter-spacing: -3px;
-    line-height: 0.85;
+    line-height: 0.95;
     text-transform: uppercase;
 }
 
