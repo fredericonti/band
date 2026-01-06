@@ -5,6 +5,25 @@ Todas as mudanças notáveis neste projeto serão documentadas neste arquivo.
 O formato é baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/),
 e este projeto adere ao [Semantic Versioning](https://semver.org/lang/pt-BR/).
 
+## [1.1.0] - 2026-01-05
+
+### 🎨 Estilo e UX
+
+- **Padronização Visual**: Harmonização de todos os botões primários com o estilo editorial brutalista da Home, incluindo novos estados de hover e transições.
+- **Busca de Artistas**: Layout simplificado para uma grade editorial limpa, removendo distrações e focando na descoberta.
+- **Fluxos de Navegação**: Atualização abrangente da experiência de cadastro de estabelecimentos e fluxo de login.
+- **Componentes**: Implementação de SideSheets modernos para Login e filtros, proporcionando uma experiência de app nativo.
+- **Masonry Grid**: Novo sistema de visualização de artistas e estabelecimentos usando layout masonry.
+- **Responsividade**: Melhorias universais na visualização mobile e áreas de toque.
+- **Micro-interações**: Ajuste na sensibilidade e "snap" do cursor personalizado para maior precisão.
+
+### 🔧 Refatoração
+
+- Migração de modais clássicos para SideSheets e BottomSheets contextuais.
+- Otimização do sistema de animações entre páginas.
+
+---
+
 ## [1.0.0] - 2024-12-09
 
 ### 🎉 Lançamento Inicial
