@@ -16,10 +16,10 @@
 }
 
 .editorial-title {
-    font-size: 4rem;
-    font-weight: 900;
-    line-height: 0.9;
-    letter-spacing: -3px;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -2px;
     margin-bottom: 0.5rem;
 }
 
@@ -62,10 +62,10 @@
 }
 
 .stat-value {
-    font-size: 2.5rem;
-    font-weight: 900;
-    margin: 1rem 0;
-    letter-spacing: -1px;
+    font-size: 2rem;
+    font-weight: 800;
+    margin: 0.75rem 0;
+    letter-spacing: -0.5px;
 }
 
 .stat-meta {

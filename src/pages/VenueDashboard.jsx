@@ -9,7 +9,8 @@ import {
     Users,
     Download,
     Plus,
-    Clock
+    Clock,
+    AlertCircle
 } from 'lucide-react';
 import './VenueDashboard.css';
 

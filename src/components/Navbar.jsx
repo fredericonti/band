@@ -1,19 +1,25 @@
-
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import './Navbar.css';
 
 import LoginSheet from './LoginSheet';
 
 const Navbar = () => {
-    const [isMenuOpen, setIsMenuOpen] = React.useState(false);
-    const [isLoginSheetOpen, setIsLoginSheetOpen] = React.useState(false);
-    const [user, setUser] = React.useState(null);
+    const navigate = useNavigate();
+    const location = useLocation();
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [isLoginSheetOpen, setIsLoginSheetOpen] = useState(false);
+    const [user, setUser] = useState(null);
+    const [userType, setUserType] = useState('artist'); // artist or venue
 
-    React.useEffect(() => {
+    useEffect(() => {
         const storedUser = localStorage.getItem('user');
         if (storedUser) {
             setUser(JSON.parse(storedUser));
+        }
+        const storedType = localStorage.getItem('userType');
+        if (storedType) {
+            setUserType(storedType);
         }
     }, []);
 
@@ -29,6 +35,20 @@ const Navbar = () => {
         e.preventDefault();
         closeMenu();
         setIsLoginSheetOpen(true);
+    };
+
+    const handleProfileClick = (e) => {
+        e.preventDefault();
+        closeMenu();
+        const nextType = userType === 'artist' ? 'venue' : 'artist';
+        setUserType(nextType);
+        localStorage.setItem('userType', nextType);
+
+        if (nextType === 'artist') {
+            navigate('/profile');
+        } else {
+            navigate('/venue-dashboard');
+        }
     };
 
     const getFirstName = (fullName) => {
@@ -59,9 +79,12 @@ const Navbar = () => {
                         {user ? (
                             <>
                                 <Link to="/register" className="nav-link" onClick={closeMenu}>CADASTRAR</Link>
-                                <Link to="/profile" className="nav-link login-btn" onClick={closeMenu}>
+                                <button className="nav-link login-btn" onClick={handleProfileClick}>
                                     {getFirstName(user.displayName).toUpperCase()}
-                                </Link>
+                                    <span style={{ fontSize: '0.6rem', opacity: 0.5, marginLeft: '8px' }}>
+                                        ({userType === 'artist' ? 'ARTISTA' : 'LOCAL'})
+                                    </span>
+                                </button>
                             </>
                         ) : (
                             <>
