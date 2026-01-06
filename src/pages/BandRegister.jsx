@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Plus, Trash2, Save, DollarSign, Mic2, CreditCard, AlertCircle } from 'lucide-react';
 import { motion } from 'framer-motion';
+import SideSheet from '../components/SideSheet';
 import './BandRegister.css';
 
 const BandRegister = () => {
@@ -18,6 +19,7 @@ const BandRegister = () => {
     });
 
     const [totalSplit, setTotalSplit] = useState(100);
+    const [notification, setNotification] = useState({ isOpen: false, title: '', message: '', type: 'info' });
 
     useEffect(() => {
         const total = formData.members.reduce((acc, member) => acc + Number(member.split), 0);
@@ -66,7 +68,12 @@ const BandRegister = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         if (totalSplit !== 100) {
-            alert('Total split percentage must equal 100%');
+            setNotification({
+                isOpen: true,
+                title: 'ERRO NO SPLIT',
+                message: `A soma das porcentagens de split deve ser exatamente 100%. Atualmente está em ${totalSplit}%.`,
+                type: 'error'
+            });
             return;
         }
         console.log('Form Submitted:', formData);
@@ -163,11 +170,11 @@ const BandRegister = () => {
                             </p>
                         </div>
                         <div style={{ display: 'flex', gap: '10px' }}>
-                            <button type="button" onClick={autoBalanceSplit} className="btn btn-outline btn-sm" style={{ borderColor: '#333' }}>
+                            <button type="button" onClick={autoBalanceSplit} className="btn btn-outline btn-sm">
                                 Auto-Balancear
                             </button>
                             <button type="button" onClick={addMember} className="btn btn-primary btn-sm">
-                                <Plus size={16} /> Add Membro
+                                <Plus size={16} /> ADICIONAR
                             </button>
                         </div>
                     </div>
@@ -278,6 +285,22 @@ const BandRegister = () => {
                     </button>
                 </div>
             </motion.form>
+
+            <SideSheet
+                isOpen={notification.isOpen}
+                onClose={() => setNotification({ ...notification, isOpen: false })}
+                title={notification.title}
+                type={notification.type}
+            >
+                <p>{notification.message}</p>
+                <button
+                    className="btn btn-primary btn-block"
+                    style={{ marginTop: '2rem' }}
+                    onClick={() => setNotification({ ...notification, isOpen: false })}
+                >
+                    CORRIGIR AGORA
+                </button>
+            </SideSheet>
         </motion.div>
     );
 };

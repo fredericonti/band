@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Search, Filter, Music, DollarSign } from 'lucide-react';
 import BookingSheet from '../components/BookingSheet';
+import SideSheet from '../components/SideSheet';
 import './FindBands.css';
 
 const MOCK_BANDS = [
@@ -48,6 +49,7 @@ const FindBands = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [selectedGenre, setSelectedGenre] = useState('Todos');
     const [selectedBand, setSelectedBand] = useState(null);
+    const [notification, setNotification] = useState({ isOpen: false, title: '', message: '', type: 'info' });
 
     const genres = ['Todos', 'Eletrônica', 'Jazz', 'Rock', 'Acústico'];
 
@@ -63,8 +65,12 @@ const FindBands = () => {
     };
 
     const handleContactOption = (option) => {
-        // Here we would implement the actual logic
-        alert(`Iniciando contato via ${option.toUpperCase()} com ${selectedBand.name}`);
+        setNotification({
+            isOpen: true,
+            title: 'CONTATO INICIADO',
+            message: `Estamos iniciando o contato via ${option.toUpperCase()} com a banda ${selectedBand.name}. Você receberá uma notificação em breve.`,
+            type: 'success'
+        });
         setSelectedBand(null);
     };
 
@@ -89,7 +95,8 @@ const FindBands = () => {
                         {genres.map(genre => (
                             <button
                                 key={genre}
-                                className={`filter-chip ${selectedGenre === genre ? 'active' : ''}`}
+                                className={`btn btn-sm ${selectedGenre === genre ? 'btn-primary' : 'btn-outline'}`}
+                                style={{ borderRadius: '99px', padding: '10px 24px' }}
                                 onClick={() => setSelectedGenre(genre)}
                             >
                                 {genre}
@@ -140,6 +147,22 @@ const FindBands = () => {
                 onClose={() => setSelectedBand(null)}
                 onSelectOption={handleContactOption}
             />
+
+            <SideSheet
+                isOpen={notification.isOpen}
+                onClose={() => setNotification({ ...notification, isOpen: false })}
+                title={notification.title}
+                type={notification.type}
+            >
+                <p>{notification.message}</p>
+                <button
+                    className="btn btn-primary btn-block"
+                    style={{ marginTop: '2rem' }}
+                    onClick={() => setNotification({ ...notification, isOpen: false })}
+                >
+                    ENTENDI
+                </button>
+            </SideSheet>
         </div>
     );
 };

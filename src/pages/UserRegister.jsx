@@ -7,6 +7,7 @@ import { Loader } from '@googlemaps/js-api-loader';
 import { GOOGLE_MAPS_CONFIG, SAO_PAULO_BOUNDS } from '../config/googleMaps';
 import { createVenue, createArtist } from '../utils/database';
 import BottomSheet from '../components/BottomSheet';
+import SideSheet from '../components/SideSheet';
 import './UserRegister.css';
 
 const GENRES = [
@@ -43,6 +44,7 @@ const UserRegister = () => {
     const [step, setStep] = useState(0); // 0 = Role selection, then 1,2,3...
     const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
     const [isSaving, setIsSaving] = useState(false);
+    const [notification, setNotification] = useState({ isOpen: false, title: '', message: '', type: 'info' });
 
     // Venue data
     const [venueData, setVenueData] = useState({
@@ -260,7 +262,12 @@ const UserRegister = () => {
             }, 500);
         } catch (error) {
             console.error('Error saving data:', error);
-            alert('Erro ao salvar dados. Por favor, tente novamente.');
+            setNotification({
+                isOpen: true,
+                title: 'ERRO NO CADASTRO',
+                message: 'Houve um erro ao salvar seus dados. Por favor, verifique sua conexão e tente novamente.',
+                type: 'error'
+            });
         } finally {
             setIsSaving(false);
         }
@@ -1292,6 +1299,23 @@ const UserRegister = () => {
                 onSubmit={handleAddMember}
                 title="Adicionar Integrante"
             />
+
+            <SideSheet
+                isOpen={notification.isOpen}
+                onClose={() => setNotification({ ...notification, isOpen: false })}
+                title={notification.title}
+                type={notification.type}
+            >
+                <div style={{ marginBottom: '2rem' }}>
+                    <p style={{ fontSize: '1.1rem', lineHeight: '1.6' }}>{notification.message}</p>
+                </div>
+                <button
+                    className="btn btn-primary btn-block"
+                    onClick={() => setNotification({ ...notification, isOpen: false })}
+                >
+                    ENTENDI
+                </button>
+            </SideSheet>
         </div>
     );
 };

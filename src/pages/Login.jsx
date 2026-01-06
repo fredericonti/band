@@ -140,7 +140,7 @@ const Login = () => {
 
                 {step === 'initial' && (
                     <div className="login-actions">
-                        <button className="btn btn-google btn-block btn-giant" onClick={handleGoogleLogin}>
+                        <button className="btn btn-primary btn-block btn-giant" onClick={handleGoogleLogin}>
                             CONTINUAR COM GOOGLE
                         </button>
 

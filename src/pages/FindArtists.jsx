@@ -122,7 +122,8 @@ const FindArtists = () => {
                         {['Todos', 'Rock', 'Jazz', 'Samba', 'Eletrônica'].map(cat => (
                             <button
                                 key={cat}
-                                className={`filter-simple-btn ${filter === cat ? 'active' : ''}`}
+                                className={`btn btn-sm ${filter === cat ? 'btn-primary' : 'btn-outline'}`}
+                                style={{ borderRadius: '99px', padding: '10px 24px' }}
                                 onClick={() => setFilter(cat)}
                             >
                                 {cat.toUpperCase()}

@@ -97,7 +97,8 @@ const ArtistDashboard = () => {
                     <div className="stat-footer">
                         <span className="badge-available">ANTECIPAÇÃO DISPONÍVEL</span>
                         <button
-                            className="btn-text"
+                            className="btn btn-outline btn-xs"
+                            style={{ background: 'white', color: 'black', border: 'none' }}
                             onClick={() => handleOpenAnticipation(stats.nextPayment)}
                         >
                             ANTECIPAR <ArrowUpRight size={16} />
@@ -137,7 +138,7 @@ const ArtistDashboard = () => {
                 <section className="dashboard-section">
                     <div className="section-header">
                         <h2>PRÓXIMOS SHOWS</h2>
-                        <button className="btn-link">VER TUDO</button>
+                        <button className="btn btn-outline btn-xs">VER TUDO</button>
                     </div>
                     <div className="shows-list">
                         {upcomingShows.map(show => (
@@ -192,7 +193,7 @@ const ArtistDashboard = () => {
                             </div>
                         ))}
                     </div>
-                    <button className="btn btn-outline btn-full mt-4">IR PARA PAGAMENTOS</button>
+                    <button className="btn btn-outline btn-block mt-4">IR PARA PAGAMENTOS</button>
                 </section>
             </div>
 

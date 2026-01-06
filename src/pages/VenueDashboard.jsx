@@ -105,7 +105,7 @@ const VenueDashboard = () => {
                 <section className="dashboard-section">
                     <div className="section-header">
                         <h2>AGENDA DE SHOWS</h2>
-                        <button className="btn-link">VER CALENDÁRIO</button>
+                        <button className="btn btn-outline btn-xs">VER CALENDÁRIO</button>
                     </div>
                     <div className="shows-list">
                         {nextShows.map(show => (

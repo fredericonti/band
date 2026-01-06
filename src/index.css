@@ -4,11 +4,11 @@
   /* Awwwards Minimalist Palette */
   --color-primary: #000000;
   --color-background: #FFFFFF;
-  --color-text: #1A1A1A;
-  --color-text-muted: #666666;
-  --color-gray-100: #F5F5F5;
-  --color-gray-200: #E0E0E0;
-  --color-accent: #FF0066;
+  --color-text: #0A0A0A;
+  --color-text-muted: #4D4D4D;
+  --color-gray-100: #F7F7F7;
+  --color-gray-200: #E5E5E5;
+  --color-accent: #000000;
 
   /* Semantic Names for easier migration */
   --bg-app: var(--color-background);
@@ -128,30 +128,31 @@ a:hover {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: clamp(12px, 2vh, 18px) clamp(24px, 4vw, 36px);
-  font-size: 0.8rem;
-  font-weight: 800;
+  padding: 16px 32px;
+  font-size: 0.75rem;
+  font-weight: 900;
   text-transform: uppercase;
-  letter-spacing: 1.5px;
-  border-radius: var(--radius-md);
+  letter-spacing: 2px;
+  border-radius: 4px;
   background: var(--color-primary);
   color: var(--color-background);
   border: 1px solid var(--color-primary);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.2s cubic-bezier(0.23, 1, 0.32, 1);
   position: relative;
-  overflow: hidden;
+  cursor: pointer;
+  white-space: nowrap;
 }
 
 .btn:hover {
   background: var(--color-background);
   color: var(--color-primary);
   transform: translate(-4px, -4px);
-  box-shadow: 6px 6px 0 var(--color-primary);
+  box-shadow: 4px 4px 0 var(--color-primary);
 }
 
 .btn:active {
   transform: translate(-1px, -1px);
-  box-shadow: 2px 2px 0 var(--color-primary);
+  box-shadow: 1px 1px 0 var(--color-primary);
 }
 
 .btn-primary {
@@ -176,18 +177,19 @@ a:hover {
 }
 
 .btn-giant {
-  padding: 24px 48px;
-  font-size: 1rem;
+  padding: 24px 64px;
+  font-size: 0.9rem;
 }
 
-.btn-outline {
-  background: transparent;
-  color: var(--color-primary);
-  border: 1px solid var(--border-subtle);
+.btn-sm {
+  padding: 10px 20px;
+  font-size: 0.7rem;
 }
 
-.btn-outline:hover {
-  border-color: var(--color-primary);
+.btn-xs {
+  padding: 6px 12px;
+  font-size: 0.65rem;
+  letter-spacing: 1px;
 }
 
 /* Card Style */

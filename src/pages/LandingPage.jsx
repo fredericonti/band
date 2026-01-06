@@ -448,7 +448,7 @@ const LandingPage = () => {
                         </div>
                         <div className="minimal-input-group">
                             <input type="email" placeholder="Seu melhor e-mail" />
-                            <button><ArrowRight size={20} /></button>
+                            <button className="btn btn-primary"><ArrowRight size={20} /></button>
                         </div>
                     </div>
                     <div style={{ borderTop: '1px solid #333', paddingTop: '3rem', display: 'flex', justifyContent: 'space-between', color: '#666', fontSize: '0.8rem', fontWeight: '700', letterSpacing: '1px' }}>

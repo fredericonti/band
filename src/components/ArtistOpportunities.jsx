@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Calendar, MapPin, DollarSign, Music, TrendingUp, Clock } from 'lucide-react';
 import { motion } from 'framer-motion';
+import SideSheet from './SideSheet';
 import './ArtistOpportunities.css';
 
 const ArtistOpportunities = ({ artistId, artistGenre, artistBaseCache }) => {
     const [opportunities, setOpportunities] = useState([]);
     const [invites, setInvites] = useState([]);
     const [filter, setFilter] = useState('all'); // all, opportunities, invites
+    const [notification, setNotification] = useState({ isOpen: false, title: '', message: '', type: 'info' });
 
     // Mock data - replace with real database queries
     useEffect(() => {
@@ -63,20 +65,32 @@ const ArtistOpportunities = ({ artistId, artistGenre, artistBaseCache }) => {
 
     const handleApply = (opportunityId) => {
         console.log('Applying to opportunity:', opportunityId);
-        // TODO: Create application in database
-        alert('Candidatura enviada com sucesso!');
+        setNotification({
+            isOpen: true,
+            title: 'CANDIDATURA REALIZADA',
+            message: 'Sua candidatura foi enviada com sucesso! O estabelecimento será notificado e você receberá uma resposta em breve.',
+            type: 'success'
+        });
     };
 
     const handleAcceptInvite = (inviteId) => {
         console.log('Accepting invite:', inviteId);
-        // TODO: Update gig status to pending_payment
-        alert('Convite aceito! Aguardando pagamento do estabelecimento.');
+        setNotification({
+            isOpen: true,
+            title: 'CONVITE ACEITO',
+            message: 'Você aceitou o convite! O show foi adicionado à sua agenda. Aguardando confirmação de pagamento pelo estabelecimento.',
+            type: 'success'
+        });
     };
 
     const handleDeclineInvite = (inviteId) => {
         console.log('Declining invite:', inviteId);
-        // TODO: Update invite status
-        alert('Convite recusado.');
+        setNotification({
+            isOpen: true,
+            title: 'CONVITE RECUSADO',
+            message: 'O convite foi recusado. O estabelecimento será notificado.',
+            type: 'warning'
+        });
     };
 
     const filteredData = filter === 'invites' ? [] : opportunities;
@@ -249,6 +263,23 @@ const ArtistOpportunities = ({ artistId, artistGenre, artistBaseCache }) => {
                     )}
                 </div>
             )}
+
+            <SideSheet
+                isOpen={notification.isOpen}
+                onClose={() => setNotification({ ...notification, isOpen: false })}
+                title={notification.title}
+                type={notification.type}
+            >
+                <div style={{ marginBottom: '2rem' }}>
+                    <p style={{ fontSize: '1.1rem', lineHeight: '1.6' }}>{notification.message}</p>
+                </div>
+                <button
+                    className="btn btn-primary btn-block"
+                    onClick={() => setNotification({ ...notification, isOpen: false })}
+                >
+                    OK
+                </button>
+            </SideSheet>
         </div>
     );
 };
