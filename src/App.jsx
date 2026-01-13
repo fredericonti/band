@@ -14,6 +14,7 @@ import BandPublicProfile from './pages/BandPublicProfile';
 import ArtistDashboard from './pages/ArtistDashboard';
 import VenueDashboard from './pages/VenueDashboard';
 import Login from './pages/Login';
+import TokenShowcase from './pages/TokenShowcase';
 import { initGA, logPageView } from './config/analytics';
 
 // Componente auxiliar para rastrear mudanças de rota
@@ -95,6 +96,11 @@ const AnimatedRoutes = () => {
                 <Route path="/band/:id" element={
                     <PageTransition>
                         <BandPublicProfile />
+                    </PageTransition>
+                } />
+                <Route path="/tokens" element={
+                    <PageTransition>
+                        <TokenShowcase />
                     </PageTransition>
                 } />
             </Routes>
