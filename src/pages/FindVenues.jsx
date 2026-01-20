@@ -11,7 +11,8 @@ const MOCK_VENUES = [
         location: 'Bela Vista, SP',
         description: 'Um dos clubes de jazz mais icônicos do mundo, agora em São Paulo. Oferecemos uma experiência intimista com acústica impecável e culinária de alta classe.',
         images: [
-            'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&q=80&w=1000',
+            // Modern jazz club vibe
+            'https://images.unsplash.com/photo-1511192336575-5a79af67a629?auto=format&fit=crop&q=80&w=1000',
             'https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?auto=format&fit=crop&q=80&w=1000'
         ],
         totalShows: 156,
@@ -29,7 +30,8 @@ const MOCK_VENUES = [
         location: 'Moema, SP',
         description: 'Inaugurado por B.B. King, o Bourbon Street é a casa do Blues e do Jazz no Brasil. Um ambiente que remete aos clássicos clubes de New Orleans.',
         images: [
-            'https://images.unsplash.com/photo-1540039155733-5bb30b53aa14?auto=format&fit=crop&q=80&w=1000',
+            // New Orleans style
+            'https://images.unsplash.com/photo-1533174072545-e8d4aa97edf9?auto=format&fit=crop&q=80&w=1000',
             'https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?auto=format&fit=crop&q=80&w=1000'
         ],
         totalShows: 203,
@@ -47,7 +49,8 @@ const MOCK_VENUES = [
         location: 'Liberdade, SP',
         description: 'Um antigo cinema de rua transformado em uma das casas de show mais descoladas de SP. Projeções mapeadas e palco em formato de concha.',
         images: [
-            'https://images.unsplash.com/photo-1598387993441-a364f854c3e1?auto=format&fit=crop&q=80&w=1000',
+            // Old cinema look
+            'https://images.unsplash.com/photo-1596356453261-0d265ae2520d?auto=format&fit=crop&q=80&w=1000',
             'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&q=80&w=1000'
         ],
         totalShows: 89,
@@ -65,7 +68,8 @@ const MOCK_VENUES = [
         location: 'Pinheiros, SP',
         description: 'Um espaço dedicado à música brasileira em toda a sua diversidade. Sustentabilidade e conforto para artistas e público.',
         images: [
-            'https://images.unsplash.com/photo-1429962714451-bb934ecdc4ec?auto=format&fit=crop&q=80&w=1000',
+            // Intimate concert
+            'https://images.unsplash.com/photo-1583795490981-d5ef5a5b5464?auto=format&fit=crop&q=80&w=1000',
             'https://images.unsplash.com/photo-1501612780327-45045538702b?auto=format&fit=crop&q=80&w=1000'
         ],
         totalShows: 124,
@@ -83,7 +87,8 @@ const MOCK_VENUES = [
         location: 'Água Branca, SP',
         description: 'Espaço multiuso para grandes shows e eventos. Infraestrutura de ponta e localização privilegiada no coração da Barra Funda.',
         images: [
-            'https://images.unsplash.com/photo-1571266028243-d220c6e2e2e5?auto=format&fit=crop&q=80&w=1000',
+            // Big stage
+            'https://images.unsplash.com/photo-1506157786151-b8491531f436?auto=format&fit=crop&q=80&w=1000',
             'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&q=80&w=1000'
         ],
         totalShows: 267,
@@ -101,7 +106,8 @@ const MOCK_VENUES = [
         location: 'Centro, SP',
         description: 'O cruzamento mais famoso de São Paulo. História, boemia e o melhor do Samba e MPB todos os dias.',
         images: [
-            'https://images.unsplash.com/photo-1543007630-9710e4a00a20?auto=format&fit=crop&q=80&w=1000',
+            // Bar vibe
+            'https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&q=80&w=1000',
             'https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&q=80&w=1000'
         ],
         totalShows: 412,
@@ -176,12 +182,12 @@ const SideSheet = ({ venue, onClose }) => {
                 <div className="sheet-section">
                     <span className="section-label-minimal">ONDE ESTAMOS</span>
                     <p className="tech-pro-text" style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
-                        <MapPin size={18} color="var(--color-accent)" /> {venue.address}
+                        <MapPin size={18} color="var(--brand-accent)" /> {venue.address}
                     </p>
                 </div>
 
                 <div className="footer-action-sticky">
-                    <button className="btn btn-primary btn-block btn-giant" style={{ margin: 0 }}>
+                    <button className="btn btn-primary btn-block" style={{ margin: 0 }}>
                         SOLICITAR ORÇAMENTO <ArrowRight size={18} />
                     </button>
                     <div className="social-links-minimal">
@@ -228,14 +234,16 @@ const FindVenues = () => {
                     </motion.p>
 
                     <div className="hero-filter-bar">
-                        <div className="search-minimal-reborn">
-                            <Search size={20} />
+                        <div className="minimal-input-group">
                             <input
                                 type="text"
                                 placeholder="BUSCAR POR NOME OU BAIRRO..."
                                 value={searchTerm}
                                 onChange={(e) => setSearchTerm(e.target.value)}
                             />
+                            <button className="btn btn-icon">
+                                <Search size={20} />
+                            </button>
                         </div>
                     </div>
                 </div>

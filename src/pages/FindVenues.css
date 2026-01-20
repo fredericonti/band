@@ -4,9 +4,10 @@
 }
 
 /* 1. Hero Editorial */
+/* 1. Hero Editorial */
 .venues-hero-editorial {
     padding: 120px 0 60px;
-    background: var(--color-background);
+    background: var(--bg-canvas);
 }
 
 .mega-title-editorial {
@@ -16,12 +17,13 @@
     letter-spacing: -3px;
     text-transform: uppercase;
     margin-bottom: 2rem;
+    color: var(--brand-primary);
 }
 
 .hero-subtitle {
     font-size: 1.25rem;
     font-weight: 500;
-    color: var(--color-text-muted);
+    color: var(--text-muted);
     margin-bottom: 4rem;
 }
 
@@ -29,67 +31,98 @@
     max-width: 600px;
 }
 
-.search-minimal-reborn {
+/* Home-style Minimal Input */
+.minimal-input-group {
     display: flex;
     align-items: center;
-    gap: 1rem;
-    padding: 1rem 0;
-    border-bottom: 2px solid var(--border-strong);
-}
-
-.search-minimal-reborn input {
-    background: none;
-    border: none;
+    background: var(--neutral-100);
+    padding: 8px;
+    border-radius: 100px;
+    border: 1px solid var(--neutral-80);
     width: 100%;
-    font-family: var(--font-mono);
-    font-size: 0.9rem;
-    font-weight: 700;
-    outline: none;
-    text-transform: uppercase;
+    max-width: 450px;
+    transition: all 0.3s ease;
 }
 
-/* 2. Masonry Grid */
+.minimal-input-group:focus-within {
+    border-color: var(--brand-primary);
+    box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.1);
+}
+
+.minimal-input-group input {
+    background: transparent;
+    border: none;
+    padding: 1rem 1.5rem;
+    color: var(--text-inverse);
+    flex: 1;
+    outline: none;
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.minimal-input-group button {
+    background: var(--neutral-0);
+    color: var(--brand-primary);
+    border-radius: 50%;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s;
+}
+
+.minimal-input-group button:hover {
+    transform: scale(1.05);
+}
+
+/* 2. Grid Content (Equal Height) */
 .venues-masonry-content {
     padding: 6rem 0;
 }
 
 .masonry-grid {
-    column-count: 3;
-    column-gap: 40px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 40px;
+    align-items: stretch;
 }
 
 .venue-card-masonry {
-    break-inside: avoid;
-    margin-bottom: 40px;
-    background: white;
+    background: var(--bg-canvas);
     border: 1px solid var(--border-strong);
     cursor: pointer;
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 }
 
 .venue-card-masonry:hover {
     box-shadow: 20px 20px 0 rgba(0, 0, 0, 0.05);
+    transform: translateY(-8px);
+    border-color: var(--brand-primary);
 }
 
 .card-image-masonry {
     width: 100%;
-    height: auto;
-    aspect-ratio: 4/5;
+    height: 320px;
     background-size: cover;
     background-position: center;
     position: relative;
     border-bottom: 1px solid var(--border-strong);
 }
 
+/* Remove aspect-ratio variance for consistency */
 .venue-card-masonry:nth-child(even) .card-image-masonry {
-    aspect-ratio: 3/4;
+    aspect-ratio: auto;
 }
 
 .available-indicator {
     position: absolute;
     top: 1rem;
     right: 1rem;
-    background: var(--color-primary);
+    background: var(--brand-primary);
     color: white;
     padding: 4px 10px;
     font-size: 0.6rem;
@@ -99,13 +132,16 @@
 
 .card-content-masonry {
     padding: 2.5rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
 }
 
 .card-location-hint {
     font-size: 0.65rem;
     font-weight: 800;
     letter-spacing: 1px;
-    color: var(--color-accent);
+    color: var(--brand-accent);
 }
 
 .card-title-masonry {
@@ -115,6 +151,7 @@
     margin: 1rem 0;
     text-transform: uppercase;
     line-height: 1;
+    color: var(--brand-primary);
 }
 
 .card-meta-masonry {
@@ -196,7 +233,8 @@
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(to bottom, transparent 60%, rgba(255, 255, 255, 1) 100%);
+    /* Much more subtle gradient to allow text reading without improved "white flash" */
+    background: linear-gradient(to bottom, transparent 40%, var(--bg-canvas) 100%);
 }
 
 .sheet-rating-pill {
