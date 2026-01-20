@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowRight, ArrowLeft, MapPin, Music } from 'lucide-react';
+import { ArrowRight, ArrowLeft, ArrowUpRight, MapPin, Music } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Loader } from '@googlemaps/js-api-loader';
 import { GOOGLE_MAPS_CONFIG, SAO_PAULO_BOUNDS } from '../config/googleMaps';
@@ -305,34 +305,40 @@ const UserRegister = () => {
                 {step === 0 && (
                     <motion.div
                         key="role-select"
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        className="split-screen-container"
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -20 }}
+                        className="role-selection-grid"
                     >
                         {/* LEFT: VENUE */}
                         <div
-                            className="split-pane pane-venue"
+                            className="role-card"
                             onClick={() => { setUserType('venue'); setStep(1); }}
                         >
                             <div className="pane-content">
-                                <MapPin size={64} className="pane-icon" />
-                                <h1 className="pane-title">SOU<br />ESTABELECIMENTO</h1>
-                                <p className="pane-desc">Quero contratar bandas e organizar minha agenda.</p>
-                                <span className="pane-cta">CRIAR CONTA <ArrowRight /></span>
+                                <span className="role-label">PARA ESTABELECIMENTOS</span>
+                                <h1 className="pane-title">Encontre o artista ideal para sua noite</h1>
+                                <p className="pane-desc">Quero contratar bandas, organizar minha agenda e gerenciar pagamentos com segurança.</p>
+                                <div className="pane-footer">
+                                    <span className="pane-cta">CRIAR CONTA</span>
+                                    <ArrowUpRight size={24} />
+                                </div>
                             </div>
                         </div>
 
                         {/* RIGHT: ARTIST */}
                         <div
-                            className="split-pane pane-artist"
+                            className="role-card"
                             onClick={() => { setUserType('artist'); setStep(1); }}
                         >
                             <div className="pane-content">
-                                <Music size={64} className="pane-icon" />
-                                <h1 className="pane-title">SOU<br />ARTISTA</h1>
-                                <p className="pane-desc">Quero tocar mais e receber sem dor de cabeça.</p>
-                                <span className="pane-cta">CRIAR PERFIL <ArrowRight /></span>
+                                <span className="role-label">PARA ARTISTAS</span>
+                                <h1 className="pane-title">Transforme sua paixão em carreira sólida</h1>
+                                <p className="pane-desc">Quero tocar mais, receber cachê antecipado e profissionalizar meu perfil musical.</p>
+                                <div className="pane-footer">
+                                    <span className="pane-cta">CRIAR PERFIL</span>
+                                    <ArrowUpRight size={24} />
+                                </div>
                             </div>
                         </div>
                     </motion.div>
@@ -401,7 +407,7 @@ const UserRegister = () => {
                                 CANCELAR
                             </button>
                             <button
-                                className="btn btn-primary btn-large"
+                                className="btn btn-primary"
                                 onClick={handleNext}
                                 disabled={!venueData.name || !venueData.cnpj}
                             >
@@ -447,10 +453,10 @@ const UserRegister = () => {
                         </div>
 
                         <div className="button-group">
-                            <button className="btn btn-outline" style={{ height: '100%' }} onClick={handleBack}>
+                            <button className="btn btn-outline" onClick={handleBack}>
                                 NÃO, VOLTAR
                             </button>
-                            <button className="btn btn-primary btn-large" style={{ height: '100%' }} onClick={handleNext}>
+                            <button className="btn btn-primary" onClick={handleNext}>
                                 SIM, CONFIRMAR <ArrowRight size={20} />
                             </button>
                         </div>
@@ -498,7 +504,7 @@ const UserRegister = () => {
                         </div>
 
                         <button
-                            className="btn btn-primary btn-large"
+                            className="btn btn-primary"
                             onClick={handleNext}
                             disabled={venueData.operatingDays.length === 0}
                         >
@@ -569,7 +575,7 @@ const UserRegister = () => {
                         </div>
 
                         <button
-                            className="btn btn-primary btn-large"
+                            className="btn btn-primary"
                             onClick={handleNext}
                         >
                             CONTINUAR <ArrowRight size={20} />
@@ -601,7 +607,7 @@ const UserRegister = () => {
                         </div>
 
                         <button
-                            className="btn btn-primary btn-large"
+                            className="btn btn-primary"
                             onClick={handleNext}
                         >
                             CONTINUAR <ArrowRight size={20} />
@@ -634,7 +640,7 @@ const UserRegister = () => {
                         </div>
 
                         <button
-                            className="btn btn-primary btn-large"
+                            className="btn btn-primary"
                             onClick={handleNext}
                             disabled={venueData.genres.length === 0}
                         >
@@ -697,7 +703,7 @@ const UserRegister = () => {
                         </div>
 
                         <button
-                            className="btn btn-primary btn-large"
+                            className="btn btn-primary"
                             onClick={handleNext}
                         >
                             PRÓXIMO <ArrowRight size={20} />
@@ -736,7 +742,7 @@ const UserRegister = () => {
                         </div>
 
                         <button
-                            className="btn btn-primary btn-large"
+                            className="btn btn-primary"
                             onClick={handleNext}
                             disabled={venueData.preferredFormats.length === 0}
                         >
@@ -776,7 +782,7 @@ const UserRegister = () => {
                         </div>
 
                         <button
-                            className="btn btn-primary btn-large"
+                            className="btn btn-primary"
                             onClick={handleNext}
                         >
                             REVISAR DADOS <ArrowRight size={20} />
@@ -828,7 +834,7 @@ const UserRegister = () => {
                         </div>
 
                         <button
-                            className="btn btn-primary btn-large"
+                            className="btn btn-primary"
                             onClick={handleSubmit}
                             disabled={isSaving}
                         >
@@ -863,7 +869,7 @@ const UserRegister = () => {
                                 CANCELAR
                             </button>
                             <button
-                                className="btn btn-primary btn-large"
+                                className="btn btn-primary"
                                 onClick={handleNext}
                                 disabled={!artistData.name.trim()}
                             >
@@ -898,7 +904,7 @@ const UserRegister = () => {
                         </div>
 
                         <button
-                            className="btn btn-primary btn-large"
+                            className="btn btn-primary"
                             onClick={() => {
                                 // If Solo, skip Step 3 (Lineup)
                                 if (artistData.projectType === 'Solo') {
@@ -955,7 +961,7 @@ const UserRegister = () => {
                         </div>
 
                         <button
-                            className="btn btn-primary btn-large"
+                            className="btn btn-primary"
                             onClick={handleNext}
                             disabled={!artistData.lineup || artistData.lineup.length < (artistData.projectType === 'Duo' ? 1 : artistData.projectType === 'Trio' ? 2 : 3)}
                         >
@@ -1004,7 +1010,7 @@ const UserRegister = () => {
                         </div>
 
                         <button
-                            className="btn btn-primary btn-large"
+                            className="btn btn-primary"
                             onClick={handleNext}
                             disabled={!artistData.location.trim()}
                         >
@@ -1052,7 +1058,7 @@ const UserRegister = () => {
                         </div>
 
                         <button
-                            className="btn btn-primary btn-large"
+                            className="btn btn-primary"
                             onClick={handleNext}
                             disabled={!artistData.instagram && !artistData.videoUrl}
                         >
@@ -1086,7 +1092,7 @@ const UserRegister = () => {
                         </div>
 
                         <button
-                            className="btn btn-primary btn-large"
+                            className="btn btn-primary"
                             onClick={handleNext}
                             disabled={artistData.genres.length === 0}
                         >
@@ -1149,7 +1155,7 @@ const UserRegister = () => {
                         </div>
 
                         <button
-                            className="btn btn-primary btn-large"
+                            className="btn btn-primary"
                             onClick={handleNext}
                         >
                             PRÓXIMO <ArrowRight size={20} />
@@ -1192,7 +1198,7 @@ const UserRegister = () => {
                         )}
 
                         <button
-                            className="btn btn-primary btn-large"
+                            className="btn btn-primary"
                             onClick={handleNext}
                             style={{ marginTop: '3rem' }}
                         >
@@ -1230,7 +1236,7 @@ const UserRegister = () => {
                         </div>
 
                         <button
-                            className="btn btn-primary btn-large"
+                            className="btn btn-primary"
                             onClick={handleNext}
                         >
                             REVISAR DADOS <ArrowRight size={20} />
@@ -1282,7 +1288,7 @@ const UserRegister = () => {
                         </div>
 
                         <button
-                            className="btn btn-primary btn-large"
+                            className="btn btn-primary"
                             onClick={handleSubmit}
                             disabled={isSaving}
                         >

@@ -89,7 +89,7 @@ const Navbar = () => {
                         ) : (
                             <>
                                 <Link to="/register" className="nav-link" onClick={closeMenu}>CADASTRAR</Link>
-                                <button className="btn btn-primary btn-sm" onClick={openLoginSheet} style={{ marginLeft: '1rem' }}>
+                                <button className="btn btn-primary btn-sm login-navbar-btn" onClick={openLoginSheet}>
                                     LOGIN
                                 </button>
                             </>

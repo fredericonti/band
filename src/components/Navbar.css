@@ -38,6 +38,10 @@
     letter-spacing: 0.5px;
 }
 
+.login-navbar-btn {
+    margin-left: 2rem;
+}
+
 .login-btn {
     background: var(--color-primary);
     color: var(--color-background);
@@ -107,9 +111,17 @@
     }
 
     .nav-link {
-        font-size: 1.75rem;
+        font-size: 2rem;
         font-weight: 900;
         letter-spacing: -1px;
+        width: 100%;
+        text-align: center;
+    }
+
+    .login-navbar-btn {
+        margin-left: 0;
+        width: 100%;
+        max-width: 250px;
     }
 
     .login-btn {

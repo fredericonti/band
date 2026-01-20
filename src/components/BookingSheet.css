@@ -160,7 +160,7 @@
         max-height: 80vh;
         border-left: none;
         border-top: 1px solid var(--border-subtle);
-        border-radius: 24px 24px 0 0;
+        border-radius: 12px 12px 0 0;
         animation: slideInUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     }
 }

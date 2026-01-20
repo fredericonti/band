@@ -357,7 +357,16 @@
     }
 
     .editorial-title {
-        font-size: 3rem;
+        font-size: 2.75rem;
+    }
+
+    .dashboard-section {
+        padding: 1.5rem;
+    }
+
+    .show-item-card {
+        flex-wrap: wrap;
+        gap: 1rem;
     }
 
     .show-item-card {
