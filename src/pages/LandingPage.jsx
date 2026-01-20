@@ -152,7 +152,24 @@ const AnimEarlyPayment = () => (
         <div style={{ width: '100%', maxWidth: '280px', background: '#f9f9f9', padding: '2rem', borderRadius: '12px', border: '1px solid #eee' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '1rem', fontSize: '0.75rem', color: '#999', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '1px' }}>
                 <span>Status Bancário</span>
-                <span style={{ color: '#000' }}>Processando</span>
+                <div style={{ position: 'relative' }}>
+                    <motion.span
+                        initial={{ opacity: 1 }}
+                        whileInView={{ opacity: 0 }}
+                        transition={{ delay: 2.4, duration: 0.1 }}
+                        style={{ color: '#000' }}
+                    >
+                        Processando
+                    </motion.span>
+                    <motion.span
+                        initial={{ opacity: 0 }}
+                        whileInView={{ opacity: 1 }}
+                        transition={{ delay: 2.5, duration: 0.1 }}
+                        style={{ color: '#000', position: 'absolute', right: 0, top: 0 }}
+                    >
+                        Concluído
+                    </motion.span>
+                </div>
             </div>
             <div style={{ height: '4px', background: '#eee', borderRadius: '999px', overflow: 'hidden' }}>
                 <motion.div
@@ -165,10 +182,20 @@ const AnimEarlyPayment = () => (
             <motion.div
                 initial={{ opacity: 0, y: 10 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: 2.2 }}
+                transition={{ delay: 2.5 }}
                 style={{ marginTop: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.75rem', color: '#000', fontSize: '0.875rem', fontWeight: '700' }}
             >
-                <div style={{ border: '1px solid #000', padding: '4px', borderRadius: '50%' }}><Check size={12} strokeWidth={3} /></div>
+                <div style={{
+                    width: '24px',
+                    height: '24px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    border: '1px solid #000',
+                    borderRadius: '50%'
+                }}>
+                    <Check size={14} strokeWidth={3} />
+                </div>
                 PAGAMENTO REALIZADO
             </motion.div>
         </div>
