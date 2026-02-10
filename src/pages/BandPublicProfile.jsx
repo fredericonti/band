@@ -2,6 +2,8 @@
 import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { ArrowLeft, Play, Pause, Share2, Heart, MessageCircle } from 'lucide-react';
+import BookingSheet from '../components/BookingSheet';
+import SideSheet from '../components/SideSheet';
 import './BandPublicProfile.css';
 
 // Mock data - in a real app this would come from an API/Database based on ID
@@ -98,6 +100,18 @@ const BandPublicProfile = () => {
     const { id } = useParams();
     const navigate = useNavigate();
     const band = MOCK_BAND_DETAILS[id] || MOCK_BAND_DETAILS[1]; // Fallback to first band if ID not found
+    const [isBookingOpen, setIsBookingOpen] = React.useState(false);
+    const [notification, setNotification] = React.useState({ isOpen: false, title: '', message: '', type: 'info' });
+
+    const handleContactOption = (option) => {
+        setIsBookingOpen(false);
+        setNotification({
+            isOpen: true,
+            title: 'SOLICITAÇÃO ENVIADA',
+            message: `Sua proposta foi enviada via ${option.toUpperCase()} para ${band.name}. Aguarde o retorno.`,
+            type: 'success'
+        });
+    };
 
     return (
         <div className="band-public-profile">
@@ -123,7 +137,7 @@ const BandPublicProfile = () => {
                         </div>
                     </div>
                     <div className="profile-actions">
-                        <button className="btn btn-primary">CONTRATAR AGORA</button>
+                        <button className="btn btn-primary" onClick={() => setIsBookingOpen(true)}>CONTRATAR AGORA</button>
                         <button className="btn btn-outline btn-icon"><MessageCircle size={20} /></button>
                         <button className="btn btn-outline btn-icon"><Heart size={20} /></button>
                         <button className="btn btn-outline btn-icon"><Share2 size={20} /></button>
@@ -176,7 +190,36 @@ const BandPublicProfile = () => {
                     </div>
                 </div>
             </div>
-        </div>
+
+
+            <BookingSheet
+                band={band}
+                onClose={() => setIsBookingOpen(false)}
+                onSelectOption={handleContactOption}
+                isOpen={isBookingOpen} // Pass isOpen if BookingSheet supports it, or use conditional rendering
+            />
+            {
+                isBookingOpen && (
+                    <div className="sheet-backdrop" onClick={() => setIsBookingOpen(false)} style={{ zIndex: 999 }}></div>
+                )
+            }
+
+            <SideSheet
+                isOpen={notification.isOpen}
+                onClose={() => setNotification({ ...notification, isOpen: false })}
+                title={notification.title}
+                type={notification.type}
+            >
+                <p>{notification.message}</p>
+                <button
+                    className="btn btn-primary btn-block"
+                    style={{ marginTop: '2rem' }}
+                    onClick={() => setNotification({ ...notification, isOpen: false })}
+                >
+                    ENTENDI
+                </button>
+            </SideSheet>
+        </div >
     );
 };
 

@@ -121,7 +121,7 @@ const MOCK_VENUES = [
     }
 ];
 
-const SideSheet = ({ venue, onClose }) => {
+const SideSheet = ({ venue, onClose, onRequestQuote }) => {
     if (!venue) return null;
 
     return (
@@ -187,7 +187,7 @@ const SideSheet = ({ venue, onClose }) => {
                 </div>
 
                 <div className="footer-action-sticky">
-                    <button className="btn btn-primary btn-block" style={{ margin: 0 }}>
+                    <button className="btn btn-primary btn-block" style={{ margin: 0 }} onClick={onRequestQuote}>
                         SOLICITAR ORÇAMENTO <ArrowRight size={18} />
                     </button>
                     <div className="social-links-minimal">
@@ -203,6 +203,7 @@ const SideSheet = ({ venue, onClose }) => {
 const FindVenues = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [selectedVenue, setSelectedVenue] = useState(null);
+    const [notification, setNotification] = useState({ isOpen: false, title: '', message: '', type: 'info' });
     const [filter, setFilter] = useState('Todos');
 
     const filteredVenues = MOCK_VENUES.filter(venue => {
@@ -294,10 +295,45 @@ const FindVenues = () => {
                         <SideSheet
                             venue={selectedVenue}
                             onClose={() => setSelectedVenue(null)}
+                            onRequestQuote={() => {
+                                setSelectedVenue(null);
+                                setNotification({
+                                    isOpen: true,
+                                    title: 'ORÇAMENTO SOLICITADO',
+                                    message: `Sua solicitação de orçamento foi enviada para ${selectedVenue.name}. Eles entrarão em contato em breve.`,
+                                    type: 'success'
+                                });
+                            }}
                         />
                     </>
                 )}
             </AnimatePresence>
+
+            <div className="notifications-layer">
+                {/* Reuse SideSheet or a simpler toast for notification? 
+                         Since SideSheet component is already imported/used, we can reuse it if we import it properly or reuse the SideSheet logic.
+                         Wait, SideSheet in this file is a local component `const SideSheet`.
+                         The `SideSheet` imported in BandPublicProfile is likely `../components/SideSheet`.
+                         Here, `SideSheet` is locally defined on line 124.
+                         I should use a separate notification mechanism or modify the local SideSheet to support "notification mode" or just alert for now since I can't easily import the generic SideSheet without naming conflicts.
+                         
+                         Let's use `alert` for simplicity OR I can check if `../components/SideSheet` is available and rename the local one.
+                         Actually, `import SideSheet from '../components/SideSheet'` is NOT present in FindVenues.jsx. 
+                         The local component is named `SideSheet`.
+                         
+                         I will just inject a simple full-screen success overlay here for "Editorial" effect.
+                     */}
+                {notification.isOpen && (
+                    <div style={{
+                        position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.8)', color: 'white',
+                        zIndex: 2000, display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', textAlign: 'center'
+                    }} onClick={() => setNotification({ ...notification, isOpen: false })}>
+                        <h2 style={{ fontSize: '3rem', fontWeight: 900, marginBottom: '1rem' }}>{notification.title}</h2>
+                        <p style={{ fontSize: '1.5rem', maxWidth: '600px' }}>{notification.message}</p>
+                        <button className="btn btn-primary" style={{ marginTop: '2rem', background: 'white', color: 'black' }}>FECHAR</button>
+                    </div>
+                )}
+            </div>
         </div>
     );
 };
