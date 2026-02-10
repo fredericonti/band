@@ -242,7 +242,7 @@ const FindVenues = () => {
                                 onChange={(e) => setSearchTerm(e.target.value)}
                             />
                             <button className="btn btn-icon">
-                                <Search size={20} />
+                                <ArrowRight size={20} color="#000" />
                             </button>
                         </div>
                     </div>

@@ -278,7 +278,7 @@ a:hover {
   padding: var(--space-3) var(--space-4);
   background: var(--bg-canvas);
   border: 1px solid var(--border-default);
-  border-radius: var(--radius-full);
+  border-radius: var(--radius-sm);
   color: var(--text-default);
   font-size: var(--font-size-sm);
   font-family: var(--font-main);

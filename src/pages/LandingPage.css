@@ -292,7 +292,7 @@
     align-items: center;
     background: #111;
     padding: 8px;
-    border-radius: 100px;
+    border-radius: var(--radius-sm);
     border: 1px solid #333;
     width: 100%;
     max-width: 450px;

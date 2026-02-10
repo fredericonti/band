@@ -96,7 +96,7 @@ const FindBands = () => {
                             <button
                                 key={genre}
                                 className={`btn btn-sm ${selectedGenre === genre ? 'btn-primary' : 'btn-outline'}`}
-                                style={{ borderRadius: '99px', padding: '10px 24px' }}
+                                style={{ padding: '10px 24px' }}
                                 onClick={() => setSelectedGenre(genre)}
                             >
                                 {genre}
