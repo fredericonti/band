@@ -2,7 +2,7 @@
 // Replace 'YOUR_GOOGLE_MAPS_API_KEY' with your actual API key
 
 export const GOOGLE_MAPS_CONFIG = {
-    apiKey: 'YOUR_GOOGLE_MAPS_API_KEY', // ⚠️ Add your API key here
+    apiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY || "",
     libraries: ['places'],
     region: 'BR',
     language: 'pt-BR'

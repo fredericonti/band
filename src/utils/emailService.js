@@ -2,9 +2,9 @@ import emailjs from '@emailjs/browser';
 
 // Initialize EmailJS with your public key
 // You can get this from https://dashboard.emailjs.com/admin/account
-const PUBLIC_KEY = "YOUR_PUBLIC_KEY";
-const SERVICE_ID = "YOUR_SERVICE_ID";
-const TEMPLATE_ID = "YOUR_TEMPLATE_ID";
+const PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY || "";
+const SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID || "";
+const TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID || "";
 
 export const initEmailService = () => {
     emailjs.init(PUBLIC_KEY);
