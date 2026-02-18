@@ -1,8 +1,15 @@
 import { initializeApp } from "firebase/app";
-import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import {
+    getAuth,
+    GoogleAuthProvider,
+    signInWithPopup,
+    sendSignInLinkToEmail,
+    isSignInWithEmailLink,
+    signInWithEmailLink,
+    signOut
+} from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 
-// Firebase configuration (set via environment variables)
 const firebaseConfig = {
     apiKey: import.meta.env.VITE_FIREBASE_API_KEY || "",
     authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN || "",
@@ -20,13 +27,38 @@ export const auth = getAuth(app);
 export const db = getFirestore(app);
 export const googleProvider = new GoogleAuthProvider();
 
-// Auth helper
+// ─── Google Sign In ───────────────────────────────────────────────────────────
 export const signInWithGoogle = async () => {
-    try {
-        const result = await signInWithPopup(auth, googleProvider);
-        return result.user;
-    } catch (error) {
-        console.error("Error signing in with Google", error);
-        throw error;
+    const result = await signInWithPopup(auth, googleProvider);
+    return result.user;
+};
+
+// ─── Email Magic Link (OTP via link) ─────────────────────────────────────────
+// Configurações do link de email
+const actionCodeSettings = {
+    // URL para onde o usuário será redirecionado após clicar no link
+    url: window.location.origin + '/login',
+    handleCodeInApp: true,
+};
+
+export const sendEmailLoginLink = async (email) => {
+    await sendSignInLinkToEmail(auth, email, actionCodeSettings);
+    // Salvar email no localStorage para usar na verificação
+    window.localStorage.setItem('emailForSignIn', email);
+};
+
+export const completeEmailSignIn = async (email, emailLink) => {
+    if (!isSignInWithEmailLink(auth, emailLink)) {
+        throw new Error('Link inválido');
     }
+    const result = await signInWithEmailLink(auth, email, emailLink);
+    window.localStorage.removeItem('emailForSignIn');
+    return result.user;
+};
+
+export const isEmailSignInLink = (link) => isSignInWithEmailLink(auth, link);
+
+// ─── Sign Out ─────────────────────────────────────────────────────────────────
+export const firebaseSignOut = async () => {
+    await signOut(auth);
 };

@@ -1,26 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import './Navbar.css';
-
 import LoginSheet from './LoginSheet';
+import { useAuth } from '../context/AuthContext';
 
 const Navbar = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isLoginSheetOpen, setIsLoginSheetOpen] = useState(false);
-    const [user, setUser] = useState(null);
     const [userType, setUserType] = useState('artist'); // artist or venue
+    const { user, logout } = useAuth();
 
     useEffect(() => {
-        const storedUser = localStorage.getItem('user');
-        if (storedUser) {
-            setUser(JSON.parse(storedUser));
-        }
         const storedType = localStorage.getItem('userType');
-        if (storedType) {
-            setUserType(storedType);
-        }
+        if (storedType) setUserType(storedType);
     }, []);
 
     const toggleMenu = () => {
@@ -40,15 +34,14 @@ const Navbar = () => {
     const handleProfileClick = (e) => {
         e.preventDefault();
         closeMenu();
-        const nextType = userType === 'artist' ? 'venue' : 'artist';
-        setUserType(nextType);
-        localStorage.setItem('userType', nextType);
+        navigate(userType === 'artist' ? '/profile' : '/venue-dashboard');
+    };
 
-        if (nextType === 'artist') {
-            navigate('/profile');
-        } else {
-            navigate('/venue-dashboard');
-        }
+    const handleLogout = async (e) => {
+        e.preventDefault();
+        closeMenu();
+        await logout();
+        navigate('/');
     };
 
     const getFirstName = (fullName) => {
@@ -80,10 +73,10 @@ const Navbar = () => {
                             <>
                                 <Link to="/register" className="nav-link" onClick={closeMenu}>CADASTRAR</Link>
                                 <button className="nav-link login-btn" onClick={handleProfileClick}>
-                                    {getFirstName(user.displayName).toUpperCase()}
-                                    <span style={{ fontSize: '0.6rem', opacity: 0.5, marginLeft: '8px' }}>
-                                        ({userType === 'artist' ? 'ARTISTA' : 'LOCAL'})
-                                    </span>
+                                    {getFirstName(user.displayName || user.email).toUpperCase()}
+                                </button>
+                                <button className="btn btn-outline btn-sm login-navbar-btn" onClick={handleLogout}>
+                                    SAIR
                                 </button>
                             </>
                         ) : (

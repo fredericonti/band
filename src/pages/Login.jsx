@@ -1,59 +1,78 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Mail } from 'lucide-react';
-import { initEmailService } from '../utils/emailService';
-import { signInWithGoogle } from '../config/firebase';
+import { Mail, CheckCircle } from 'lucide-react';
+import { signInWithGoogle, sendEmailLoginLink, completeEmailSignIn, isEmailSignInLink } from '../config/firebase';
+import { useAuth } from '../context/AuthContext';
 import './Login.css';
-
-// Initialize EmailJS
-initEmailService();
 
 const Login = () => {
     const navigate = useNavigate();
-    const [step, setStep] = useState('initial'); // initial, email-input, otp-input
+    const { user } = useAuth();
+    const [step, setStep] = useState('initial'); // initial | email-input | email-sent | completing
     const [email, setEmail] = useState('');
-    const [otp, setOtp] = useState(['', '', '', '']);
-    const [generatedOtp, setGeneratedOtp] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
+
+    // Se já está logado, redireciona
+    useEffect(() => {
+        if (user) {
+            navigate('/register');
+        }
+    }, [user, navigate]);
+
+    // Verifica se a URL atual é um link de login por email (magic link)
+    useEffect(() => {
+        if (isEmailSignInLink(window.location.href)) {
+            setStep('completing');
+            const savedEmail = window.localStorage.getItem('emailForSignIn');
+
+            const finishSignIn = async (emailToUse) => {
+                try {
+                    await completeEmailSignIn(emailToUse, window.location.href);
+                    // onAuthStateChanged no AuthContext vai detectar e redirecionar
+                } catch (err) {
+                    console.error('Erro ao completar login:', err);
+                    setError('Link inválido ou expirado. Tente novamente.');
+                    setStep('initial');
+                }
+            };
+
+            if (savedEmail) {
+                finishSignIn(savedEmail);
+            } else {
+                // Email não encontrado no localStorage (abriu em outro dispositivo)
+                const emailInput = window.prompt('Por favor, confirme seu e-mail para entrar:');
+                if (emailInput) {
+                    finishSignIn(emailInput);
+                } else {
+                    setStep('initial');
+                }
+            }
+        }
+    }, []);
 
     const handleGoogleLogin = async () => {
         setIsLoading(true);
         setError('');
         try {
-            const user = await signInWithGoogle();
-            console.log("Google Login Success:", user);
-            localStorage.setItem('user', JSON.stringify(user));
-            navigate('/register');
+            await signInWithGoogle();
+            // AuthContext detecta e redireciona via useEffect acima
         } catch (err) {
-            console.error("Google Login Error:", err);
-            console.warn("Falha no Login Google. Ativando modo de demonstração/fallback.");
-
-            // Fallback: Create a mock user session so the user can proceed
-            const mockUser = {
-                uid: 'demo_user_' + Date.now(),
-                displayName: 'Usuário Demo',
-                email: 'demo@bandapp.com',
-                photoURL: null,
-                isAnonymous: true
-            };
-
-            localStorage.setItem('user', JSON.stringify(mockUser));
-            // Small delay to simulate processing
-            setTimeout(() => {
-                navigate('/register');
-            }, 1000);
+            console.error('Erro no login Google:', err);
+            if (err.code === 'auth/popup-closed-by-user') {
+                setError('Login cancelado. Tente novamente.');
+            } else if (err.code === 'auth/popup-blocked') {
+                setError('Popup bloqueado pelo navegador. Permita popups para este site.');
+            } else {
+                setError('Erro ao entrar com Google. Tente novamente.');
+            }
         } finally {
             setIsLoading(false);
         }
     };
 
     const validateEmail = (email) => {
-        return String(email)
-            .toLowerCase()
-            .match(
-                /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-            );
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
     };
 
     const handleEmailSubmit = async (e) => {
@@ -66,65 +85,14 @@ const Login = () => {
         setIsLoading(true);
         setError('');
 
-        // SIMULATION MODE: Realistic behavior + Best Practice Toast/Log
-        setTimeout(() => {
-            console.log("%c[TONARE AUTH SIMULATION]", "color: #ff3e00; font-weight: bold", "OTP Sent to: " + email);
-            const code = "1234";
-            setGeneratedOtp(code);
+        try {
+            await sendEmailLoginLink(email);
+            setStep('email-sent');
+        } catch (err) {
+            console.error('Erro ao enviar link:', err);
+            setError('Erro ao enviar o link. Verifique o e-mail e tente novamente.');
+        } finally {
             setIsLoading(false);
-            setStep('otp-input');
-        }, 1500);
-    };
-
-    const handleOtpChange = (index, value) => {
-        // Only numbers
-        if (value && !/^\d+$/.test(value)) return;
-
-        const newOtp = [...otp];
-        newOtp[index] = value;
-        setOtp(newOtp);
-
-        // Auto focus next input
-        if (value && index < 3) {
-            const nextInput = document.getElementById(`otp-${index + 1}`);
-            if (nextInput) nextInput.focus();
-        }
-    };
-
-    const handleKeyDown = (index, e) => {
-        if (e.key === 'Backspace' && !otp[index] && index > 0) {
-            const prevInput = document.getElementById(`otp-${index - 1}`);
-            if (prevInput) prevInput.focus();
-        }
-    };
-
-    const handleOtpSubmit = (e) => {
-        e.preventDefault();
-        const enteredOtp = otp.join('');
-        if (enteredOtp.length === 4) {
-            setIsLoading(true);
-            setError('');
-
-            // SIMULATION MODE
-            setTimeout(() => {
-                if (enteredOtp === '1234' || enteredOtp === generatedOtp) {
-                    const mockUser = {
-                        uid: 'email_user_' + Date.now(),
-                        displayName: email.split('@')[0],
-                        email: email,
-                        isAnonymous: false,
-                        authType: 'email'
-                    };
-                    localStorage.setItem('user', JSON.stringify(mockUser));
-                    setIsLoading(false);
-                    navigate('/register');
-                } else {
-                    setIsLoading(false);
-                    setError('Código inválido ou expirado. Tente 1234.');
-                    setOtp(['', '', '', '']);
-                    document.getElementById('otp-0').focus();
-                }
-            }, 1000);
         }
     };
 
@@ -138,23 +106,32 @@ const Login = () => {
 
                 {error && <div className="error-message">{error}</div>}
 
+                {/* ── Tela inicial ── */}
                 {step === 'initial' && (
                     <div className="login-actions">
-                        <button className="btn btn-primary btn-block btn-giant" onClick={handleGoogleLogin}>
-                            CONTINUAR COM GOOGLE
+                        <button
+                            className="btn btn-primary btn-block btn-giant"
+                            onClick={handleGoogleLogin}
+                            disabled={isLoading}
+                        >
+                            {isLoading ? 'AGUARDE...' : 'CONTINUAR COM GOOGLE'}
                         </button>
 
                         <div className="divider">
                             <span>OU</span>
                         </div>
 
-                        <button className="btn btn-outline btn-block" onClick={() => setStep('email-input')}>
+                        <button
+                            className="btn btn-outline btn-block"
+                            onClick={() => setStep('email-input')}
+                        >
                             <Mail size={18} style={{ marginRight: '10px' }} />
                             ENTRAR COM E-MAIL
                         </button>
                     </div>
                 )}
 
+                {/* ── Formulário de email ── */}
                 {step === 'email-input' && (
                     <form onSubmit={handleEmailSubmit} className="login-form">
                         <div className="input-group">
@@ -169,47 +146,59 @@ const Login = () => {
                                 autoFocus
                             />
                         </div>
-                        <button type="submit" className="btn btn-primary btn-block" disabled={isLoading}>
-                            {isLoading ? 'ENVIANDO...' : 'ENVIAR CÓDIGO'}
+                        <div className="login-hint">
+                            Vamos enviar um link mágico para o seu e-mail. Sem senha!
+                        </div>
+                        <button
+                            type="submit"
+                            className="btn btn-primary btn-block"
+                            disabled={isLoading}
+                        >
+                            {isLoading ? 'ENVIANDO...' : 'ENVIAR LINK DE ACESSO'}
                         </button>
-                        <button type="button" className="btn-link" onClick={() => setStep('initial')}>
+                        <button
+                            type="button"
+                            className="btn-link"
+                            onClick={() => { setStep('initial'); setError(''); }}
+                        >
                             VOLTAR
                         </button>
                     </form>
                 )}
 
-                {step === 'otp-input' && (
-                    <form onSubmit={handleOtpSubmit} className="login-form">
-                        <div className="otp-header">
-                            <p>CÓDIGO ENVIADO PARA <strong>{email}</strong></p>
+                {/* ── Link enviado ── */}
+                {step === 'email-sent' && (
+                    <div className="login-form" style={{ textAlign: 'center' }}>
+                        <div className="email-sent-icon">
+                            <CheckCircle size={56} strokeWidth={1.5} />
                         </div>
-
-                        <div className="otp-grid">
-                            {otp.map((digit, index) => (
-                                <input
-                                    key={index}
-                                    id={`otp-${index}`}
-                                    type="text"
-                                    inputMode="numeric"
-                                    pattern="\d*"
-                                    maxLength="1"
-                                    className="input otp-digit"
-                                    value={digit}
-                                    onChange={(e) => handleOtpChange(index, e.target.value)}
-                                    onKeyDown={(e) => handleKeyDown(index, e)}
-                                    autoFocus={index === 0}
-                                    autoComplete="one-time-code"
-                                />
-                            ))}
-                        </div>
-
-                        <button type="submit" className="btn btn-primary btn-block" disabled={isLoading || otp.join('').length !== 4}>
-                            {isLoading ? 'VERIFICANDO...' : 'ACESSAR SISTEMA'}
+                        <h2 className="email-sent-title">LINK ENVIADO!</h2>
+                        <p className="email-sent-desc">
+                            Enviamos um link de acesso para<br />
+                            <strong>{email}</strong>
+                        </p>
+                        <p className="email-sent-hint">
+                            Abra o e-mail e clique no link para entrar.<br />
+                            O link expira em 10 minutos.
+                        </p>
+                        <button
+                            type="button"
+                            className="btn-link"
+                            onClick={() => { setStep('email-input'); setError(''); }}
+                        >
+                            USAR OUTRO E-MAIL
                         </button>
-                        <button type="button" className="btn-link" onClick={() => setStep('email-input')}>
-                            TROCAR E-MAIL
-                        </button>
-                    </form>
+                    </div>
+                )}
+
+                {/* ── Completando login via magic link ── */}
+                {step === 'completing' && (
+                    <div className="login-form" style={{ textAlign: 'center' }}>
+                        <div className="login-spinner" />
+                        <p className="login-subtitle" style={{ marginTop: '2rem' }}>
+                            VERIFICANDO ACESSO...
+                        </p>
+                    </div>
                 )}
             </div>
         </div>
