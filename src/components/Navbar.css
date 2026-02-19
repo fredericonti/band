@@ -132,3 +132,74 @@
         text-align: center;
     }
 }
+
+/* ── Avatar do usuário ── */
+.navbar-user-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: var(--color-primary);
+    color: var(--color-background);
+    border: 1px solid var(--color-primary);
+    border-radius: var(--radius-md);
+    padding: 6px 14px 6px 6px;
+    cursor: pointer;
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    transition: all 0.2s ease;
+}
+
+.navbar-user-btn:hover {
+    background: var(--color-background);
+    color: var(--color-primary);
+    transform: translate(-2px, -2px);
+    box-shadow: 3px 3px 0 var(--color-primary);
+}
+
+.navbar-avatar {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    object-fit: cover;
+    display: block;
+    flex-shrink: 0;
+}
+
+.navbar-avatar-fallback {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--color-background);
+    color: var(--color-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 900;
+    flex-shrink: 0;
+}
+
+.navbar-user-btn:hover .navbar-avatar-fallback {
+    background: var(--color-primary);
+    color: var(--color-background);
+}
+
+.navbar-username {
+    line-height: 1;
+}
+
+@media (max-width: 768px) {
+    .navbar-user-btn {
+        font-size: 0.9rem;
+        padding: 10px 20px 10px 10px;
+        max-width: 250px;
+    }
+
+    .navbar-avatar,
+    .navbar-avatar-fallback {
+        width: 32px;
+        height: 32px;
+    }
+}

@@ -4,6 +4,7 @@ import { AnimatePresence } from 'framer-motion';
 import PageTransition from './components/PageTransition';
 import Navbar from './components/Navbar';
 import CustomCursor from './components/CustomCursor';
+import ProtectedRoute from './components/ProtectedRoute';
 import LandingPage from './pages/LandingPage';
 import UserRegister from './pages/UserRegister';
 import FindBands from './pages/FindBands';
@@ -17,21 +18,14 @@ import Login from './pages/Login';
 import TokenShowcase from './pages/TokenShowcase';
 import { initGA, logPageView } from './config/analytics';
 
-// Componente auxiliar para rastrear mudanças de rota
 const RouteTracker = () => {
     const location = useLocation();
-
-    useEffect(() => {
-        logPageView();
-    }, [location]);
-
+    useEffect(() => { logPageView(); }, [location]);
     return null;
 };
 
 function App() {
-    useEffect(() => {
-        initGA();
-    }, []);
+    useEffect(() => { initGA(); }, []);
 
     return (
         <Router>
@@ -53,55 +47,49 @@ const AnimatedRoutes = () => {
     return (
         <AnimatePresence mode="wait">
             <Routes location={location} key={location.pathname}>
+                {/* ── Rotas públicas ── */}
                 <Route path="/" element={
-                    <PageTransition>
-                        <LandingPage />
-                    </PageTransition>
+                    <PageTransition><LandingPage /></PageTransition>
                 } />
                 <Route path="/login" element={
-                    <PageTransition>
-                        <Login />
-                    </PageTransition>
-                } />
-                <Route path="/register" element={
-                    <PageTransition>
-                        <UserRegister />
-                    </PageTransition>
+                    <PageTransition><Login /></PageTransition>
                 } />
                 <Route path="/find-bands" element={
-                    <PageTransition>
-                        <FindBands />
-                    </PageTransition>
+                    <PageTransition><FindBands /></PageTransition>
                 } />
                 <Route path="/artists" element={
-                    <PageTransition>
-                        <FindArtists />
-                    </PageTransition>
+                    <PageTransition><FindArtists /></PageTransition>
                 } />
                 <Route path="/venues" element={
-                    <PageTransition>
-                        <FindVenues />
-                    </PageTransition>
-                } />
-                <Route path="/profile" element={
-                    <PageTransition>
-                        <ArtistDashboard />
-                    </PageTransition>
-                } />
-                <Route path="/venue-dashboard" element={
-                    <PageTransition>
-                        <VenueDashboard />
-                    </PageTransition>
+                    <PageTransition><FindVenues /></PageTransition>
                 } />
                 <Route path="/band/:id" element={
-                    <PageTransition>
-                        <BandPublicProfile />
-                    </PageTransition>
+                    <PageTransition><BandPublicProfile /></PageTransition>
                 } />
                 <Route path="/tokens" element={
-                    <PageTransition>
-                        <TokenShowcase />
-                    </PageTransition>
+                    <PageTransition><TokenShowcase /></PageTransition>
+                } />
+
+                {/* ── Rotas protegidas (requerem login) ── */}
+                <Route path="/register" element={
+                    <ProtectedRoute>
+                        <PageTransition><UserRegister /></PageTransition>
+                    </ProtectedRoute>
+                } />
+                <Route path="/profile" element={
+                    <ProtectedRoute>
+                        <PageTransition><ArtistDashboard /></PageTransition>
+                    </ProtectedRoute>
+                } />
+                <Route path="/venue-dashboard" element={
+                    <ProtectedRoute>
+                        <PageTransition><VenueDashboard /></PageTransition>
+                    </ProtectedRoute>
+                } />
+                <Route path="/band-profile" element={
+                    <ProtectedRoute>
+                        <PageTransition><BandProfile /></PageTransition>
+                    </ProtectedRoute>
                 } />
             </Routes>
         </AnimatePresence>

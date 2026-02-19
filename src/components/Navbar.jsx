@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './Navbar.css';
 import LoginSheet from './LoginSheet';
 import { useAuth } from '../context/AuthContext';
 
 const Navbar = () => {
     const navigate = useNavigate();
-    const location = useLocation();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isLoginSheetOpen, setIsLoginSheetOpen] = useState(false);
-    const [userType, setUserType] = useState('artist'); // artist or venue
+    const [userType, setUserType] = useState('artist');
     const { user, logout } = useAuth();
 
     useEffect(() => {
@@ -17,13 +16,8 @@ const Navbar = () => {
         if (storedType) setUserType(storedType);
     }, []);
 
-    const toggleMenu = () => {
-        setIsMenuOpen(!isMenuOpen);
-    };
-
-    const closeMenu = () => {
-        setIsMenuOpen(false);
-    };
+    const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+    const closeMenu = () => setIsMenuOpen(false);
 
     const openLoginSheet = (e) => {
         e.preventDefault();
@@ -44,8 +38,11 @@ const Navbar = () => {
         navigate('/');
     };
 
-    const getFirstName = (fullName) => {
-        return fullName ? fullName.split(' ')[0] : 'PERFIL';
+    const getFirstName = (str) => {
+        if (!str) return 'PERFIL';
+        // se for email, pega a parte antes do @
+        if (str.includes('@')) return str.split('@')[0].toUpperCase();
+        return str.split(' ')[0].toUpperCase();
     };
 
     return (
@@ -69,12 +66,30 @@ const Navbar = () => {
                     <div className={`navbar-links ${isMenuOpen ? 'active' : ''}`}>
                         <Link to="/venues" className="nav-link" onClick={closeMenu}>ESTABELECIMENTOS</Link>
                         <Link to="/artists" className="nav-link" onClick={closeMenu}>ARTISTAS</Link>
+
                         {user ? (
                             <>
                                 <Link to="/register" className="nav-link" onClick={closeMenu}>CADASTRAR</Link>
-                                <button className="nav-link login-btn" onClick={handleProfileClick}>
-                                    {getFirstName(user.displayName || user.email).toUpperCase()}
+
+                                {/* Botão do perfil com avatar */}
+                                <button className="navbar-user-btn" onClick={handleProfileClick}>
+                                    {user.photoURL ? (
+                                        <img
+                                            src={user.photoURL}
+                                            alt={user.displayName || 'Perfil'}
+                                            className="navbar-avatar"
+                                            referrerPolicy="no-referrer"
+                                        />
+                                    ) : (
+                                        <div className="navbar-avatar-fallback">
+                                            {getFirstName(user.displayName || user.email).charAt(0)}
+                                        </div>
+                                    )}
+                                    <span className="navbar-username">
+                                        {getFirstName(user.displayName || user.email)}
+                                    </span>
                                 </button>
+
                                 <button className="btn btn-outline btn-sm login-navbar-btn" onClick={handleLogout}>
                                     SAIR
                                 </button>

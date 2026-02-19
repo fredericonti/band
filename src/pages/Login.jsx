@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { Mail, CheckCircle } from 'lucide-react';
 import { signInWithGoogle, sendEmailLoginLink, completeEmailSignIn, isEmailSignInLink } from '../config/firebase';
 import { useAuth } from '../context/AuthContext';
@@ -7,18 +7,22 @@ import './Login.css';
 
 const Login = () => {
     const navigate = useNavigate();
+    const location = useLocation();
     const { user } = useAuth();
-    const [step, setStep] = useState('initial'); // initial | email-input | email-sent | completing
+    const [step, setStep] = useState('initial');
     const [email, setEmail] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
 
-    // Se já está logado, redireciona
+    // Rota de destino: onde o usuário tentou ir antes do login
+    const from = location.state?.from?.pathname || '/register';
+
+    // Se já está logado, redireciona para a rota original (ou /register)
     useEffect(() => {
         if (user) {
-            navigate('/register');
+            navigate(from, { replace: true });
         }
-    }, [user, navigate]);
+    }, [user, navigate, from]);
 
     // Verifica se a URL atual é um link de login por email (magic link)
     useEffect(() => {
