@@ -260,6 +260,31 @@
     color: #000;
 }
 
+.show-actions {
+    margin-left: auto;
+    display: flex;
+    gap: 0.5rem;
+}
+
+.btn-black-outline {
+    background: transparent;
+    border: 1px solid #000;
+    color: #000;
+    font-weight: 700;
+    font-size: 0.75rem;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.btn-black-outline:hover {
+    background: #000;
+    color: #fff;
+}
+
 .billing-info-box {
     margin-top: 2rem;
     padding: 1.5rem;

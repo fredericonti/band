@@ -97,8 +97,7 @@ const ArtistDashboard = () => {
                     <div className="stat-footer">
                         <span className="badge-available">ANTECIPAÇÃO DISPONÍVEL</span>
                         <button
-                            className="btn btn-outline btn-xs"
-                            style={{ background: 'white', color: 'black', border: 'none' }}
+                            className="btn-white-outline"
                             onClick={() => handleOpenAnticipation(stats.nextPayment)}
                         >
                             ANTECIPAR <ArrowUpRight size={16} />

@@ -106,7 +106,7 @@ const VenueDashboard = () => {
                 <section className="dashboard-section">
                     <div className="section-header">
                         <h2>AGENDA DE SHOWS</h2>
-                        <button className="btn btn-outline btn-xs">VER CALENDÁRIO</button>
+                        <button className="btn-black-outline">VER CALENDÁRIO</button>
                     </div>
                     <div className="shows-list">
                         {nextShows.map(show => (
@@ -125,7 +125,7 @@ const VenueDashboard = () => {
                                     </span>
                                 </div>
                                 <div className="show-actions">
-                                    <button className="btn btn-outline btn-xs">MENSAGEM</button>
+                                    <button className="btn-black-outline">MENSAGEM</button>
                                 </div>
                             </div>
                         ))}
@@ -174,7 +174,7 @@ const VenueDashboard = () => {
                             <div className="member-bubble">PALCO 4x3m</div>
                         </div>
                     </div>
-                    <button className="btn btn-outline" style={{ border: '1px solid #000', color: '#000' }}>EDITAR EQUIPAMENTOS</button>
+                    <button className="btn-black-outline">EDITAR EQUIPAMENTOS</button>
                 </div>
             </section>
         </div>
