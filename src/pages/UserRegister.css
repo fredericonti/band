@@ -40,6 +40,21 @@
     transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+.step-counter {
+    position: fixed;
+    top: 16px;
+    right: 20px;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    z-index: 100;
+    padding: 4px 8px;
+    background: var(--bg-surface);
+    border: 1px solid var(--border-default);
+    border-radius: 4px;
+}
+
 /* Back Button */
 .back-button {
     position: fixed;

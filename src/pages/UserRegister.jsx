@@ -241,8 +241,19 @@ const UserRegister = () => {
         }
     };
 
+    const sanitizeData = (data) => {
+        const cleaned = { ...data };
+        Object.keys(cleaned).forEach(key => {
+            if (cleaned[key] === undefined) {
+                cleaned[key] = null;
+            }
+        });
+        return cleaned;
+    };
+
     const handleSubmit = async () => {
-        const data = userType === 'venue' ? venueData : artistData;
+        const rawData = userType === 'venue' ? venueData : artistData;
+        const data = sanitizeData(rawData);
         console.log(`${userType} Registration: `, data);
 
         setIsSaving(true);
@@ -289,9 +300,16 @@ const UserRegister = () => {
     return (
         <div className="onboarding-container">
             {/* Progress Bar */}
+            {/* Progress Bar & Counter */}
             {step > 0 && (
                 <div className="progress-bar-top">
                     <div className="progress-fill" style={{ width: `${progress}% ` }}></div>
+                </div>
+            )}
+
+            {step > 0 && step < 11 && (
+                <div className="step-counter">
+                    PASSO {step} DE {maxSteps}
                 </div>
             )}
 
@@ -576,12 +594,17 @@ const UserRegister = () => {
                             </div>
                         </div>
 
-                        <button
-                            className="btn btn-primary"
-                            onClick={handleNext}
-                        >
-                            CONTINUAR <ArrowRight size={20} />
-                        </button>
+                        <div className="button-group">
+                            <button className="btn btn-outline" onClick={handleBack}>
+                                VOLTAR
+                            </button>
+                            <button
+                                className="btn btn-primary"
+                                onClick={handleNext}
+                            >
+                                CONTINUAR <ArrowRight size={20} />
+                            </button>
+                        </div>
                     </motion.div>
                 )}
 
@@ -608,12 +631,17 @@ const UserRegister = () => {
                             <p className="mono-text muted-text" style={{ marginTop: '2rem' }}>MÍNIMO 1 FOTO PARA CONTINUAR</p>
                         </div>
 
-                        <button
-                            className="btn btn-primary"
-                            onClick={handleNext}
-                        >
-                            CONTINUAR <ArrowRight size={20} />
-                        </button>
+                        <div className="button-group">
+                            <button className="btn btn-outline" onClick={handleBack}>
+                                VOLTAR
+                            </button>
+                            <button
+                                className="btn btn-primary"
+                                onClick={handleNext}
+                            >
+                                CONTINUAR <ArrowRight size={20} />
+                            </button>
+                        </div>
                     </motion.div>
                 )}
 
@@ -641,13 +669,18 @@ const UserRegister = () => {
                             ))}
                         </div>
 
-                        <button
-                            className="btn btn-primary"
-                            onClick={handleNext}
-                            disabled={venueData.genres.length === 0}
-                        >
-                            PRÓXIMO <ArrowRight size={20} />
-                        </button>
+                        <div className="button-group">
+                            <button className="btn btn-outline" onClick={handleBack}>
+                                VOLTAR
+                            </button>
+                            <button
+                                className="btn btn-primary"
+                                onClick={handleNext}
+                                disabled={venueData.genres.length === 0}
+                            >
+                                PRÓXIMO <ArrowRight size={20} />
+                            </button>
+                        </div>
                     </motion.div>
                 )}
 
@@ -704,12 +737,17 @@ const UserRegister = () => {
                             <span className="mono-text">VALOR NEGOCIÁVEL</span>
                         </div>
 
-                        <button
-                            className="btn btn-primary"
-                            onClick={handleNext}
-                        >
-                            PRÓXIMO <ArrowRight size={20} />
-                        </button>
+                        <div className="button-group">
+                            <button className="btn btn-outline" onClick={handleBack}>
+                                VOLTAR
+                            </button>
+                            <button
+                                className="btn btn-primary"
+                                onClick={handleNext}
+                            >
+                                PRÓXIMO <ArrowRight size={20} />
+                            </button>
+                        </div>
                     </motion.div>
                 )}
 
@@ -743,13 +781,18 @@ const UserRegister = () => {
                             ))}
                         </div>
 
-                        <button
-                            className="btn btn-primary"
-                            onClick={handleNext}
-                            disabled={venueData.preferredFormats.length === 0}
-                        >
-                            PRÓXIMO <ArrowRight size={20} />
-                        </button>
+                        <div className="button-group">
+                            <button className="btn btn-outline" onClick={handleBack}>
+                                VOLTAR
+                            </button>
+                            <button
+                                className="btn btn-primary"
+                                onClick={handleNext}
+                                disabled={venueData.preferredFormats.length === 0}
+                            >
+                                PRÓXIMO <ArrowRight size={20} />
+                            </button>
+                        </div>
                     </motion.div>
                 )}
 
@@ -783,12 +826,17 @@ const UserRegister = () => {
                             ))}
                         </div>
 
-                        <button
-                            className="btn btn-primary"
-                            onClick={handleNext}
-                        >
-                            REVISAR DADOS <ArrowRight size={20} />
-                        </button>
+                        <div className="button-group">
+                            <button className="btn btn-outline" onClick={handleBack}>
+                                VOLTAR
+                            </button>
+                            <button
+                                className="btn btn-primary"
+                                onClick={handleNext}
+                            >
+                                REVISAR DADOS <ArrowRight size={20} />
+                            </button>
+                        </div>
                     </motion.div>
                 )}
 
@@ -835,13 +883,18 @@ const UserRegister = () => {
                             </div>
                         </div>
 
-                        <button
-                            className="btn btn-primary"
-                            onClick={handleSubmit}
-                            disabled={isSaving}
-                        >
-                            {isSaving ? 'SALVANDO...' : 'FINALIZAR CADASTRO'} <ArrowRight size={20} />
-                        </button>
+                        <div className="button-group">
+                            <button className="btn btn-outline" onClick={handleBack}>
+                                VOLTAR
+                            </button>
+                            <button
+                                className="btn btn-primary"
+                                onClick={handleSubmit}
+                                disabled={isSaving}
+                            >
+                                {isSaving ? 'SALVANDO...' : 'FINALIZAR CADASTRO'} <ArrowRight size={20} />
+                            </button>
+                        </div>
                     </motion.div>
                 )}
 
@@ -905,19 +958,24 @@ const UserRegister = () => {
                             ))}
                         </div>
 
-                        <button
-                            className="btn btn-primary"
-                            onClick={() => {
-                                // If Solo, skip Step 3 (Lineup)
-                                if (artistData.projectType === 'Solo') {
-                                    setStep(4);
-                                } else {
-                                    handleNext();
-                                }
-                            }}
-                        >
-                            PRÓXIMO <ArrowRight size={20} />
-                        </button>
+                        <div className="button-group">
+                            <button className="btn btn-outline" onClick={handleBack}>
+                                VOLTAR
+                            </button>
+                            <button
+                                className="btn btn-primary"
+                                onClick={() => {
+                                    // If Solo, skip Step 3 (Lineup)
+                                    if (artistData.projectType === 'Solo') {
+                                        setStep(4);
+                                    } else {
+                                        handleNext();
+                                    }
+                                }}
+                            >
+                                PRÓXIMO <ArrowRight size={20} />
+                            </button>
+                        </div>
                     </motion.div>
                 )}
 
@@ -962,13 +1020,18 @@ const UserRegister = () => {
                             </button>
                         </div>
 
-                        <button
-                            className="btn btn-primary"
-                            onClick={handleNext}
-                            disabled={!artistData.lineup || artistData.lineup.length < (artistData.projectType === 'Duo' ? 1 : artistData.projectType === 'Trio' ? 2 : 3)}
-                        >
-                            PRÓXIMO <ArrowRight size={20} />
-                        </button>
+                        <div className="button-group">
+                            <button className="btn btn-outline" onClick={handleBack}>
+                                VOLTAR
+                            </button>
+                            <button
+                                className="btn btn-primary"
+                                onClick={handleNext}
+                                disabled={!artistData.lineup || artistData.lineup.length < (artistData.projectType === 'Duo' ? 1 : artistData.projectType === 'Trio' ? 2 : 3)}
+                            >
+                                PRÓXIMO <ArrowRight size={20} />
+                            </button>
+                        </div>
                     </motion.div>
                 )}
 
@@ -1011,13 +1074,18 @@ const UserRegister = () => {
                             </div>
                         </div>
 
-                        <button
-                            className="btn btn-primary"
-                            onClick={handleNext}
-                            disabled={!artistData.location.trim()}
-                        >
-                            PRÓXIMO <ArrowRight size={20} />
-                        </button>
+                        <div className="button-group">
+                            <button className="btn btn-outline" onClick={handleBack}>
+                                VOLTAR
+                            </button>
+                            <button
+                                className="btn btn-primary"
+                                onClick={handleNext}
+                                disabled={!artistData.location.trim()}
+                            >
+                                PRÓXIMO <ArrowRight size={20} />
+                            </button>
+                        </div>
                     </motion.div>
                 )}
 
@@ -1059,13 +1127,18 @@ const UserRegister = () => {
                             </div>
                         </div>
 
-                        <button
-                            className="btn btn-primary"
-                            onClick={handleNext}
-                            disabled={!artistData.instagram && !artistData.videoUrl}
-                        >
-                            PRÓXIMO <ArrowRight size={20} />
-                        </button>
+                        <div className="button-group">
+                            <button className="btn btn-outline" onClick={handleBack}>
+                                VOLTAR
+                            </button>
+                            <button
+                                className="btn btn-primary"
+                                onClick={handleNext}
+                                disabled={!artistData.instagram && !artistData.videoUrl}
+                            >
+                                PRÓXIMO <ArrowRight size={20} />
+                            </button>
+                        </div>
                     </motion.div>
                 )}
 
@@ -1093,13 +1166,18 @@ const UserRegister = () => {
                             ))}
                         </div>
 
-                        <button
-                            className="btn btn-primary"
-                            onClick={handleNext}
-                            disabled={artistData.genres.length === 0}
-                        >
-                            PRÓXIMO <ArrowRight size={20} />
-                        </button>
+                        <div className="button-group">
+                            <button className="btn btn-outline" onClick={handleBack}>
+                                VOLTAR
+                            </button>
+                            <button
+                                className="btn btn-primary"
+                                onClick={handleNext}
+                                disabled={artistData.genres.length === 0}
+                            >
+                                PRÓXIMO <ArrowRight size={20} />
+                            </button>
+                        </div>
                     </motion.div>
                 )}
 
@@ -1156,12 +1234,17 @@ const UserRegister = () => {
                             <span className="mono-text">VALOR NEGOCIÁVEL</span>
                         </div>
 
-                        <button
-                            className="btn btn-primary"
-                            onClick={handleNext}
-                        >
-                            PRÓXIMO <ArrowRight size={20} />
-                        </button>
+                        <div className="button-group">
+                            <button className="btn btn-outline" onClick={handleBack}>
+                                VOLTAR
+                            </button>
+                            <button
+                                className="btn btn-primary"
+                                onClick={handleNext}
+                            >
+                                PRÓXIMO <ArrowRight size={20} />
+                            </button>
+                        </div>
                     </motion.div>
                 )}
 
@@ -1199,13 +1282,17 @@ const UserRegister = () => {
                             />
                         )}
 
-                        <button
-                            className="btn btn-primary"
-                            onClick={handleNext}
-                            style={{ marginTop: '3rem' }}
-                        >
-                            PRÓXIMO <ArrowRight size={20} />
-                        </button>
+                        <div className="button-group" style={{ marginTop: '3rem' }}>
+                            <button className="btn btn-outline" onClick={handleBack}>
+                                VOLTAR
+                            </button>
+                            <button
+                                className="btn btn-primary"
+                                onClick={handleNext}
+                            >
+                                PRÓXIMO <ArrowRight size={20} />
+                            </button>
+                        </div>
                     </motion.div>
                 )}
 
@@ -1237,12 +1324,17 @@ const UserRegister = () => {
                             ))}
                         </div>
 
-                        <button
-                            className="btn btn-primary"
-                            onClick={handleNext}
-                        >
-                            REVISAR DADOS <ArrowRight size={20} />
-                        </button>
+                        <div className="button-group">
+                            <button className="btn btn-outline" onClick={handleBack}>
+                                VOLTAR
+                            </button>
+                            <button
+                                className="btn btn-primary"
+                                onClick={handleNext}
+                            >
+                                REVISAR DADOS <ArrowRight size={20} />
+                            </button>
+                        </div>
                     </motion.div>
                 )}
 
@@ -1289,15 +1381,21 @@ const UserRegister = () => {
                             </div>
                         </div>
 
-                        <button
-                            className="btn btn-primary"
-                            onClick={handleSubmit}
-                            disabled={isSaving}
-                        >
-                            {isSaving ? 'SALVANDO...' : 'FINALIZAR PERFIL'} <ArrowRight size={20} />
-                        </button>
+                        <div className="button-group">
+                            <button className="btn btn-outline" onClick={handleBack}>
+                                VOLTAR
+                            </button>
+                            <button
+                                className="btn btn-primary"
+                                onClick={handleSubmit}
+                                disabled={isSaving}
+                            >
+                                {isSaving ? 'SALVANDO...' : 'FINALIZAR PERFIL'} <ArrowRight size={20} />
+                            </button>
+                        </div>
                     </motion.div>
                 )}
+
 
                 {/* SUCCESS STEP (11) */}
                 {step === 11 && (
