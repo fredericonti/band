@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowRight, ArrowLeft, ArrowUpRight, MapPin, Music } from 'lucide-react';
+import { ArrowRight, ArrowLeft, ArrowUpRight, MapPin, Music, CheckCircle } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Loader } from '@googlemaps/js-api-loader';
 import { GOOGLE_MAPS_CONFIG, SAO_PAULO_BOUNDS } from '../config/googleMaps';
@@ -256,10 +256,8 @@ const UserRegister = () => {
                 console.log('Artist saved to database');
             }
 
-            // Navigate after successful save
-            setTimeout(() => {
-                navigate(userType === 'venue' ? '/find-bands' : '/profile');
-            }, 500);
+            // Navigate to success step
+            setStep(11);
         } catch (error) {
             console.error('Error saving data:', error);
             setNotification({
@@ -271,6 +269,10 @@ const UserRegister = () => {
         } finally {
             setIsSaving(false);
         }
+    };
+
+    const handleFinish = () => {
+        navigate(userType === 'venue' ? '/find-bands' : '/profile');
     };
 
     const handleAddMember = (memberData) => {
@@ -294,7 +296,7 @@ const UserRegister = () => {
             )}
 
             {/* Back Button */}
-            {step > 0 && (
+            {step > 0 && step < 11 && (
                 <button className="back-button" onClick={handleBack}>
                     <ArrowLeft size={24} />
                 </button>
@@ -1296,6 +1298,34 @@ const UserRegister = () => {
                         </button>
                     </motion.div>
                 )}
+
+                {/* SUCCESS STEP (11) */}
+                {step === 11 && (
+                    <motion.div
+                        key="success-step"
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        className="step-screen success-screen"
+                    >
+                        <div className="success-content">
+                            <div className="success-icon-wrapper">
+                                <CheckCircle size={80} color="#00ff00" strokeWidth={1.5} />
+                            </div>
+                            <h1 className="mega-title success-title">
+                                {userType === 'venue' ? 'LOCAL CADASTRADO!' : 'PERFIL CRIADO!'}
+                            </h1>
+                            <p className="success-desc">
+                                {userType === 'venue'
+                                    ? 'Agora você pode buscar artistas e receber propostas para seus eventos.'
+                                    : 'Seu perfil já está visível para contratantes. Prepare-se para tocar muito!'}
+                            </p>
+                        </div>
+
+                        <button className="btn btn-primary btn-giant" onClick={handleFinish}>
+                            {userType === 'venue' ? 'BUSCAR ARTISTAS' : 'VER MEU PERFIL'} <ArrowRight size={24} />
+                        </button>
+                    </motion.div>
+                )}
             </AnimatePresence>
 
             {/* Bottom Sheet for Adding Members */}
@@ -1322,7 +1352,7 @@ const UserRegister = () => {
                     ENTENDI
                 </button>
             </SideSheet>
-        </div>
+        </div >
     );
 };
 
