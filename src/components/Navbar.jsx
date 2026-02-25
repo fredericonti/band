@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import './Navbar.css';
 import LoginSheet from './LoginSheet';
 import { useAuth } from '../context/AuthContext';
+import { Button } from './ui/Button';
 
 const Navbar = () => {
     const navigate = useNavigate();
@@ -90,16 +91,16 @@ const Navbar = () => {
                                     </span>
                                 </button>
 
-                                <button className="btn btn-outline btn-sm login-navbar-btn" onClick={handleLogout}>
+                                <Button variant="outline" size="sm" className="login-navbar-btn" onClick={handleLogout}>
                                     SAIR
-                                </button>
+                                </Button>
                             </>
                         ) : (
                             <>
                                 <Link to="/register" className="nav-link" onClick={closeMenu}>CADASTRAR</Link>
-                                <button className="btn btn-primary btn-sm login-navbar-btn" onClick={openLoginSheet}>
+                                <Button size="sm" className="login-navbar-btn" onClick={openLoginSheet}>
                                     LOGIN
-                                </button>
+                                </Button>
                             </>
                         )}
                     </div>
@@ -111,3 +112,4 @@ const Navbar = () => {
 };
 
 export default Navbar;
+
