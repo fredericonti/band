@@ -16,17 +16,6 @@
     "@radix-ui/react-dropdown-menu": "^2.1.16",
     "@radix-ui/react-popover": "^1.1.15",
     "@radix-ui/react-slot": "^1.2.4",
-    "@tambo-ai/react": "^1.0.0-rc.5",
-    "@tambo-ai/react-ui-base": "^0.1.0-alpha.7",
-    "@tambo-ai/typescript-sdk": "^0.93.0",
-    "@tiptap/extension-document": "^3.20.0",
-    "@tiptap/extension-hard-break": "^3.20.0",
-    "@tiptap/extension-mention": "^3.20.0",
-    "@tiptap/extension-paragraph": "^3.20.0",
-    "@tiptap/extension-placeholder": "^3.20.0",
-    "@tiptap/extension-text": "^3.20.0",
-    "@tiptap/react": "^3.20.0",
-    "@tiptap/suggestion": "^3.20.0",
     "class-variance-authority": "^0.7.1",
     "dompurify": "^3.3.1",
     "firebase": "^12.6.0",
@@ -38,9 +27,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-ga4": "^2.1.0",
-    "react-router-dom": "^6.22.3",
-    "streamdown": "^2.3.0",
-    "use-debounce": "^10.1.0"
+    "react-router-dom": "^6.22.3"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.1.18",

@@ -1,95 +1,109 @@
-/* ========== ARTISTAS SIMPLES - ESTILO EDITORIAL ========== */
+/* ═══════════════════════════════════════
+   FIND ARTISTS — PEDESTAL DESIGN SYSTEM
+   ═══════════════════════════════════════ */
 .find-artists-page-simple {
-    background: #fff;
+    background: var(--p-white);
     min-height: 100vh;
 }
 
-/* 1. Herói Simples */
+/* 1. Hero */
 .artists-simple-hero {
-    padding: 180px 0 100px;
+    padding: 160px 0 80px;
 }
 
 .mega-title-simple {
-    font-size: clamp(3.5rem, 10vw, 8rem);
-    font-weight: 900;
-    line-height: 0.85;
+    font-size: clamp(3rem, 10vw, 7.5rem);
+    font-weight: var(--fw-regular);
+    line-height: 1.0;
     letter-spacing: -4px;
     text-transform: uppercase;
-    margin-bottom: 5rem;
+    margin-bottom: var(--sp-48);
+    color: var(--p-black);
 }
 
+/* Filter tabs */
 .filter-simple-row {
     display: flex;
-    gap: 2.5rem;
+    gap: var(--sp-32);
     flex-wrap: wrap;
-    border-bottom: 1px solid #000;
-    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--p-black);
+    padding-bottom: var(--sp-24);
 }
 
 .filter-simple-btn {
     background: none;
     border: none;
-    font-family: inherit;
-    font-size: 0.8rem;
-    font-weight: 900;
-    letter-spacing: 2px;
-    color: #999;
+    font-family: var(--font-main);
+    font-size: var(--text-xs);
+    font-weight: var(--fw-semibold);
+    letter-spacing: var(--ls-wider);
+    text-transform: uppercase;
+    color: var(--p-gray-light);
     cursor: pointer;
-    transition: all 0.3s;
+    transition: color var(--t-fast) ease;
+    padding: 0 0 4px;
 }
 
 .filter-simple-btn:hover,
 .filter-simple-btn.active {
-    color: #000;
+    color: var(--p-black);
 }
 
-/* 2. Busca e Grid */
-.artists-grid-wrapper {
-    padding: 4rem 0 10rem;
+.filter-simple-btn.active {
+    border-bottom: 2px solid var(--p-black);
+    margin-bottom: -2px;
 }
+
+/* 2. Search & Grid */
+.artists-grid-wrapper { padding: var(--sp-48) 0 8rem; }
 
 .search-minimal-grid {
     display: flex;
     align-items: center;
-    gap: 1.5rem;
-    margin-bottom: 6rem;
-    padding: 0 1rem;
+    gap: var(--sp-16);
+    margin-bottom: var(--sp-64);
 }
 
 .search-minimal-grid input {
     flex: 1;
-    background: none;
-    border: none;
-    border-bottom: 1px solid #eee;
-    padding: 1rem 0;
-    font-family: var(--font-mono);
-    font-size: 0.85rem;
-    font-weight: 800;
-    outline: none;
-    transition: border-color 0.3s;
+    background: none !important;
+    border: none !important;
+    border-bottom: 1px solid var(--p-border) !important;
+    padding: var(--sp-12) 0 !important;
+    border-radius: 0 !important;
+    font-size: var(--text-base) !important;
+    font-weight: var(--fw-regular) !important;
+    height: auto !important;
+    outline: none !important;
+    letter-spacing: var(--ls-normal);
+    color: var(--p-black) !important;
+    transition: border-color var(--t-fast) ease;
 }
 
 .search-minimal-grid input:focus {
-    border-color: #000;
+    border-bottom-color: var(--p-black) !important;
 }
 
+.search-minimal-grid input::placeholder {
+    color: var(--p-gray-light) !important;
+}
+
+/* Grid */
 .artists-grid-simple {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 60px 40px;
+    gap: var(--sp-48) var(--sp-32);
 }
 
-.artist-card-simple {
-    cursor: pointer;
-}
+.artist-card-simple { cursor: pointer; }
 
 .artist-image-container {
     width: 100%;
     aspect-ratio: 4/5;
     overflow: hidden;
     position: relative;
-    background: #f5f5f5;
-    margin-bottom: 1.5rem;
+    background: var(--p-bg);
+    margin-bottom: var(--sp-16);
 }
 
 .artist-image {
@@ -100,103 +114,102 @@
     transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.artist-card-simple:hover .artist-image {
-    transform: scale(1.08);
-}
+.artist-card-simple:hover .artist-image { transform: scale(1.05); }
 
 .artist-overlay {
     position: absolute;
-    top: 1.5rem;
-    right: 1.5rem;
+    top: var(--sp-16);
+    right: var(--sp-16);
 }
 
 .artist-genre-pill {
-    padding: 6px 14px;
-    color: #fff;
-    font-size: 0.65rem;
-    font-weight: 900;
+    padding: 4px 10px;
+    background: var(--p-black);
+    color: var(--p-white);
+    font-size: var(--text-xs);
+    font-weight: var(--fw-semibold);
     text-transform: uppercase;
-    letter-spacing: 1px;
+    letter-spacing: var(--ls-wider);
+    border-radius: var(--r-xs);
 }
 
-.artist-info-simple {
-    padding: 0 0.5rem;
-}
+.artist-info-simple { padding: 0 4px; }
 
 .artist-name-simple {
-    font-size: 1.75rem;
-    font-weight: 900;
+    font-size: var(--text-xl);
+    font-weight: var(--fw-medium);
     text-transform: uppercase;
-    margin-bottom: 0.75rem;
+    margin-bottom: var(--sp-8);
+    letter-spacing: var(--ls-tight);
+    color: var(--p-black);
 }
 
 .artist-meta-simple {
     display: flex;
     align-items: center;
-    gap: 10px;
-    font-size: 0.8rem;
-    font-weight: 800;
-    color: #999;
-    margin-bottom: 0.75rem;
+    gap: var(--sp-8);
+    font-size: var(--text-xs);
+    font-weight: var(--fw-semibold);
+    color: var(--p-gray-light);
+    margin-bottom: var(--sp-8);
     text-transform: uppercase;
+    letter-spacing: var(--ls-wider);
 }
 
 .artist-rating-simple {
     display: flex;
     align-items: center;
-    gap: 6px;
-    font-weight: 900;
-    font-size: 0.85rem;
+    gap: 4px;
+    font-weight: var(--fw-semibold);
+    font-size: var(--text-sm);
+    color: var(--p-black);
 }
 
-/* 3. Rodapé CTA */
+/* 3. Footer CTA */
 .artists-footer-cta-simple {
-    background: #000;
-    color: #fff;
-    padding: 12rem 0;
+    background: var(--p-black);
+    color: var(--p-white);
+    padding: 8rem 0;
     text-align: center;
 }
 
 .artists-footer-cta-simple h2 {
-    font-size: 3.5rem;
-    font-weight: 900;
-    letter-spacing: -2px;
-    margin-bottom: 2rem;
+    font-size: clamp(2.5rem, 6vw, 4rem);
+    font-weight: var(--fw-regular);
+    letter-spacing: var(--ls-tight);
+    margin-bottom: var(--sp-24);
+    color: var(--p-white);
 }
 
 .artists-footer-cta-simple p {
-    font-size: 1.1rem;
-    opacity: 0.6;
-    margin-bottom: 4rem;
+    font-size: var(--text-base);
+    color: rgba(255,255,255,0.4);
+    margin-bottom: var(--sp-48);
+    letter-spacing: var(--ls-normal);
+    line-height: var(--lh-relaxed);
 }
 
 /* 4. No Results */
 .no-results-simple {
     text-align: center;
-    padding: 10rem 0;
-    font-size: 1.25rem;
-    font-weight: 800;
-    color: #ccc;
+    padding: 8rem 0;
+    font-size: var(--text-base);
+    font-weight: var(--fw-semibold);
+    color: var(--p-gray-light);
     text-transform: uppercase;
+    letter-spacing: var(--ls-wider);
 }
 
 /* Responsive */
 @media (max-width: 1024px) {
-    .artists-grid-simple {
-        grid-template-columns: repeat(2, 1fr);
-    }
+    .artists-grid-simple { grid-template-columns: repeat(2, 1fr); }
 }
 
 @media (max-width: 640px) {
     .artists-grid-simple {
         grid-template-columns: 1fr;
+        gap: var(--sp-40) var(--sp-20);
     }
-
-    .mega-title-simple {
-        font-size: 3rem;
-    }
-
-    .artists-footer-cta-simple h2 {
-        font-size: 2.25rem;
-    }
+    .mega-title-simple  { font-size: 3rem; letter-spacing: -2px; }
+    .artists-simple-hero { padding: 100px 0 60px; }
 }

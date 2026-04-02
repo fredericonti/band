@@ -20,6 +20,7 @@ const ArtistDashboard = lazy(() => import('./pages/ArtistDashboard'));
 const VenueDashboard = lazy(() => import('./pages/VenueDashboard'));
 const Login = lazy(() => import('./pages/Login'));
 const TokenShowcase = lazy(() => import('./pages/TokenShowcase'));
+const PedestalDesignSystem = lazy(() => import('./pages/PedestalDesignSystem'));
 
 const RouteTracker = () => {
     const location = useLocation();
@@ -72,6 +73,9 @@ const AnimatedRoutes = () => {
                     } />
                     <Route path="/tokens" element={
                         <PageTransition><TokenShowcase /></PageTransition>
+                    } />
+                    <Route path="/pedestal-design-system" element={
+                        <PageTransition><PedestalDesignSystem /></PageTransition>
                     } />
 
                     {/* ── Rotas protegidas (requerem login) ── */}

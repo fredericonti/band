@@ -330,7 +330,7 @@ const FindVenues = () => {
                     }} onClick={() => setNotification({ ...notification, isOpen: false })}>
                         <h2 style={{ fontSize: '3rem', fontWeight: 900, marginBottom: '1rem' }}>{notification.title}</h2>
                         <p style={{ fontSize: '1.5rem', maxWidth: '600px' }}>{notification.message}</p>
-                        <button className="btn btn-primary" style={{ marginTop: '2rem', background: 'white', color: 'black' }}>FECHAR</button>
+                        <button className="btn btn-outline-white mt-8" onClick={() => setShowQuoteModal(false)}>FECHAR</button>
                     </div>
                 )}
             </div>
