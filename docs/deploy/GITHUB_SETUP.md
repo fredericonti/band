@@ -182,7 +182,7 @@ Após o push para o GitHub:
 
 Execute novamente para verificar:
 ```bash
-./check-deploy.sh
+./scripts/check-deploy.sh
 ```
 
 ---

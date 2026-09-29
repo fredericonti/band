@@ -29,7 +29,7 @@ elif [ "$HTTP_CODE" = "404" ]; then
     echo "   1. Acesse: https://dashboard.render.com"
     echo "   2. Clique no site 'band-vvet'"
     echo "   3. Verifique se 'Publish Directory' está como: dist"
-    echo "   4. Veja o arquivo VERIFICACAO_DEPLOY.md para mais detalhes"
+    echo "   4. Veja o arquivo docs/deploy/VERIFICACAO_DEPLOY.md para mais detalhes"
     echo ""
 elif [ "$HTTP_CODE" = "503" ]; then
     echo "⏱️  Site está iniciando... (HTTP $HTTP_CODE)"
@@ -74,7 +74,7 @@ elif [ "$HTTP_CODE" = "404" ]; then
     echo "   URL: $URL"
     echo "   Código HTTP: $HTTP_CODE"
     echo ""
-    echo "   📖 Consulte: VERIFICACAO_DEPLOY.md"
+    echo "   📖 Consulte: docs/deploy/VERIFICACAO_DEPLOY.md"
     echo "   🔧 Ação: Verifique a configuração no Dashboard do Render"
     echo ""
 else
@@ -83,7 +83,7 @@ else
     echo "   Código HTTP: $HTTP_CODE"
     echo ""
     echo "   💡 Aguarde alguns minutos e execute novamente:"
-    echo "      bash check-deploy.sh"
+    echo "      bash scripts/check-deploy.sh"
     echo ""
 fi
 

@@ -13,7 +13,7 @@ deploy: ## Deploy to Render (push to main)
 	@echo "⏳ Wait a few minutes and run 'make check' to verify."
 
 check: ## Check deployment status
-	@./check-deploy.sh
+	@./scripts/check-deploy.sh
 
 dev: ## Start development server
 	npm run dev
